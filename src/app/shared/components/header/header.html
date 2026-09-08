@@ -1,0 +1,71 @@
+<header class="app-header">
+  <div class="header-left">
+    <!-- Course Hierarchy Dropdown -->
+    <div class="course-menu-container">
+      <div class="course-menu-trigger" (click)="toggleMenu()">
+        <div class="logo-placeholder">N<span>N</span>L</div>
+        <span class="menu-icon">▼</span>
+      </div>
+
+      <div class="course-dropdown" *ngIf="isMenuOpen">
+        <ul>
+          <li class="course-item">
+            <div class="course-title">🇨🇳 Khóa tiếng Trung</div>
+            <ul class="level-list">
+              <li>
+                <div class="level-title">🌱 Khóa sơ cấp</div>
+                <ul class="hsk-list">
+                  <li><a routerLink="/course/tieng-trung" [queryParams]="{level: 'so-cap', sublevel: 'hsk1'}" (click)="toggleMenu()">HSK 1</a></li>
+                  <li><a routerLink="/course/tieng-trung" [queryParams]="{level: 'so-cap', sublevel: 'hsk2'}" (click)="toggleMenu()">HSK 2</a></li>
+                  <li><a routerLink="/course/tieng-trung" [queryParams]="{level: 'so-cap', sublevel: 'hsk3'}" (click)="toggleMenu()">HSK 3</a></li>
+                </ul>
+              </li>
+              <li>
+                <div class="level-title">🚀 Khóa trung-cao cấp</div>
+                <ul class="hsk-list">
+                  <li><a class="disabled">HSK 4 (Sắp ra mắt)</a></li>
+                  <li><a class="disabled">HSK 5 (Sắp ra mắt)</a></li>
+                  <li><a class="disabled">HSK 6 (Sắp ra mắt)</a></li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li class="course-item disabled">
+            <div class="course-title">🇯🇵 Khóa tiếng Nhật (Sắp ra mắt)</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="brand-info">
+      <h2>Ngoại Ngữ Nghiêm Linh</h2>
+      <p>Nỗ lực - Kiên trì - Bứt phá</p>
+    </div>
+  </div>
+
+  <div class="header-right">
+    <!-- Stats (For logged in users, mocked for now) -->
+    <div class="user-stats">
+      <div class="stat-item streak">
+        <span class="icon">🔥</span> Chuỗi 0 ngày <span>连续0天</span>
+      </div>
+      <div class="stat-item month">
+        <span class="icon">📅</span> Tháng này: 0/30 ngày <span>本月0天</span>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="user-actions">
+      <!-- Mocks a logged in state with avatar -->
+      <div class="user-avatar">
+        <img src="https://via.placeholder.com/40" alt="Avatar" />
+        <span class="username">Nghiêm Linh</span>
+      </div>
+      <!-- Login/Register for non-logged in -->
+      <!--
+      <a routerLink="/login" [queryParams]="{mode: 'login'}" class="btn-login">Đăng nhập</a>
+      <a routerLink="/login" [queryParams]="{mode: 'register'}" class="btn-register">Đăng ký</a>
+      -->
+    </div>
+  </div>
+</header>

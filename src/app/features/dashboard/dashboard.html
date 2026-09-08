@@ -1,1 +1,104 @@
-<p>dashboard works!</p>
+<div class="dashboard-container">
+
+  <!-- Nút quay lại (chỉ hiển thị ở bước 2 và 3) -->
+  <div class="back-nav" *ngIf="currentStep > 1" (click)="goBack()">
+    <span class="back-icon">←</span> Quay lại chọn khoá
+  </div>
+
+  <div class="dashboard-header">
+    <h1 *ngIf="currentStep === 1"><span class="icon-home">🏠</span> Trang chủ</h1>
+    <h1 *ngIf="currentStep > 1"><span class="icon-course">{{ selectedCourse.icon }}</span> {{ selectedCourse.name }}
+    </h1>
+
+    <p *ngIf="currentStep === 1">Chọn khoá học bạn muốn bắt đầu.</p>
+    <p *ngIf="currentStep === 2">Chọn cấp độ bạn muốn học.</p>
+    <p *ngIf="currentStep === 3">Chọn cấp độ HSK bạn muốn bắt đầu.</p>
+  </div>
+
+  <!-- Bước 1: Chọn ngôn ngữ / luyện thi -->
+  <div class="courses-grid" *ngIf="currentStep === 1">
+    <ng-container *ngFor="let course of courses">
+      <div class="course-card"
+        [ngClass]="{'upcoming': course.status === 'upcoming', 'active': course.status === 'active'}"
+        (click)="selectCourse(course)">
+        <div class="card-icon">{{ course.icon }}</div>
+        <div class="card-content">
+          <h3>{{ course.name }}</h3>
+          <p>{{ course.description }}</p>
+        </div>
+        <div class="card-badge" *ngIf="course.status === 'upcoming'">
+          Sắp ra mắt
+        </div>
+      </div>
+    </ng-container>
+  </div>
+
+  <!-- Bước 2: Chọn cấp độ Sơ cấp / Trung - Cao cấp -->
+  <div class="courses-grid" *ngIf="currentStep === 2">
+    <ng-container *ngFor="let level of levels">
+      <div class="course-card"
+        [ngClass]="{'upcoming': level.status === 'upcoming', 'active': level.status === 'active'}"
+        (click)="selectLevel(level)">
+        <div class="card-icon">{{ level.icon }}</div>
+        <div class="card-content">
+          <h3>{{ level.name }}</h3>
+          <p>{{ level.description }}</p>
+        </div>
+        <div class="card-badge" *ngIf="level.status === 'upcoming'">
+          Sắp ra mắt
+        </div>
+      </div>
+    </ng-container>
+  </div>
+
+  <!-- Bước 3: Chọn HSK 1, 2, 3 -->
+  <div class="sublevels-container" *ngIf="currentStep === 3">
+    <div class="sublevel-card" (click)="goToSubLevel('hsk1')">
+      <div class="hsk-badge">HSK 1</div>
+      <h3>Người mới bắt đầu</h3>
+    </div>
+    <div class="sublevel-card" (click)="goToSubLevel('hsk2')">
+      <div class="hsk-badge">HSK 2</div>
+      <h3>Sơ cấp</h3>
+    </div>
+    <div class="sublevel-card" (click)="goToSubLevel('hsk3')">
+      <div class="hsk-badge">HSK 3</div>
+      <h3>Sơ trung cấp</h3>
+    </div>
+  </div>
+
+  <!-- Intro Section -->
+  <div class="intro-section fade-in">
+    <div class="intro-card">
+      <div class="intro-brand">
+        <!-- Có thể thay URL logo thực tế ở đây -->
+        <div class="logo-placeholder">N<span>N</span>L</div>
+        <div class="brand-info">
+          <h2>Ngoại Ngữ Nghiêm Linh</h2>
+          <p class="slogan">Nỗ lực - Kiên trì - Bứt phá</p>
+        </div>
+      </div>
+
+      <div class="intro-content">
+        <p class="highlight-text">Ngoại ngữ Nghiêm Linh chuyên đào tạo tiếng Trung theo lộ trình bài bản, phù hợp với
+          nhiều đối tượng học viên và mục tiêu học tập khác nhau.</p>
+
+        <h4 class="section-title">Các khóa học tại trung tâm</h4>
+        <ul class="feature-list">
+          <li>Lớp tiếng Trung online đa dạng trình độ, từ người mới bắt đầu đến các khóa học nâng cao.</li>
+          <li>Lớp học 1 kèm 1 với lịch học linh hoạt, cá nhân hóa theo nhu cầu của từng học viên.</li>
+          <li>Lớp sửa phát âm chuyên sâu, giúp xây dựng nền tảng phát âm chuẩn ngay từ đầu.</li>
+          <li>Lớp luyện thi cấp tốc dành cho các kỳ thi HSK và các mục tiêu học tập cụ thể.</li>
+        </ul>
+
+        <h4 class="section-title">Đội ngũ giáo viên</h4>
+        <p class="text-body">Đội ngũ giáo viên của trung tâm là những cử nhân chuyên ngành Ngôn ngữ Trung Quốc tốt
+          nghiệp từ các trường đại học đào tạo ngoại ngữ uy tín, trong đó có các giáo viên đã trúng tuyển và đang theo
+          học hoặc đã hoàn thành chương trình thạc sĩ tại Trung Quốc. Với phát âm chuẩn, chuyên môn vững vàng và kinh
+          nghiệm giảng dạy thực tế, đội ngũ giáo viên luôn tận tâm đồng hành, giúp học viên xây dựng nền tảng tiếng
+          Trung vững chắc và tiến bộ một cách hiệu quả.</p>
+      </div>
+    </div>
+  </div>
+
+</div>

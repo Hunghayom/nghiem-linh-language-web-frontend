@@ -1,0 +1,10 @@
+/* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
+
+/* Tùy chỉnh theme trực tiếp trong file CSS thay vì config.js */
+@theme {
+    --color-primary: #0284c7;
+    /* Màu xanh nhận diện của trang web */
+    --color-success: #16a34a;
+    /* Dùng cho hiệu ứng trả lời đúng */
+}

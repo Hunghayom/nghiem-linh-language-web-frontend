@@ -1,7 +1,8 @@
 :host {
   display: block;
   min-height: 100vh;
-  background-color: #FFFBF0; /* Yellow theme background */
+  background-color: #FFFBF0;
+  /* Yellow theme background */
   font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: #333;
 }
@@ -24,7 +25,7 @@
       margin: 0;
       font-size: 24px;
       font-weight: 800;
-      color: #EDBA20; /* Gold/Yellow color for brand */
+      color: #EDBA20;
       letter-spacing: -0.5px;
     }
   }
@@ -72,7 +73,7 @@
     max-width: 100%;
     height: auto;
     border-radius: 20px;
-    mix-blend-mode: multiply; /* Helps blend white bg of illustration */
+    mix-blend-mode: multiply;
   }
 }
 
@@ -89,13 +90,24 @@
 }
 
 .hero-title {
+
   font-size: 32px;
   font-weight: 800;
   line-height: 1.4;
   color: #444;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.hero-slogan {
+  font-size: 15px;
+  font-style: italic;
+  line-height: 1.4;
+  color: #EDBA20;
   margin-bottom: 40px;
   text-align: center;
 }
+
 
 .hero-buttons {
   display: flex;
@@ -126,11 +138,13 @@
   .btn-primary {
     background-color: #EDBA20;
     color: white;
-    box-shadow: 0 4px 0 #D4A315; /* 3D button effect */
+    box-shadow: 0 4px 0 #D4A315;
+    /* 3D button effect */
 
     &:hover {
       background-color: #F4C936;
     }
+
     &:active {
       box-shadow: 0 0 0 #D4A315;
     }
@@ -143,10 +157,11 @@
     box-shadow: 0 4px 0 #e5e5e5;
 
     &:hover {
-      background-color: rgba(0,0,0,0.02);
+      background-color: rgba(0, 0, 0, 0.02);
       border-color: #d5d5d5;
       box-shadow: 0 4px 0 #d5d5d5;
     }
+
     &:active {
       box-shadow: 0 0 0 transparent;
       transform: translateY(2px);

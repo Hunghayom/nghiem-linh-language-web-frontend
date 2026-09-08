@@ -19,7 +19,7 @@
 .auth-card {
   background: #ffffff;
   border-radius: 24px;
-  border: 1px solid #e0e0e0;
+  border: 2px solid #e5e5e5;
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.05);
   padding: 40px;
   overflow: hidden;
@@ -48,26 +48,33 @@
 .auth-tabs {
   display: flex;
   background: #f0f2f5;
-  border-radius: 12px;
-  padding: 4px;
+  border-radius: 16px;
+  padding: 6px;
   margin-bottom: 30px;
+  border: 2px solid #e5e5e5;
 
   button {
     flex: 1;
     padding: 12px;
-    border: none;
+    border: 2px solid transparent;
     background: transparent;
-    border-radius: 10px;
+    border-radius: 12px;
     font-size: 15px;
-    font-weight: 600;
-    color: #666;
+    font-weight: 800;
+    color: #999;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
 
     &.active {
       background: #fff;
       color: #EDBA20;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      border-color: #e5e5e5;
+      box-shadow: 0 4px 0 #e5e5e5;
+    }
+
+    &:hover:not(.active) {
+      color: #666;
+      background: rgba(0, 0, 0, 0.02);
     }
   }
 }
@@ -85,7 +92,7 @@
 
   label {
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 700;
     color: #444;
   }
 
@@ -93,11 +100,12 @@
   input[type="email"],
   input[type="password"] {
     padding: 14px 16px;
-    border: 1px solid #e0e0e0;
-    border-radius: 12px;
+    border: 2px solid #e5e5e5;
+    border-radius: 16px;
     font-size: 15px;
+    font-weight: 500;
     outline: none;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
     background: #fafafa;
     color: #333;
 
@@ -108,7 +116,6 @@
     &:focus {
       border-color: #EDBA20;
       background: #fff;
-      box-shadow: 0 0 0 4px rgba(237, 186, 32, 0.1);
     }
   }
 }
@@ -122,14 +129,14 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 12px;
-    border: 1px solid #e0e0e0;
-    border-radius: 12px;
+    padding: 14px;
+    border: 2px solid #e5e5e5;
+    border-radius: 16px;
     cursor: pointer;
     font-size: 14px;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    color: #555;
+    font-weight: 700;
+    transition: all 0.2s ease;
+    color: #777;
     background: #fafafa;
 
     input {
@@ -138,8 +145,12 @@
 
     &.selected {
       border-color: #EDBA20;
-      background: rgba(237, 186, 32, 0.05);
+      background: rgba(237, 186, 32, 0.1);
       color: #EDBA20;
+    }
+
+    &:hover:not(.selected) {
+      background: #f0f0f0;
     }
   }
 }
@@ -153,13 +164,13 @@
   align-items: center;
   gap: 10px;
   cursor: pointer;
-  font-weight: 500;
+  font-weight: 600;
   font-size: 14px;
   color: #555;
 
   input[type="checkbox"] {
-    width: 18px;
-    height: 18px;
+    width: 20px;
+    height: 20px;
     accent-color: #EDBA20;
     cursor: pointer;
   }
@@ -173,7 +184,7 @@
     font-size: 14px;
     color: #EDBA20;
     text-decoration: none;
-    font-weight: 500;
+    font-weight: 700;
 
     &:hover {
       text-decoration: underline;
@@ -198,9 +209,10 @@
   color: white;
   box-shadow: 0 4px 0 #D4A315;
   /* 3D button effect */
+  margin-top: 10px;
 
-  &:active {
-    transform: translateY(2px);
+  &:active:not(:disabled) {
+    transform: translateY(4px);
     box-shadow: 0 0 0 transparent;
   }
 
@@ -209,8 +221,8 @@
   }
 
   &:disabled {
-    background: #e0e0e0;
-    color: #999;
+    background: #e5e5e5;
+    color: #aaa;
     box-shadow: 0 4px 0 #cccccc;
     cursor: not-allowed;
   }
@@ -222,13 +234,14 @@
   text-align: center;
   color: #999;
   font-size: 12px;
-  margin: 10px 0;
+  font-weight: 700;
+  margin: 15px 0;
 
   &::before,
   &::after {
     content: '';
     flex: 1;
-    border-bottom: 1px solid #eee;
+    border-bottom: 2px solid #eee;
   }
 
   span {
@@ -266,7 +279,7 @@
 
   &:active {
     box-shadow: 0 0 0 transparent;
-    transform: translateY(2px);
+    transform: translateY(4px);
   }
 }
 
@@ -304,4 +317,10 @@
     max-height: 120px;
     transform: translateY(0);
   }
+}
+
+.error-message {
+  color: red;
+  font-size: 12px;
+  font-style: italic;
 }

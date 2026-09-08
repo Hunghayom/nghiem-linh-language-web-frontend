@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
+
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -23,12 +24,12 @@ export class LoginComponent implements OnInit {
 
     this.registerForm = this.fb.group({
       fullName: ['', Validators.required],
-      course: ['Tiếng Trung', Validators.required], // Mặc định chọn Tiếng Trung
+      course: ['Tiếng Trung', Validators.required],
       hasStudiedBefore: [false],
-      previousClass: [''], // Trường này sẽ hiển thị khi hasStudiedBefore là true
-      email: ['', [Validators.required, Validators.email]],
+      previousClass: [''],
+      email: ['', [Validators.required, Validators.pattern(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i)]],
       username: ['', Validators.required],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      password: ['', [Validators.required, Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/)]],
       confirmPassword: ['', Validators.required]
     }, { validators: this.passwordMatchValidator });
   }

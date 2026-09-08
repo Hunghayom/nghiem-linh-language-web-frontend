@@ -22,13 +22,13 @@
         <label>Mật khẩu</label>
         <input type="password" formControlName="password" placeholder="••••••••" />
       </div>
-      
+
       <div class="form-actions">
         <a href="#" class="forgot-password">Quên mật khẩu?</a>
       </div>
 
       <button type="submit" class="btn-submit" [disabled]="loginForm.invalid">Đăng nhập</button>
-      
+
       <div class="divider"><span>HOẶC</span></div>
       <button type="button" class="btn-google">
         <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google" />
@@ -70,6 +70,17 @@
       <div class="form-group">
         <label>Email</label>
         <input type="email" formControlName="email" placeholder="ban@email.com" />
+        <ng-container *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.invalid">
+
+          <div class="error-message">
+            <span *ngIf="registerForm.get('email')?.hasError('required')">
+              Vui lòng nhập email
+            </span>
+            <span *ngIf="registerForm.get('email')?.hasError('pattern')">
+              Vui lòng nhập đúng định dạng email
+            </span>
+          </div>
+        </ng-container>
       </div>
 
       <div class="form-group">
@@ -80,11 +91,32 @@
       <div class="form-group">
         <label>Mật khẩu</label>
         <input type="password" formControlName="password" placeholder="••••••••" />
+        <ng-container *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.invalid">
+          <div class="error-message">
+            <span *ngIf="registerForm.get('password')?.hasError('required')">
+              Vui lòng nhập mật khẩu
+            </span>
+            <span *ngIf="registerForm.get('password')?.hasError('pattern')">
+              Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường và chữ số.
+            </span>
+          </div>
+        </ng-container>
       </div>
 
       <div class="form-group">
         <label>Nhập lại mật khẩu</label>
         <input type="password" formControlName="confirmPassword" placeholder="••••••••" />
+        <ng-container
+          *ngIf="registerForm.get('confirmPassword')?.touched && registerForm.get('confirmPassword')?.invalid">
+          <div class="error-message">
+            <span *ngIf="registerForm.get('confirmPassword')?.hasError('required')">
+              Vui lòng nhập lại mật khẩu
+            </span>
+            <span *ngIf="registerForm.get('confirmPassword')?.hasError('mismatch')">
+              Mật khẩu không khớp
+            </span>
+          </div>
+        </ng-container>
       </div>
 
       <button type="submit" class="btn-submit" [disabled]="registerForm.invalid">Tạo tài khoản</button>

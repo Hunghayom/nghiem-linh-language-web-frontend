@@ -1,8 +1,11 @@
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
-    // Route mặc định khi vào trang web (chuyển hướng đến /login)
-    { path: '', redirectTo: 'login', pathMatch: 'full' },
+    // Route mặc định khi vào trang web (chuyển hướng đến /landing)
+    {
+        path: '',
+        loadComponent: () => import('./features/landing/landing').then(m => m.Landing)
+    },
 
     // Route Đăng nhập / Đăng ký
     {

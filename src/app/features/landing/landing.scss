@@ -1,0 +1,155 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  background-color: #FFFBF0; /* Yellow theme background */
+  font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
+
+.landing-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.landing-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  background-color: transparent;
+
+  .logo-area {
+    h1 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 800;
+      color: #EDBA20; /* Gold/Yellow color for brand */
+      letter-spacing: -0.5px;
+    }
+  }
+
+  .header-actions {
+    .lang-selector {
+      font-size: 13px;
+      font-weight: 700;
+      color: #999;
+      cursor: pointer;
+      letter-spacing: 0.5px;
+
+      &:hover {
+        color: #666;
+      }
+    }
+  }
+}
+
+.landing-main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 40px;
+  gap: 60px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    text-align: center;
+    gap: 30px;
+    padding: 20px;
+  }
+}
+
+.hero-image-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .hero-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 20px;
+    mix-blend-mode: multiply; /* Helps blend white bg of illustration */
+  }
+}
+
+.hero-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 450px;
+
+  @media (max-width: 768px) {
+    align-items: center;
+  }
+}
+
+.hero-title {
+  font-size: 32px;
+  font-weight: 800;
+  line-height: 1.4;
+  color: #444;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.hero-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  max-width: 350px;
+  margin: 0 auto;
+
+  .btn {
+    display: inline-block;
+    text-align: center;
+    padding: 16px 24px;
+    border-radius: 16px;
+    font-size: 15px;
+    font-weight: 800;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    border: 2px solid transparent;
+
+    &:active {
+      transform: translateY(2px);
+    }
+  }
+
+  .btn-primary {
+    background-color: #EDBA20;
+    color: white;
+    box-shadow: 0 4px 0 #D4A315; /* 3D button effect */
+
+    &:hover {
+      background-color: #F4C936;
+    }
+    &:active {
+      box-shadow: 0 0 0 #D4A315;
+    }
+  }
+
+  .btn-secondary {
+    background-color: transparent;
+    color: #EDBA20;
+    border-color: #e5e5e5;
+    box-shadow: 0 4px 0 #e5e5e5;
+
+    &:hover {
+      background-color: rgba(0,0,0,0.02);
+      border-color: #d5d5d5;
+      box-shadow: 0 4px 0 #d5d5d5;
+    }
+    &:active {
+      box-shadow: 0 0 0 transparent;
+      transform: translateY(2px);
+    }
+  }
+}

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FlashcardData } from '../../models/lesson.data';
 
@@ -11,6 +11,7 @@ import { FlashcardData } from '../../models/lesson.data';
 })
 export class FlashcardsComponent implements OnInit {
   @Input() data!: FlashcardData;
+  @Output() progressUpdated = new EventEmitter<number>();
   
   currentIndex = 0;
   isFlipped = false;
@@ -54,11 +55,14 @@ export class FlashcardsComponent implements OnInit {
 
   markMemorized() {
     this.cardStatus[this.currentWord.id] = 'memorized';
+    this.progressUpdated.emit(this.progressPercent);
     this.next();
   }
 
   markReview() {
     this.cardStatus[this.currentWord.id] = 'review';
+    // Review status does not add to progress, but we emit just in case
+    this.progressUpdated.emit(this.progressPercent);
     this.next();
   }
 

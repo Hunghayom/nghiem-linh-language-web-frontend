@@ -225,4 +225,15 @@ export class Lesson implements OnInit, OnDestroy {
   saveProgress() {
     alert('Đã lưu tiến độ thành công!');
   }
+
+  onProgressUpdated(moduleId: string, progress: number) {
+    const mod = this.modules.find(m => m.id === moduleId);
+    if (mod) {
+      // Angular Change Detection will automatically update the UI since modules is bound
+      mod.progress = progress;
+      if (progress === 100) {
+        // Optionally mark it completed or show a toast
+      }
+    }
+  }
 }

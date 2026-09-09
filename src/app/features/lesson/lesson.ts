@@ -210,7 +210,7 @@ export class Lesson implements OnInit, OnDestroy {
 
   confirmExit() {
     const doSave = confirm('Bạn có muốn lưu tiến độ trước khi thoát không?');
-    
+
     // Sử dụng setTimeout và NgZone để tránh lỗi blocking UI của trình duyệt gây crash router
     setTimeout(() => {
       if (doSave) {

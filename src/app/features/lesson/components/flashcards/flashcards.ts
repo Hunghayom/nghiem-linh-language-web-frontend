@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FlashcardData } from '../../models/lesson.data';
 
@@ -9,11 +9,20 @@ import { FlashcardData } from '../../models/lesson.data';
   templateUrl: './flashcards.html',
   styleUrls: ['./flashcards.scss']
 })
-export class FlashcardsComponent {
+export class FlashcardsComponent implements OnInit {
   @Input() data!: FlashcardData;
   
   currentIndex = 0;
   isFlipped = false;
+  cardStatus: Record<string, 'memorized' | 'review' | 'unseen'> = {};
+
+  ngOnInit() {
+    this.data.words.forEach(word => {
+      if (!this.cardStatus[word.id]) {
+        this.cardStatus[word.id] = 'unseen';
+      }
+    });
+  }
 
   get currentWord() {
     return this.data.words[this.currentIndex];
@@ -38,9 +47,31 @@ export class FlashcardsComponent {
   }
 
   shuffle() {
-    // Basic shuffle implementation
     this.data.words.sort(() => Math.random() - 0.5);
     this.currentIndex = 0;
     this.isFlipped = false;
+  }
+
+  markMemorized() {
+    this.cardStatus[this.currentWord.id] = 'memorized';
+    this.next();
+  }
+
+  markReview() {
+    this.cardStatus[this.currentWord.id] = 'review';
+    this.next();
+  }
+
+  get memorizedCount(): number {
+    return this.data.words.filter(w => this.cardStatus[w.id] === 'memorized').length;
+  }
+
+  get progressPercent(): number {
+    if (!this.data.words.length) return 0;
+    return (this.memorizedCount / this.data.words.length) * 100;
+  }
+
+  get isCompleted(): boolean {
+    return this.memorizedCount === this.data.words.length && this.data.words.length > 0;
   }
 }

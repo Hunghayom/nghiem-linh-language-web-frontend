@@ -4,6 +4,24 @@
     <p class="description">Đoán nghĩa trước, rồi bấm lật thẻ kiểm tra.</p>
   </div>
 
+  <div class="completion-message" *ngIf="isCompleted">
+    🎉 Tuyệt vời! Bạn đã ghi nhớ tất cả các thẻ trong bài này.
+  </div>
+
+  <div class="progress-section">
+    <div class="progress-bar-bg">
+      <div class="progress-bar-fill" [style.width.%]="progressPercent"></div>
+    </div>
+    <div class="indicators">
+      <div class="indicator-dot" 
+           *ngFor="let word of data.words; let i = index"
+           [class.active]="i === currentIndex"
+           [class.memorized]="cardStatus[word.id] === 'memorized'"
+           [class.review]="cardStatus[word.id] === 'review'">
+      </div>
+    </div>
+  </div>
+
   <div class="navigation">
     <button class="nav-btn" (click)="prev()" [disabled]="currentIndex === 0">←</button>
     <div class="counter">{{ currentIndex + 1 }} / {{ data.words.length }}</div>
@@ -41,5 +59,7 @@
 
   <div class="actions">
     <button class="btn-shuffle" (click)="shuffle()">🔀 Xáo trộn</button>
+    <button class="btn-review" (click)="markReview()">🔄 Cần học thêm</button>
+    <button class="btn-memorized" (click)="markMemorized()">✔️ Đã ghi nhớ</button>
   </div>
 </div>

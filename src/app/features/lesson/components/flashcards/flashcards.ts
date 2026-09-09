@@ -7,34 +7,40 @@ import { FlashcardData } from '../../models/lesson.data';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './flashcards.html',
-  styleUrl: './flashcards.scss'
+  styleUrls: ['./flashcards.scss']
 })
 export class FlashcardsComponent {
-  @Input() data?: FlashcardData;
+  @Input() data!: FlashcardData;
   
   currentIndex = 0;
   isFlipped = false;
 
-  get currentCard() {
-    return this.data?.words[this.currentIndex];
+  get currentWord() {
+    return this.data.words[this.currentIndex];
   }
 
-  flipCard() {
-    this.isFlipped = !this.isFlipped;
-  }
-
-  nextCard(known: boolean) {
-    if (this.data && this.currentIndex < this.data.words.length - 1) {
+  next() {
+    if (this.currentIndex < this.data.words.length - 1) {
+      this.currentIndex++;
       this.isFlipped = false;
-      setTimeout(() => {
-        this.currentIndex++;
-      }, 150); // Đợi CSS animation flip hoàn tất một phần
-    } else {
-      alert(known ? 'Bạn đã hoàn thành bộ thẻ nhớ!' : 'Bạn đã xem hết bộ thẻ nhớ!');
     }
   }
 
-  playAudio() {
-    // TODO: implement
+  prev() {
+    if (this.currentIndex > 0) {
+      this.currentIndex--;
+      this.isFlipped = false;
+    }
+  }
+
+  flip() {
+    this.isFlipped = !this.isFlipped;
+  }
+
+  shuffle() {
+    // Basic shuffle implementation
+    this.data.words.sort(() => Math.random() - 0.5);
+    this.currentIndex = 0;
+    this.isFlipped = false;
   }
 }

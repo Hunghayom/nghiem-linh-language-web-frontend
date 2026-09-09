@@ -1,26 +1,70 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { GrammarData } from '../../models/lesson.data';
+import { GrammarData, GrammarRule } from '../../models/lesson.data';
 
 @Component({
   selector: 'app-grammar',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './grammar.html',
-  styleUrl: './grammar.scss'
+  styleUrls: ['./grammar.scss']
 })
-export class GrammarComponent {
-  @Input() data?: GrammarData;
+export class GrammarComponent implements OnInit {
+  @Input() data!: GrammarData;
+  
+  // Track answers for each rule's practice
+  practiceAnswers: { [ruleId: string]: string[] } = {};
+  practiceSubmitted: { [ruleId: string]: boolean } = {};
 
-  // Helper function to highlight text in HTML safely
-  getHighlightedHtml(text: string, highlights?: string[]): string {
-    if (!highlights || highlights.length === 0) return text;
-    let result = text;
-    highlights.forEach(hl => {
-      // Very basic replace for demonstration. Real app should use DOMPurify
-      const regex = new RegExp(`(${hl})`, 'g');
-      result = result.replace(regex, `<span class="highlight">$1</span>`);
+  ngOnInit() {
+    this.data.rules.forEach(rule => {
+      this.practiceAnswers[rule.id] = [];
+      this.practiceSubmitted[rule.id] = false;
     });
-    return result;
+  }
+
+  selectWord(rule: GrammarRule, wordId: string) {
+    if (this.practiceSubmitted[rule.id]) return;
+    
+    const answers = this.practiceAnswers[rule.id];
+    if (!answers.includes(wordId)) {
+      answers.push(wordId);
+    }
+  }
+
+  removeWord(rule: GrammarRule, wordId: string) {
+    if (this.practiceSubmitted[rule.id]) return;
+    
+    const answers = this.practiceAnswers[rule.id];
+    const index = answers.indexOf(wordId);
+    if (index !== -1) {
+      answers.splice(index, 1);
+    }
+  }
+
+  getWordText(rule: GrammarRule, wordId: string): string {
+    return rule.practice.wordsToOrder.find(w => w.id === wordId)?.text || '';
+  }
+
+  getAvailableWords(rule: GrammarRule) {
+    const answers = this.practiceAnswers[rule.id];
+    return rule.practice.wordsToOrder.filter(w => !answers.includes(w.id));
+  }
+
+  checkAnswer(rule: GrammarRule) {
+    this.practiceSubmitted[rule.id] = true;
+  }
+
+  resetAnswer(rule: GrammarRule) {
+    this.practiceSubmitted[rule.id] = false;
+    this.practiceAnswers[rule.id] = [];
+  }
+
+  isCorrect(rule: GrammarRule): boolean {
+    const answers = this.practiceAnswers[rule.id];
+    const correct = rule.practice.correctOrderIds;
+    
+    if (answers.length !== correct.length) return false;
+    return answers.every((val, index) => val === correct[index]);
   }
 }

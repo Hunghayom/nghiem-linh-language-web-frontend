@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LessonModuleInfo, LessonType } from './models/lesson.model';
 import { LessonData } from './models/lesson.data';
-import { MOCK_LESSON_DATA } from './data/lesson.mock';
+import { mockLessonData } from './data/lesson.mock';
 
 import { WarmUpComponent } from './components/warm-up/warm-up';
 import { VocabularyComponent } from './components/vocabulary/vocabulary';
@@ -20,7 +20,7 @@ import { GrammarComponent } from './components/grammar/grammar';
 export class Lesson implements OnInit, OnDestroy {
   modules: LessonModuleInfo[] = [];
   activeModuleId: string = '';
-  lessonData: LessonData = MOCK_LESSON_DATA;
+  lessonData: LessonData = mockLessonData;
 
   activePopoverId: string | null = null;
   activePopoverMod: LessonModuleInfo | null = null;

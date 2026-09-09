@@ -66,24 +66,25 @@
   <!-- Khung nội dung chính -->
   <main class="lesson-content-area" (click)="onDocumentClick()">
     @switch (activeModuleId) {
-      @case ('1') {
-        <app-warm-up [data]="lessonData.warmUp"></app-warm-up>
-      }
-      @case ('2') {
-        <app-vocabulary [data]="lessonData.vocabulary"></app-vocabulary>
-      }
-      @case ('3') {
-        <app-flashcards [data]="lessonData.flashcards"></app-flashcards>
-      }
-      @case ('4') {
-        <app-grammar [data]="lessonData.grammar"></app-grammar>
-      }
-      @default {
-        <div class="active-module-placeholder">
-          <h2>{{ modules[activeModuleId ? +activeModuleId - 1 : 0]?.title }} ({{ modules[activeModuleId ? +activeModuleId - 1 : 0]?.cnName }})</h2>
-          <p>Nội dung của phần {{ modules[activeModuleId ? +activeModuleId - 1 : 0]?.shortName }} đang được xây dựng...</p>
-        </div>
-      }
+    @case ('1') {
+    <app-warm-up [data]="lessonData.warmUp!"></app-warm-up>
+    }
+    @case ('2') {
+    <app-vocabulary [data]="lessonData.vocabulary!"></app-vocabulary>
+    }
+    @case ('3') {
+    <app-flashcards [data]="lessonData.flashcards!"></app-flashcards>
+    }
+    @case ('4') {
+    <app-grammar [data]="lessonData.grammar!"></app-grammar>
+    }
+    @default {
+    <div class="active-module-placeholder">
+      <h2>{{ modules[activeModuleId ? +activeModuleId - 1 : 0]?.title }} ({{ modules[activeModuleId ? +activeModuleId -
+        1 : 0]?.cnName }})</h2>
+      <p>Nội dung của phần {{ modules[activeModuleId ? +activeModuleId - 1 : 0]?.shortName }} đang được xây dựng...</p>
+    </div>
+    }
     }
   </main>
   <!-- Dropdown Chọn Bài Học -->

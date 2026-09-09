@@ -1,4 +1,4 @@
-import { LessonData } from '../models/lesson.data';
+import { LessonData } from './lesson.data';
 
 export const mockLessonData: LessonData = {
   lessonId: 'lesson-1',

@@ -1,32 +1,45 @@
-<div class="flashcards-container" *ngIf="data && currentCard">
-  <div class="content-header">
-    <h2>{{ data.title }}</h2>
-    <div class="progress-text">
-      Thẻ {{ currentIndex + 1 }} / {{ data.words.length }}
-    </div>
+<div class="flashcards-container">
+  <div class="header">
+    <div class="title-badge">🃏 {{ data.title }}</div>
+    <p class="description">Đoán nghĩa trước, rồi bấm lật thẻ kiểm tra.</p>
   </div>
 
-  <div class="flashcard-scene" (click)="flipCard()">
-    <div class="flashcard" [class.is-flipped]="isFlipped">
-      <!-- Mặt trước (Chữ Hán) -->
-      <div class="card-face card-front">
-        <div class="hanzi-large">{{ currentCard.hanzi }}</div>
-        <button class="btn-audio" (click)="playAudio(); $event.stopPropagation()">
-          🔊
-        </button>
-        <div class="hint-text">Chạm để lật thẻ</div>
-      </div>
+  <div class="navigation">
+    <button class="nav-btn" (click)="prev()" [disabled]="currentIndex === 0">←</button>
+    <div class="counter">{{ currentIndex + 1 }} / {{ data.words.length }}</div>
+    <button class="nav-btn" (click)="next()" [disabled]="currentIndex === data.words.length - 1">→</button>
+  </div>
+
+  <div class="flashcard-scene" (click)="flip()">
+    <div class="flashcard-inner" [class.is-flipped]="isFlipped">
       
-      <!-- Mặt sau (Pinyin + Nghĩa) -->
-      <div class="card-face card-back">
-        <div class="pinyin-large">{{ currentCard.pinyin }}</div>
-        <div class="meaning-large">{{ currentCard.meaning }}</div>
+      <!-- Front Face -->
+      <div class="flashcard-face flashcard-front">
+        <div class="hanzi-large">{{ currentWord.hanzi }}</div>
+        <button class="btn-audio" (click)="$event.stopPropagation()">🔊 Đọc mẫu</button>
+        <div class="hint">Bấm thẻ để lật</div>
       </div>
+
+      <!-- Back Face -->
+      <div class="flashcard-face flashcard-back">
+        <div class="meaning">{{ currentWord.meaning }}</div>
+        <div class="pinyin">{{ currentWord.pinyin }}</div>
+        
+        <div class="examples" *ngIf="currentWord.examples && currentWord.examples.length > 0">
+          <div class="ex-hanzi">{{ currentWord.examples[0].hanzi }}</div>
+          <div class="ex-meaning">{{ currentWord.examples[0].meaning }}</div>
+        </div>
+
+        <div class="action-buttons">
+          <button class="btn-audio-green" (click)="$event.stopPropagation()">🔊 Đọc từ</button>
+          <button class="btn-audio-white" (click)="$event.stopPropagation()">🔊 Đọc câu</button>
+        </div>
+      </div>
+
     </div>
   </div>
 
-  <div class="action-buttons">
-    <button class="btn-unknown" (click)="nextCard(false)">Chưa thuộc</button>
-    <button class="btn-known" (click)="nextCard(true)">Đã thuộc</button>
+  <div class="actions">
+    <button class="btn-shuffle" (click)="shuffle()">🔀 Xáo trộn</button>
   </div>
 </div>

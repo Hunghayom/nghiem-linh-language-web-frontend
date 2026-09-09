@@ -1,21 +1,54 @@
-<div class="warm-up-container" *ngIf="data">
-  <div class="content-header">
-    <h2>{{ data.title }}</h2>
-    <p>{{ data.description }}</p>
-  </div>
-  
-  <div class="images-container">
-    <img *ngFor="let img of data.imageUrls" [src]="img" alt="Minh họa bài học">
+<div class="warm-up-container">
+  <div class="header">
+    <div class="title-row">
+      <span class="icon">🎯</span>
+      <span class="title-text">{{ data.title }}</span>
+      <span class="badge-new">Mới</span>
+    </div>
+    <p class="description">{{ data.description }}</p>
   </div>
 
-  <div class="keywords-container">
-    <h3>Từ khóa chính:</h3>
-    <div class="keyword-list">
-      <div class="keyword-card" *ngFor="let kw of data.keywords">
-        <span class="hanzi">{{ kw.hanzi }}</span>
-        <span class="pinyin">{{ kw.pinyin }}</span>
-        <span class="meaning">{{ kw.meaning }}</span>
+  <div class="blanks-grid">
+    <div *ngFor="let item of data.items; let i = index" class="blank-card">
+      <div class="number-badge">{{ i + 1 }}</div>
+      <div class="meaning">{{ item.meaning }}</div>
+
+      <div class="drop-zone" [class.filled]="answers[item.id]" [class.correct]="isSubmitted && isCorrect(item)"
+        [class.incorrect]="isSubmitted && !isCorrect(item)"
+        (click)="answers[item.id] ? removeAnswer(item) : fillBlank(item)">
+        <ng-container *ngIf="answers[item.id]; else emptyTpl">
+          <div class="filled-content">
+            <div class="hanzi">{{ answers[item.id]?.hanzi }}</div>
+            <div class="pinyin">{{ answers[item.id]?.pinyin }}</div>
+          </div>
+        </ng-container>
+        <ng-template #emptyTpl>
+          <span class="placeholder">( ? )</span>
+        </ng-template>
       </div>
+    </div>
+  </div>
+
+  <div class="choices-section">
+    <h4>Các từ để nối:</h4>
+    <div class="choices-grid">
+      <div *ngFor="let choice of data.choices; let i = index" class="choice-card"
+        [class.selected]="selectedChoice?.id === choice.id" (click)="selectChoice(choice)">
+        <div class="letter">{{ ['A','B','C','D','E','F'][i] }}. {{ choice.hanzi }}</div>
+        <div class="pinyin">{{ choice.pinyin }}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button class="btn-primary" (click)="checkAnswers()" *ngIf="!isSubmitted">
+      <span class="icon">✔️</span> Kiểm tra
+    </button>
+    <button class="btn-secondary" (click)="reset()" *ngIf="isSubmitted">
+      <span class="icon">🔄</span> Làm lại
+    </button>
+    <div class="result-text" *ngIf="isSubmitted">
+      Đúng {{ getCorrectCount() }}/{{ data.items.length }}
     </div>
   </div>
 </div>

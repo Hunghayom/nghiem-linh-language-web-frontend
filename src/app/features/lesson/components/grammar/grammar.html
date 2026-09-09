@@ -1,31 +1,75 @@
-<div class="grammar-container" *ngIf="data">
-  <div class="content-header">
-    <h2>{{ data.title }}</h2>
+<div class="grammar-container">
+  <div class="header">
+    <div class="title-badge">📐 {{ data.title }}</div>
+    <p class="description">Những điểm ngữ pháp trọng tâm của bài.</p>
   </div>
 
-  <div class="grammar-rules">
-    <div class="rule-card" *ngFor="let rule of data.rules; let i = index">
-      <div class="rule-header">
-        <span class="rule-number">{{ i + 1 }}</span>
-        <h3>{{ rule.title }}</h3>
-      </div>
-      
-      <div class="rule-body">
-        <div class="rule-structure">
-          <span class="structure-label">Cấu trúc:</span>
-          <span class="structure-text">{{ rule.structure }}</span>
+  <div class="grammar-rule" *ngFor="let rule of data.rules; let i = index">
+    <div class="rule-header">
+      <div class="number-badge">{{ i + 1 }}</div>
+      <h3 class="rule-title">{{ rule.title }}</h3>
+    </div>
+
+    <div class="rule-body">
+      <div class="explanation-box">
+        <div class="usage" *ngIf="rule.usage">
+          <span class="label">CÁCH DÙNG</span> {{ rule.usage }}
         </div>
-        
-        <p class="rule-explanation">{{ rule.explanation }}</p>
-        
-        <div class="rule-examples">
-          <div class="example-item" *ngFor="let ex of rule.examples">
-            <div class="ex-hanzi" [innerHTML]="getHighlightedHtml(ex.hanzi, ex.highlights)"></div>
-            <div class="ex-pinyin">{{ ex.pinyin }}</div>
-            <div class="ex-meaning">{{ ex.meaning }}</div>
+        <div class="note" *ngIf="rule.note">
+          <span class="label">LƯU Ý</span> {{ rule.note }}
+        </div>
+        <div class="general" *ngIf="rule.explanation && !rule.usage && !rule.note">
+          {{ rule.explanation }}
+        </div>
+      </div>
+
+      <div class="examples-table">
+        <div class="table-header">
+          <div class="col-hanzi">Câu tiếng Trung</div>
+          <div class="col-pinyin">Phiên âm</div>
+          <div class="col-meaning">Nghĩa tiếng Việt</div>
+          <div class="col-audio">Đọc</div>
+        </div>
+        <div class="table-row" *ngFor="let ex of rule.examples">
+          <div class="col-hanzi">{{ ex.hanzi }}</div>
+          <div class="col-pinyin">{{ ex.pinyin }}</div>
+          <div class="col-meaning">{{ ex.meaning }}</div>
+          <div class="col-audio">
+            <button class="btn-audio-small">🔊</button>
           </div>
         </div>
       </div>
+
+      <div class="practice-section" *ngIf="rule.practice">
+        <div class="practice-title">📝 Luyện tập điểm ngữ pháp này</div>
+        <div class="practice-desc">Bấm các từ theo đúng thứ tự - Bấm từ đã đặt để xóa.</div>
+        
+        <div class="question-text">{{ rule.practice.questionText }}</div>
+        
+        <div class="drop-zone" [class.correct]="practiceSubmitted[rule.id] && isCorrect(rule)"
+             [class.incorrect]="practiceSubmitted[rule.id] && !isCorrect(rule)">
+          <div class="word-chip placed" 
+               *ngFor="let ansId of practiceAnswers[rule.id]"
+               (click)="removeWord(rule, ansId)">
+            {{ getWordText(rule, ansId) }}
+          </div>
+        </div>
+
+        <div class="source-zone">
+          <div class="word-chip" 
+               *ngFor="let word of getAvailableWords(rule)"
+               (click)="selectWord(rule, word.id)">
+            {{ word.text }}
+          </div>
+        </div>
+
+        <div class="actions">
+          <button class="btn-primary" (click)="checkAnswer(rule)" *ngIf="!practiceSubmitted[rule.id]">Kiểm tra</button>
+          <button class="btn-secondary" (click)="resetAnswer(rule)" *ngIf="practiceSubmitted[rule.id]">Làm lại</button>
+          <button class="btn-audio-white" *ngIf="practiceSubmitted[rule.id]">🔊 Đọc mẫu</button>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>

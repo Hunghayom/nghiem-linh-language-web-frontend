@@ -3,22 +3,28 @@ export interface VocabItem {
   hanzi: string;
   pinyin: string;
   meaning: string;
+  sinoVietnamese?: string;
   audioUrl?: string;
-  exampleHanzi?: string;
-  examplePinyin?: string;
-  exampleMeaning?: string;
+  examples: {
+    hanzi: string;
+    pinyin: string;
+    meaning: string;
+    audioUrl?: string;
+  }[];
   imageUrl?: string;
+}
+
+export interface WarmUpItem {
+  id: string;
+  meaning: string; // The blank meaning
+  expectedVocabId: string; // The correct vocab to fill in
 }
 
 export interface WarmUpData {
   title: string;
   description: string;
-  imageUrls: string[];
-  keywords: {
-    hanzi: string;
-    pinyin: string;
-    meaning: string;
-  }[];
+  items: WarmUpItem[];
+  choices: VocabItem[]; // A-F choices
 }
 
 export interface VocabularyData {
@@ -29,20 +35,26 @@ export interface VocabularyData {
 
 export interface FlashcardData {
   title: string;
-  words: VocabItem[]; 
+  words: VocabItem[];
 }
 
 export interface GrammarRule {
   id: string;
   title: string;
   explanation: string;
-  structure: string;
+  usage: string;
+  note?: string;
   examples: {
     hanzi: string;
     pinyin: string;
     meaning: string;
-    highlights?: string[]; // Từ cần highlight
+    audioUrl?: string;
   }[];
+  practice: {
+    questionText: string;
+    wordsToOrder: { id: string; text: string; }[];
+    correctOrderIds: string[];
+  };
 }
 
 export interface GrammarData {
@@ -50,12 +62,10 @@ export interface GrammarData {
   rules: GrammarRule[];
 }
 
-// Master interface for a full Lesson
 export interface LessonData {
-  lessonId: string; 
+  lessonId: string;
   warmUp?: WarmUpData;
   vocabulary?: VocabularyData;
   flashcards?: FlashcardData;
   grammar?: GrammarData;
-  // TODO: Add other 8 modules later
 }

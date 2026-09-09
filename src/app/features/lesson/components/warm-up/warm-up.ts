@@ -1,9 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { WarmUpData } from '../../models/lesson.data';
 
 @Component({
-  imports: [],
   selector: 'app-warm-up',
-  styleUrl: './warm-up.scss',
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './warm-up.html',
+  styleUrl: './warm-up.scss'
 })
-export class WarmUp {}
+export class WarmUpComponent {
+  @Input() data?: WarmUpData;
+}

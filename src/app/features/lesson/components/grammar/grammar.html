@@ -1,0 +1,31 @@
+<div class="grammar-container" *ngIf="data">
+  <div class="content-header">
+    <h2>{{ data.title }}</h2>
+  </div>
+
+  <div class="grammar-rules">
+    <div class="rule-card" *ngFor="let rule of data.rules; let i = index">
+      <div class="rule-header">
+        <span class="rule-number">{{ i + 1 }}</span>
+        <h3>{{ rule.title }}</h3>
+      </div>
+      
+      <div class="rule-body">
+        <div class="rule-structure">
+          <span class="structure-label">Cấu trúc:</span>
+          <span class="structure-text">{{ rule.structure }}</span>
+        </div>
+        
+        <p class="rule-explanation">{{ rule.explanation }}</p>
+        
+        <div class="rule-examples">
+          <div class="example-item" *ngFor="let ex of rule.examples">
+            <div class="ex-hanzi" [innerHTML]="getHighlightedHtml(ex.hanzi, ex.highlights)"></div>
+            <div class="ex-pinyin">{{ ex.pinyin }}</div>
+            <div class="ex-meaning">{{ ex.meaning }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

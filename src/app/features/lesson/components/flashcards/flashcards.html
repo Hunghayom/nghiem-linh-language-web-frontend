@@ -1,0 +1,32 @@
+<div class="flashcards-container" *ngIf="data && currentCard">
+  <div class="content-header">
+    <h2>{{ data.title }}</h2>
+    <div class="progress-text">
+      Thẻ {{ currentIndex + 1 }} / {{ data.words.length }}
+    </div>
+  </div>
+
+  <div class="flashcard-scene" (click)="flipCard()">
+    <div class="flashcard" [class.is-flipped]="isFlipped">
+      <!-- Mặt trước (Chữ Hán) -->
+      <div class="card-face card-front">
+        <div class="hanzi-large">{{ currentCard.hanzi }}</div>
+        <button class="btn-audio" (click)="playAudio(); $event.stopPropagation()">
+          🔊
+        </button>
+        <div class="hint-text">Chạm để lật thẻ</div>
+      </div>
+      
+      <!-- Mặt sau (Pinyin + Nghĩa) -->
+      <div class="card-face card-back">
+        <div class="pinyin-large">{{ currentCard.pinyin }}</div>
+        <div class="meaning-large">{{ currentCard.meaning }}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="action-buttons">
+    <button class="btn-unknown" (click)="nextCard(false)">Chưa thuộc</button>
+    <button class="btn-known" (click)="nextCard(true)">Đã thuộc</button>
+  </div>
+</div>

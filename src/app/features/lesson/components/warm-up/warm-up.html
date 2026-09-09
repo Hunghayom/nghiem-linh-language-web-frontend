@@ -1,1 +1,21 @@
-<p>warm-up works!</p>
+<div class="warm-up-container" *ngIf="data">
+  <div class="content-header">
+    <h2>{{ data.title }}</h2>
+    <p>{{ data.description }}</p>
+  </div>
+  
+  <div class="images-container">
+    <img *ngFor="let img of data.imageUrls" [src]="img" alt="Minh họa bài học">
+  </div>
+
+  <div class="keywords-container">
+    <h3>Từ khóa chính:</h3>
+    <div class="keyword-list">
+      <div class="keyword-card" *ngFor="let kw of data.keywords">
+        <span class="hanzi">{{ kw.hanzi }}</span>
+        <span class="pinyin">{{ kw.pinyin }}</span>
+        <span class="meaning">{{ kw.meaning }}</span>
+      </div>
+    </div>
+  </div>
+</div>

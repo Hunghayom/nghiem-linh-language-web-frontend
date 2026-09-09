@@ -20,7 +20,7 @@
   background: #ffffff;
   border-radius: 24px;
   border: 2px solid #e5e5e5;
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.05);
+  box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.08);
   padding: 40px;
   overflow: hidden;
   position: relative;
@@ -69,7 +69,7 @@
       background: #fff;
       color: #EDBA20;
       border-color: #e5e5e5;
-      box-shadow: 0 4px 0 #e5e5e5;
+      box-shadow: 4px 4px 0px rgba(0,0,0,0.05);
     }
 
     &:hover:not(.active) {
@@ -147,6 +147,7 @@
       border-color: #EDBA20;
       background: rgba(237, 186, 32, 0.1);
       color: #EDBA20;
+      box-shadow: 3px 3px 0px rgba(237, 186, 32, 0.15);
     }
 
     &:hover:not(.selected) {
@@ -207,23 +208,24 @@
 
   background-color: #EDBA20;
   color: white;
-  box-shadow: 0 4px 0 #D4A315;
-  /* 3D button effect */
+  box-shadow: none;
   margin-top: 10px;
-
-  &:active:not(:disabled) {
-    transform: translateY(4px);
-    box-shadow: 0 0 0 transparent;
-  }
 
   &:hover:not(:disabled) {
     background-color: #F4C936;
+    box-shadow: 5px 5px 0px rgba(237, 186, 32, 0.3);
+    transform: translate(-2px, -2px);
+  }
+
+  &:active:not(:disabled) {
+    box-shadow: none;
+    transform: translate(0, 0);
   }
 
   &:disabled {
     background: #e5e5e5;
     color: #aaa;
-    box-shadow: 0 4px 0 #cccccc;
+    box-shadow: none;
     cursor: not-allowed;
   }
 }
@@ -263,7 +265,7 @@
   color: #555;
   cursor: pointer;
   transition: all 0.2s ease;
-  box-shadow: 0 4px 0 #e5e5e5;
+  box-shadow: none;
   text-transform: uppercase;
 
   img {
@@ -274,12 +276,13 @@
   &:hover {
     background-color: rgba(0, 0, 0, 0.02);
     border-color: #d5d5d5;
-    box-shadow: 0 4px 0 #d5d5d5;
+    box-shadow: 5px 5px 0px rgba(0, 0, 0, 0.1);
+    transform: translate(-2px, -2px);
   }
 
   &:active {
-    box-shadow: 0 0 0 transparent;
-    transform: translateY(4px);
+    box-shadow: none;
+    transform: translate(0, 0);
   }
 }
 

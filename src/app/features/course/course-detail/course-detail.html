@@ -1,1 +1,53 @@
-<p>course-detail works!</p>
+<div class="course-learning-container" [ngClass]="activeTheme">
+
+  <!-- HSK Tabs -->
+  <div class="hsk-tabs">
+    <div class="hsk-tab" *ngFor="let level of hskLevels" [class.active]="currentHsk === level.id"
+      [ngClass]="level.id"
+      (click)="selectHsk(level.id)">
+      {{ level.name }}
+    </div>
+  </div>
+
+  <!-- Units Path (Calendar Grid) -->
+  <div class="calendar-container">
+
+    <div class="unit-wrapper" *ngFor="let unit of units"
+         [class.is-active]="unit.id === activeUnitId">
+      
+      <!-- Unit Circle Button -->
+      <div class="unit-button" 
+           [class.active]="unit.id === activeUnitId"
+           [class.unstarted]="unit.completedLessons === 0"
+           (click)="toggleUnit($event, unit.id)">
+           
+        <!-- SVG Progress Ring (Outside) - Always displayed -->
+        <svg class="progress-ring" viewBox="0 0 100 100">
+          <circle class="ring-bg" cx="50" cy="50" r="46" />
+          <circle class="ring-fill" cx="50" cy="50" r="46" 
+                  [style.stroke-dasharray]="289" 
+                  [style.stroke-dashoffset]="289 - (289 * unit.completedLessons / unit.totalLessons)" />
+        </svg>
+
+        <!-- Unit Icon (Flat Number) -->
+        <div class="unit-icon">
+          <span>{{ unit.id }}</span>
+        </div>
+      </div>
+
+      <!-- Tooltip Dialog -->
+      <div class="unit-tooltip" *ngIf="unit.id === activeUnitId" (click)="$event.stopPropagation()">
+        <div class="tooltip-arrow"></div>
+        <div class="tooltip-content">
+          <h3>{{ unit.title }}</h3>
+          <p>Tiến độ: {{ unit.completedLessons }} / {{ unit.totalLessons }} bài</p>
+          <button class="btn-action" (click)="startUnit($event, unit)">
+            {{ getUnitActionText(unit) }}
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>

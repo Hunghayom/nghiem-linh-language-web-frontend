@@ -138,15 +138,17 @@
   .btn-primary {
     background-color: #EDBA20;
     color: white;
-    box-shadow: 0 4px 0 #D4A315;
-
+    box-shadow: none;
 
     &:hover {
       background-color: #F4C936;
+      box-shadow: 5px 5px 0px rgba(237, 186, 32, 0.3);
+      transform: translate(-2px, -2px);
     }
 
     &:active {
-      box-shadow: 0 0 0 #D4A315;
+      box-shadow: none;
+      transform: translate(0, 0);
     }
   }
 
@@ -154,17 +156,18 @@
     background-color: transparent;
     color: #EDBA20;
     border-color: #e5e5e5;
-    box-shadow: 0 4px 0 #e5e5e5;
+    box-shadow: none;
 
     &:hover {
       background-color: rgba(0, 0, 0, 0.02);
       border-color: #d5d5d5;
-      box-shadow: 0 4px 0 #d5d5d5;
+      box-shadow: 5px 5px 0px rgba(0, 0, 0, 0.1);
+      transform: translate(-2px, -2px);
     }
 
     &:active {
-      box-shadow: 0 0 0 transparent;
-      transform: translateY(2px);
+      box-shadow: none;
+      transform: translate(0, 0);
     }
   }
 }

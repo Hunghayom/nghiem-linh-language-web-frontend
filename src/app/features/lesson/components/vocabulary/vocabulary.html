@@ -1,1 +1,36 @@
-<p>vocabulary works!</p>
+<div class="vocabulary-container" *ngIf="data">
+  <div class="content-header">
+    <h2>{{ data.title }}</h2>
+    <p *ngIf="data.description">{{ data.description }}</p>
+  </div>
+
+  <div class="vocab-list">
+    <div class="vocab-card" *ngFor="let word of data.words">
+      
+      <div class="vocab-main">
+        <button class="btn-play" (click)="playAudio(word.audioUrl)" title="Nghe phát âm">
+          ▶
+        </button>
+        <div class="word-info">
+          <span class="hanzi">{{ word.hanzi }}</span>
+          <span class="pinyin">{{ word.pinyin }}</span>
+        </div>
+      </div>
+      
+      <div class="vocab-meaning">
+        <span class="meaning-label">Nghĩa:</span>
+        <span class="meaning-text">{{ word.meaning }}</span>
+      </div>
+
+      <div class="vocab-example" *ngIf="word.exampleHanzi">
+        <span class="example-label">Ví dụ:</span>
+        <div class="example-content">
+          <span class="ex-hanzi">{{ word.exampleHanzi }}</span>
+          <span class="ex-pinyin">{{ word.examplePinyin }}</span>
+          <span class="ex-meaning">{{ word.exampleMeaning }}</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

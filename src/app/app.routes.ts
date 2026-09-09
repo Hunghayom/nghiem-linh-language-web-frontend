@@ -22,7 +22,7 @@ export const routes: Routes = [
     // Route Chi tiết khóa học (cần truyền thêm ID khóa học trên URL, ví dụ: /course/tieng-trung)
     {
         path: 'course/:id',
-        loadComponent: () => import('./features/course/course-detail/course-detail').then(m => m.CourseDetail)
+        loadComponent: () => import('./features/course/course-detail/course-detail').then(m => m.CourseDetailComponent)
     },
 
     // Route Học tập (cần truyền ID bài học, ví dụ: /lesson/bai-1)

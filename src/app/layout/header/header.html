@@ -1,1 +1,103 @@
-<p>header works!</p>
+<header class="app-header">
+    <div class="header-left">
+        <div class="logo">
+            <img src="assets/logo.jpg" alt="Logo">
+        </div>
+        <div class="brand-info">
+            <h2>Ngoại Ngữ Nghiêm Linh</h2>
+            <p class="slogan-1">Nỗ lực - Kiên trì - Bứt phá</p>
+            <p class="slogan-2">Học thêm ngoại ngữ mới - Mở thêm vạn cơ hội</p>
+        </div>
+    </div>
+
+    <div class="header-right">
+        <!-- Course Selection Dropdown -->
+        <div class="course-menu-container">
+            <button class="btn-course-select" (click)="toggleMenu()">
+                <span>📚 Chọn khóa học</span>
+                <span class="menu-icon">▼</span>
+            </button>
+
+            <div class="course-dropdown" *ngIf="isMenuOpen">
+                <ul>
+                    <li class="course-item">
+                        <div class="course-title">🇨🇳 Khóa tiếng Trung</div>
+                        <ul class="level-list">
+                            <li>
+                                <div class="level-title">🌱 Khóa sơ cấp</div>
+                                <ul class="hsk-list">
+                                    <li><a routerLink="/course/tieng-trung"
+                                            [queryParams]="{level: 'so-cap', sublevel: 'hsk1'}" (click)="toggleMenu()"
+                                            class="hsk1">HSK 1</a></li>
+                                    <li><a routerLink="/course/tieng-trung"
+                                            [queryParams]="{level: 'so-cap', sublevel: 'hsk2'}" (click)="toggleMenu()"
+                                            class="hsk2">HSK 2</a></li>
+                                    <li><a routerLink="/course/tieng-trung"
+                                            [queryParams]="{level: 'so-cap', sublevel: 'hsk3'}" (click)="toggleMenu()"
+                                            class="hsk3">HSK 3</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <div class="level-title">🚀 Khóa trung-cao cấp</div>
+                                <ul class="hsk-list">
+                                    <li><a class="disabled">HSK 4 (Sắp ra mắt)</a></li>
+                                    <li><a class="disabled">HSK 5 (Sắp ra mắt)</a></li>
+                                    <li><a class="disabled">HSK 6 (Sắp ra mắt)</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="course-item disabled">
+                        <div class="course-title">🇯🇵 Khóa tiếng Nhật (Sắp ra mắt)</div>
+                    </li>
+                    <li class="course-item disabled">
+                        <div class="course-title">📝 Khóa ôn tập (Sắp ra mắt)</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <ng-container *ngIf="userService.currentUser() as user; else loginTemplate">
+            <!-- Stats: Shrinked to icon + number (Only show when logged in) -->
+            <div class="user-stats">
+                <div class="stat-item streak" title="Chuỗi ngày học">
+                    <span class="icon">🔥</span> 0
+                </div>
+                <div class="stat-item month" title="Số ngày học trong tháng">
+                    <span class="icon">📅</span> 0/30
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="user-actions">
+                <!-- Avatar and Name -->
+                <div class="user-avatar-container">
+                    <div class="user-avatar" (click)="toggleUserMenu()">
+                        <img [src]="user.avatarUrl" onerror="this.src='assets/logo.jpg'" alt="Avatar" />
+                        <span class="username">{{ user.name }}</span>
+                        <span class="menu-icon" style="font-size: 10px; color: #888; margin-left: 4px;">▼</span>
+                    </div>
+
+                    <!-- User Dropdown Menu -->
+                    <div class="user-dropdown" *ngIf="isUserMenuOpen">
+                        <ul>
+                            <li (click)="openEditProfile()">
+                                <span class="icon">✏️</span> Chỉnh sửa thông tin
+                            </li>
+                            <li class="logout" (click)="logout()">
+                                <span class="icon">🚪</span> Đăng xuất
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+
+        <ng-template #loginTemplate>
+            <div class="login-actions" style="display: flex; gap: 8px;">
+                <a routerLink="/login" [queryParams]="{mode: 'login'}" class="btn-login">Đăng nhập</a>
+                <a routerLink="/login" [queryParams]="{mode: 'register'}" class="btn-register">Đăng ký</a>
+            </div>
+        </ng-template>
+    </div>
+</header>

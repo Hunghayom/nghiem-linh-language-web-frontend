@@ -21,4 +21,10 @@ export class VocabularyComponent {
   closeDetail() {
     this.selectedWord = null;
   }
+
+  playAudio(event: Event, word: VocabItem) {
+    event.stopPropagation();
+    // TODO: implement actual audio playback
+    console.log('Playing audio for:', word.hanzi);
+  }
 }

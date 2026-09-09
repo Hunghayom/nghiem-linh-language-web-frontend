@@ -1,7 +1,11 @@
 <div class="vocabulary-container">
   <div class="header">
-    <div class="title-badge">📚 {{ data.title }}</div>
-    <p class="description" *ngIf="data.description">{{ data.description }}</p>
+    <div class="title-row">
+      <span class="icon">📚</span>
+      <span class="title-text">{{ data.title }}</span>
+      <span class="badge-new">xxxxx Từ</span>
+    </div>
+    <p class="description" *ngIf="data.description">👆 Bấm thẻ để xem nghĩa & câu ví dụ.</p>
   </div>
 
   <div class="vocab-grid">
@@ -11,7 +15,7 @@
 
       <div class="main-content">
         <div class="hanzi">{{ word.hanzi }}</div>
-        <button class="btn-play" (click)="$event.stopPropagation()">
+        <button class="btn-play" (click)="playAudio($event, word)">
           <span class="icon">🔊</span> Đọc mẫu
         </button>
       </div>
@@ -31,6 +35,7 @@
       <div class="modal-body">
         <div class="word-header">
           <div class="number-badge">1</div>
+          <div class="type-badge-large">Thán từ</div>
           <div class="hanzi-large">{{ selectedWord.hanzi }}</div>
           <div class="action-buttons">
             <button class="btn-stroke">✍️ Nét viết</button>
@@ -44,12 +49,14 @@
           <div class="sino-viet">Âm Hán Việt: {{ selectedWord.sinoVietnamese }}</div>
         </div>
 
-        <div class="examples-list">
+        <div class="examples-list" *ngIf="selectedWord.examples?.length">
           <div class="example-card" *ngFor="let ex of selectedWord.examples">
             <button class="btn-ex-audio">🔊</button>
-            <div class="ex-hanzi">{{ ex.hanzi }}</div>
-            <div class="ex-pinyin">{{ ex.pinyin }}</div>
-            <div class="ex-meaning">{{ ex.meaning }}</div>
+            <div class="ex-content">
+              <div class="ex-hanzi">{{ ex.hanzi }}</div>
+              <div class="ex-pinyin">{{ ex.pinyin }}</div>
+              <div class="ex-meaning">{{ ex.meaning }}</div>
+            </div>
           </div>
         </div>
 

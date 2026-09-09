@@ -1,6 +1,6 @@
 .flashcards-container {
   padding: 24px;
-  background-color: #f4f9fd;
+  background-color: var(--theme-bg);
   border-radius: 16px;
   display: flex;
   flex-direction: column;
@@ -14,7 +14,7 @@
       display: inline-block;
       font-size: 24px;
       font-weight: bold;
-      color: #004085;
+      color: var(--theme-color);
       margin-bottom: 8px;
     }
     
@@ -33,9 +33,9 @@
       width: 40px;
       height: 40px;
       border-radius: 50%;
-      border: 1px solid #cce5ff;
+      border: 1px solid var(--theme-color);
       background: white;
-      color: #007bff;
+      color: var(--theme-color);
       font-size: 18px;
       cursor: pointer;
       display: flex;
@@ -44,7 +44,7 @@
       transition: all 0.2s;
 
       &:hover:not(:disabled) {
-        background: #007bff;
+        background: var(--theme-color);
         color: white;
       }
       &:disabled {
@@ -56,7 +56,7 @@
     .counter {
       font-weight: bold;
       font-size: 18px;
-      color: #004085;
+      color: var(--theme-color);
     }
   }
 
@@ -103,12 +103,12 @@
     .hanzi-large {
       font-size: 80px;
       font-weight: bold;
-      color: #004085;
+      color: var(--theme-color);
       margin-bottom: 24px;
     }
 
     .btn-audio {
-      background: #007bff;
+      background: var(--theme-color);
       color: white;
       border: none;
       padding: 10px 24px;
@@ -116,18 +116,18 @@
       font-weight: bold;
       margin-bottom: 24px;
       cursor: pointer;
-      &:hover { background: #0056b3; }
+      &:hover { background: var(--theme-hover); }
     }
 
     .hint {
-      color: #007bff;
+      color: var(--theme-color);
       font-weight: bold;
     }
   }
 
   .flashcard-back {
-    background-color: #f1f8e9; /* Light green */
-    border: 2px solid #c5e1a5;
+    background-color: var(--theme-bg);
+    border: 2px solid var(--theme-color);
     transform: rotateY(180deg);
 
     .meaning {

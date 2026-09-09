@@ -5,17 +5,23 @@
       <span class="title-text">{{ data.title }}</span>
       <span class="badge-new">Mới</span>
     </div>
-    <p class="description">{{ data.description }}</p>
+    <p class="description">Bấm chọn hoặc kéo-thả một chữ Hán (A-F) bên dưới vào ô nghĩa tương ứng.</p>
   </div>
 
   <div class="blanks-grid">
-    <div *ngFor="let item of data.items; let i = index" class="blank-card">
+    <div *ngFor="let item of displayItems; let i = index" class="blank-card">
       <div class="number-badge">{{ i + 1 }}</div>
       <div class="meaning">{{ item.meaning }}</div>
 
-      <div class="drop-zone" [class.filled]="answers[item.id]" [class.correct]="isSubmitted && isCorrect(item)"
+      <!-- Drop zone for drag and drop -->
+      <div class="drop-zone" 
+        [class.filled]="answers[item.id]" 
+        [class.correct]="isSubmitted && isCorrect(item)"
         [class.incorrect]="isSubmitted && !isCorrect(item)"
-        (click)="answers[item.id] ? removeAnswer(item) : fillBlank(item)">
+        (click)="answers[item.id] ? removeAnswer(item) : fillBlank(item)"
+        (dragover)="onDragOver($event)"
+        (drop)="onDrop($event, item)">
+        
         <ng-container *ngIf="answers[item.id]; else emptyTpl">
           <div class="filled-content">
             <div class="hanzi">{{ answers[item.id]?.hanzi }}</div>
@@ -32,8 +38,12 @@
   <div class="choices-section">
     <h4>Các từ để nối:</h4>
     <div class="choices-grid">
-      <div *ngFor="let choice of data.choices; let i = index" class="choice-card"
-        [class.selected]="selectedChoice?.id === choice.id" (click)="selectChoice(choice)">
+      <!-- Draggable choices -->
+      <div *ngFor="let choice of displayChoices; let i = index" class="choice-card"
+        [class.selected]="selectedChoice?.id === choice.id" 
+        draggable="true"
+        (dragstart)="onDragStart(choice)"
+        (click)="selectChoice(choice)">
         <div class="letter">{{ ['A','B','C','D','E','F'][i] }}. {{ choice.hanzi }}</div>
         <div class="pinyin">{{ choice.pinyin }}</div>
       </div>
@@ -49,6 +59,22 @@
     </button>
     <div class="result-text" *ngIf="isSubmitted">
       Đúng {{ getCorrectCount() }}/{{ data.items.length }}
+    </div>
+  </div>
+
+  <!-- Feedback Area -->
+  <div class="feedback-area" *ngIf="isSubmitted">
+    <div class="correct-answers-box">
+      <h5>🔑 Đáp án đúng 正确答案:</h5>
+      <div class="answers-pills">
+        <span class="answer-pill" *ngFor="let ans of correctAnswersArray">{{ ans }}</span>
+      </div>
+    </div>
+
+    <div class="feedback-message" [class.success]="isPerfect" [class.warning]="!isPerfect">
+      <span class="icon" *ngIf="isPerfect">🎉</span>
+      <span class="icon" *ngIf="!isPerfect">💪</span>
+      {{ isPerfect ? 'Hoàn hảo! Bạn đã làm đúng tất cả' : 'Gần đúng rồi, cố gắng lên nhé!' }}
     </div>
   </div>
 </div>

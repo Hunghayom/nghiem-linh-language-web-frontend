@@ -73,7 +73,7 @@ import { CommonModule } from '@angular/common';
 export class RecorderComponent {
   @Input() maxDuration: number = 10; // seconds
   @Output() onRecordEnd = new EventEmitter<Blob>();
-  
+
   isRecording = false;
   score: number | null = null;
   private mediaRecorder: MediaRecorder | null = null;
@@ -100,7 +100,7 @@ export class RecorderComponent {
       this.mediaRecorder.addEventListener("stop", () => {
         const audioBlob = new Blob(this.audioChunks, { type: 'audio/webm' });
         this.onRecordEnd.emit(audioBlob);
-        
+
         // Mock scoring for UI demonstration
         this.score = Math.floor(Math.random() * 4) + 7; // Random 7 to 10
       });

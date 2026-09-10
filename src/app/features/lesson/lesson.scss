@@ -6,22 +6,10 @@
   background-color: #f8f9fa;
   min-height: 100vh;
 
-  /* Theme Variables Default (HSK 1 - Teal) */
-  --theme-color: #0d9488;
-  --theme-bg: #f0fdfa;
-  --theme-hover: #0f766e;
-
-  &.theme-pastel-blue {
-    --theme-color: #3b82f6;
-    --theme-bg: #eff6ff;
-    --theme-hover: #2563eb;
-  }
-
-  &.theme-pastel-indigo {
-    --theme-color: #6366f1;
-    --theme-bg: #eef2ff;
-    --theme-hover: #4f46e5;
-  }
+  /* Theme Variables Default fallback */
+  --theme-color: var(--hsk1-color);
+  --theme-bg: var(--hsk1-bg);
+  --theme-hover: var(--hsk1-hover);
 }
 
 .lesson-navigation {

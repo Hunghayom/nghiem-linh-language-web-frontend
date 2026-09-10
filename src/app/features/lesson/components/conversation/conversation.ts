@@ -11,11 +11,11 @@ import { ConversationData, ConversationTurn } from '../../models/lesson.data';
 })
 export class ConversationComponent implements OnInit {
   @Input() data!: ConversationData;
-  
+
   recordingTurnId: string | null = null;
   recordingScore: number | null = null;
   isRecording: boolean = false;
-  
+
   ngOnInit() {
   }
 
@@ -28,7 +28,7 @@ export class ConversationComponent implements OnInit {
     this.recordingTurnId = turn.id;
     this.isRecording = true;
     this.recordingScore = null;
-    
+
     // Tạm thời mock giả lập ghi âm 2 giây sau đó trả về điểm ngẫu nhiên
     setTimeout(() => {
       this.isRecording = false;

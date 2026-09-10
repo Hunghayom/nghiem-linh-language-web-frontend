@@ -248,27 +248,27 @@
             box-shadow: 3px 3px 0px rgba(0,0,0,0.05);
             transition: all 0.2s ease;
 
-            &.hsk1 { color: #16a34a; border-color: #16a34a; background: #f0fdf4; }
-            &.hsk2 { color: #0284c7; border-color: #0284c7; background: #f0f9ff; }
-            &.hsk3 { color: #ea580c; border-color: #ea580c; background: #fff7ed; }
+            &.hsk1 { color: var(--hsk1-color); border-color: var(--hsk1-stroke); background: var(--hsk1-bg); }
+            &.hsk2 { color: var(--hsk2-color); border-color: var(--hsk2-stroke); background: var(--hsk2-bg); }
+            &.hsk3 { color: var(--hsk3-color); border-color: var(--hsk3-stroke); background: var(--hsk3-bg); }
 
             &:hover:not(.disabled) {
                 transform: translate(-2px, -2px);
             }
 
             &.hsk1:hover:not(.disabled) {
-                background: #dcfce7;
-                box-shadow: 5px 5px 0px rgba(22, 163, 74, 0.2);
+                background: var(--hsk1-active);
+                box-shadow: 5px 5px 0px var(--hsk1-shadow);
             }
 
             &.hsk2:hover:not(.disabled) {
-                background: #e0f2fe;
-                box-shadow: 5px 5px 0px rgba(2, 132, 199, 0.2);
+                background: var(--hsk2-active);
+                box-shadow: 5px 5px 0px var(--hsk2-shadow);
             }
 
             &.hsk3:hover:not(.disabled) {
-                background: #ffedd5;
-                box-shadow: 5px 5px 0px rgba(234, 88, 12, 0.2);
+                background: var(--hsk3-active);
+                box-shadow: 5px 5px 0px var(--hsk3-shadow);
             }
 
             &:active:not(.disabled) {

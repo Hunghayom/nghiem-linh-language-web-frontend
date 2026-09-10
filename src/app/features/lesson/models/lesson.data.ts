@@ -134,6 +134,39 @@ export interface MatchingData {
   rightItems: MatchingItem[];
   pairs: MatchingPair[];
 }
+
+export interface QuizOption {
+  id: string;
+  text: string;     // Nội dung đáp án (chữ Hán/Pinyin/Tiếng Việt)
+}
+
+export interface QuizQuestion {
+  id: string;
+  questionText: string; // Câu hỏi
+  options: QuizOption[];
+  correctOptionId: string;
+}
+
+export interface QuizData {
+  title: string;
+  description?: string;
+  questions: QuizQuestion[];
+}
+
+export interface SpeakingTask {
+  id: string;
+  hanzi: string;
+  pinyin: string;
+  meaning: string;
+  audioUrl?: string;
+}
+
+export interface SpeakingData {
+  title: string;
+  description?: string;
+  tasks: SpeakingTask[];
+}
+
 export interface LessonData {
   lessonId: string;
   warmUp?: WarmUpData;
@@ -144,4 +177,6 @@ export interface LessonData {
   fillBlank?: FillBlankData;
   arranging?: ArrangingData;
   matching?: MatchingData;
+  quiz?: QuizData;
+  speaking?: SpeakingData;
 }

@@ -8,3 +8,58 @@
   --color-success: #16a34a;
   /* Dùng cho hiệu ứng trả lời đúng */
 }
+
+/* ===== GLOBAL THEME VARIABLES ===== */
+:root {
+  /* HSK 1 - Teal */
+  --hsk1-color: #2dd4bf;
+  --hsk1-text: #0f766e;
+  --hsk1-stroke: #14b8a6;
+  --hsk1-bg: #f0fdfa;
+  --hsk1-hover: #14b8a6;
+  --hsk1-active: #ccfbf1;
+  --hsk1-shadow: rgba(20, 184, 166, 0.2);
+
+  /* HSK 2 - Blue */
+  --hsk2-color: #7ba1c7;
+  --hsk2-text: #334e68;
+  --hsk2-stroke: #5c84ab;
+  --hsk2-bg: #f4f8fc;
+  --hsk2-hover: #5c84ab;
+  --hsk2-active: #e0eaf5;
+  --hsk2-shadow: rgba(92, 132, 171, 0.2);
+
+  /* HSK 3 - Pink/Indigo */
+  --hsk3-color: #f472b6;
+  --hsk3-text: #9d174d;
+  --hsk3-stroke: #db2777;
+  --hsk3-bg: #fdf2f8;
+  --hsk3-hover: #db2777;
+  --hsk3-active: #fce7f3;
+  --hsk3-shadow: rgba(219, 39, 119, 0.2);
+}
+
+/* Áp dụng theme vào class, các component chỉ cần dùng var(--theme-color) */
+.theme-pastel-teal {
+  --theme-color: var(--hsk1-color);
+  --theme-text: var(--hsk1-text);
+  --theme-stroke: var(--hsk1-stroke);
+  --theme-bg: var(--hsk1-bg);
+  --theme-hover: var(--hsk1-hover);
+}
+
+.theme-pastel-blue {
+  --theme-color: var(--hsk2-color);
+  --theme-text: var(--hsk2-text);
+  --theme-stroke: var(--hsk2-stroke);
+  --theme-bg: var(--hsk2-bg);
+  --theme-hover: var(--hsk2-hover);
+}
+
+.theme-pastel-indigo {
+  --theme-color: var(--hsk3-color);
+  --theme-text: var(--hsk3-text);
+  --theme-stroke: var(--hsk3-stroke);
+  --theme-bg: var(--hsk3-bg);
+  --theme-hover: var(--hsk3-hover);
+}

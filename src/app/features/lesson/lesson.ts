@@ -13,11 +13,25 @@ import { ConversationComponent } from './components/conversation/conversation';
 import { FillBlankComponent } from './components/fill-blank/fill-blank';
 import { ArrangingComponent } from './components/arranging/arranging';
 import { MatchingComponent } from './components/matching/matching';
+import { QuizComponent } from './components/quiz/quiz';
+import { SpeakingComponent } from './components/speaking/speaking';
 
 @Component({
   selector: 'app-lesson',
   standalone: true,
-  imports: [CommonModule, WarmUpComponent, VocabularyComponent, FlashcardsComponent, GrammarComponent, ConversationComponent, FillBlankComponent, ArrangingComponent, MatchingComponent],
+  imports: [
+    CommonModule,
+    WarmUpComponent,
+    VocabularyComponent,
+    FlashcardsComponent,
+    GrammarComponent,
+    ConversationComponent,
+    FillBlankComponent,
+    ArrangingComponent,
+    MatchingComponent,
+    QuizComponent,
+    SpeakingComponent,
+  ],
   styleUrl: './lesson.scss',
   templateUrl: './lesson.html',
 })

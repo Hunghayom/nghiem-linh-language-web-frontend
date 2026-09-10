@@ -185,5 +185,61 @@ export const mockLessonData: LessonData = {
       { leftId: 'l2', rightId: 'r3' },
       { leftId: 'l3', rightId: 'r2' }
     ]
+  },
+  quiz: {
+    title: 'Trắc nghiệm',
+    description: 'Chọn đáp án đúng nhất cho các câu hỏi sau.',
+    questions: [
+      {
+        id: 'q1',
+        questionText: 'Trong tiếng Trung, "Xin chào" nói như thế nào?',
+        options: [
+          { id: 'o1', text: '你好 (Nǐ hǎo)' },
+          { id: 'o2', text: '再见 (Zàijiàn)' },
+          { id: 'o3', text: '谢谢 (Xièxie)' },
+          { id: 'o4', text: '老师 (Lǎoshī)' }
+        ],
+        correctOptionId: 'o1'
+      },
+      {
+        id: 'q2',
+        questionText: 'Để chào giáo viên một cách kính trọng, bạn nói câu nào?',
+        options: [
+          { id: 'o1', text: '大家好！' },
+          { id: 'o2', text: '老师，您好！' },
+          { id: 'o3', text: '你好，老师！' }
+        ],
+        correctOptionId: 'o2'
+      },
+      {
+        id: 'q3',
+        questionText: 'Ý nghĩa của từ "大家" là gì?',
+        options: [
+          { id: 'o1', text: 'Học sinh' },
+          { id: 'o2', text: 'Thầy cô' },
+          { id: 'o3', text: 'Mọi người' },
+          { id: 'o4', text: 'Bạn bè' }
+        ],
+        correctOptionId: 'o3'
+      }
+    ]
+  },
+  speaking: {
+    title: 'Luyện nói',
+    description: 'Hãy bấm Nghe mẫu, sau đó bấm Ghi âm để luyện phát âm.',
+    tasks: [
+      {
+        id: 's1',
+        hanzi: '老师，您好！',
+        pinyin: 'Lǎoshī, nín hǎo!',
+        meaning: 'Chào thầy/cô!'
+      },
+      {
+        id: 's2',
+        hanzi: '同学们，再见！',
+        pinyin: 'Tóngxuémen, zàijiàn!',
+        meaning: 'Các bạn học, tạm biệt!'
+      }
+    ]
   }
 };

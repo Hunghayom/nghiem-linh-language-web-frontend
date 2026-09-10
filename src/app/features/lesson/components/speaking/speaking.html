@@ -1,0 +1,51 @@
+<div class="speaking-container">
+  <div class="header">
+    <div class="title-row">
+      <span class="icon">🎙️</span>
+      <span class="title-text">{{ data.title }}</span>
+    </div>
+    <p class="description">{{ data.description || 'Hãy bấm Nghe mẫu, sau đó bấm Ghi âm để luyện phát âm.' }}</p>
+  </div>
+
+  <div class="tasks-list">
+    <div class="task-card" *ngFor="let task of data.tasks; let i = index">
+      <div class="card-number">{{ i + 1 }}</div>
+      
+      <div class="card-content">
+        <div class="hanzi-text">{{ task.hanzi }}</div>
+        <div class="pinyin-text">{{ task.pinyin }}</div>
+        <div class="meaning-text">{{ task.meaning }}</div>
+      </div>
+
+      <div class="card-actions">
+        <button class="btn-play" (click)="playAudio(task.id)">
+          <span class="icon">🔊</span> Nghe mẫu
+        </button>
+
+        <button class="btn-record" 
+                [class.recording]="getStatus(task.id) === 'recording'"
+                (click)="toggleRecording(task.id)">
+          <span class="icon" *ngIf="getStatus(task.id) !== 'recording'">🎤</span>
+          <span class="icon recording-pulse" *ngIf="getStatus(task.id) === 'recording'">⏹️</span>
+          {{ getStatus(task.id) === 'recording' ? 'Đang ghi âm...' : 'Ghi âm' }}
+        </button>
+      </div>
+
+      <!-- Feedback Area for this task -->
+      <div class="feedback-box" *ngIf="getStatus(task.id) === 'done'">
+        <div class="score-row">
+          <div class="score-circle" 
+               [class.excellent]="scores[task.id] >= 90"
+               [class.good]="scores[task.id] >= 70 && scores[task.id] < 90"
+               [class.needs-work]="scores[task.id] < 70">
+            {{ scores[task.id] }}
+          </div>
+          <div class="feedback-text">
+            {{ getScoreMessage(scores[task.id]) }}
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

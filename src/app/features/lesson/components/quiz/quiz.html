@@ -1,1 +1,67 @@
-<p>quiz works!</p>
+<div class="quiz-container">
+  <div class="header">
+    <div class="title-row">
+      <span class="icon">📝</span>
+      <span class="title-text">{{ data.title }}</span>
+    </div>
+    <p class="description">{{ data.description || 'Chọn đáp án đúng nhất cho các câu hỏi sau.' }}</p>
+  </div>
+
+  <!-- Tracker bar (sticky) -->
+  <div class="tracker-bar">
+    <div class="tracker-item" *ngFor="let q of data.questions; let i = index" [ngClass]="getTrackerClass(q)"
+      (click)="scrollToQuestion(i)">
+      {{ i + 1 }}
+    </div>
+  </div>
+
+  <!-- Questions List -->
+  <div class="questions-list">
+    <div class="question-card" *ngFor="let q of data.questions; let i = index" [id]="'question-' + i">
+      <div class="q-header">
+        <span class="q-number">Câu {{ i + 1 }}</span>
+        <span class="q-text">{{ q.questionText }}</span>
+      </div>
+
+      <div class="options-grid">
+        <div class="option-item" *ngFor="let opt of q.options; let optIdx = index"
+          [class.selected]="answers[q.id] === opt.id" [class.correct]="submitted && opt.id === q.correctOptionId"
+          [class.incorrect]="submitted && answers[q.id] === opt.id && answers[q.id] !== q.correctOptionId"
+          (click)="selectOption(q.id, opt.id)">
+          <div class="opt-letter">{{ ['A', 'B', 'C', 'D', 'E', 'F'][optIdx] }}</div>
+          <div class="opt-text">{{ opt.text }}</div>
+
+          <!-- Icon check mark if correct after submit -->
+          <span class="result-icon correct" *ngIf="submitted && opt.id === q.correctOptionId">✔️</span>
+          <span class="result-icon incorrect"
+            *ngIf="submitted && answers[q.id] === opt.id && answers[q.id] !== q.correctOptionId">❌</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button class="btn-primary" (click)="checkAnswers()" *ngIf="!submitted">
+      <span class="icon">✔️</span> Kiểm tra
+    </button>
+    <button class="btn-secondary" (click)="reset()" *ngIf="submitted">
+      <span class="icon">🔄</span> Làm lại
+    </button>
+  </div>
+
+  <!-- Feedback Area -->
+  <div class="feedback-area" *ngIf="submitted">
+    <div class="score-summary">
+      <div class="score-box" [class.excellent]="isPerfect" [class.good]="!isPerfect">
+        <span class="score-label">Đúng:</span>
+        <span class="score-value">{{ getCorrectCount() }}/{{ data.questions.length }}</span>
+      </div>
+      <div class="feedback-message">
+        <span class="icon" *ngIf="isPerfect">🎉</span>
+        <span class="icon" *ngIf="!isPerfect">💪</span>
+        {{ isPerfect ? 'Hoàn hảo! Bạn đã làm đúng tất cả.' : 'Tuyệt vời! Cố gắng luyện tập thêm để đạt điểm tuyệt đối
+        nhé!' }}
+      </div>
+    </div>
+  </div>
+</div>

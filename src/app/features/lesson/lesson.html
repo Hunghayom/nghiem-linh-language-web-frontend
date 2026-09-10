@@ -90,6 +90,12 @@
     @case ('8') {
     <app-matching [data]="lessonData.matching!"></app-matching>
     }
+    @case ('9') {
+    <app-quiz *ngIf="lessonData.quiz" [data]="lessonData.quiz!"></app-quiz>
+    }
+    @case ('10') {
+    <app-speaking *ngIf="lessonData.speaking" [data]="lessonData.speaking!"></app-speaking>
+    }
     @default {
     <div class="active-module-placeholder">
       <h2>{{ modules[activeModuleId ? +activeModuleId - 1 : 0]?.title }} ({{ modules[activeModuleId ? +activeModuleId -

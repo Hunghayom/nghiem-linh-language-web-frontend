@@ -1,6 +1,15 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, AfterViewInit, HostListener, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatchingData, MatchingItem, MatchingPair } from '../../models/lesson.data';
+
+interface LineData {
+  startX: number;
+  startY: number;
+  endX: number;
+  endY: number;
+  path: string;
+  status: 'default' | 'correct' | 'incorrect';
+}
 
 @Component({
   selector: 'app-matching',
@@ -9,82 +18,145 @@ import { MatchingData, MatchingItem, MatchingPair } from '../../models/lesson.da
   templateUrl: './matching.html',
   styleUrls: ['./matching.scss']
 })
-export class MatchingComponent implements OnInit {
+export class MatchingComponent implements OnInit, AfterViewInit {
   @Input() data!: MatchingData;
+  @ViewChild('columnsContainer') columnsContainer!: ElementRef;
   
+  userConnections: { leftId: string, rightId: string }[] = [];
   selectedLeftId: string | null = null;
   selectedRightId: string | null = null;
 
-  matchedPairs: MatchingPair[] = [];
+  lines: LineData[] = [];
   
-  // To show error animation
-  errorPair: { leftId: string, rightId: string } | null = null;
+  submitted: boolean = false;
+  isAllCorrect: boolean = false;
+
+  constructor(private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
   }
 
+  ngAfterViewInit() {
+    setTimeout(() => this.drawLines(), 100);
+  }
+
+  @HostListener('window:resize')
+  onResize() {
+    this.drawLines();
+  }
+
   selectLeft(item: MatchingItem) {
-    if (this.isMatchedLeft(item.id)) return;
-    
+    if (this.submitted) return;
+    // Bỏ chọn nếu bấm lại
+    if (this.selectedLeftId === item.id) {
+      this.selectedLeftId = null;
+      return;
+    }
     this.selectedLeftId = item.id;
-    this.checkMatch();
+    this.tryConnect();
   }
 
   selectRight(item: MatchingItem) {
-    if (this.isMatchedRight(item.id)) return;
-    
+    if (this.submitted) return;
+    // Bỏ chọn nếu bấm lại
+    if (this.selectedRightId === item.id) {
+      this.selectedRightId = null;
+      return;
+    }
     this.selectedRightId = item.id;
-    this.checkMatch();
+    this.tryConnect();
   }
 
-  checkMatch() {
+  tryConnect() {
     if (this.selectedLeftId && this.selectedRightId) {
-      const isCorrect = this.data.pairs.some(
-        p => p.leftId === this.selectedLeftId && p.rightId === this.selectedRightId
+      // Xóa các liên kết cũ của 2 item này
+      this.userConnections = this.userConnections.filter(c => 
+        c.leftId !== this.selectedLeftId && c.rightId !== this.selectedRightId
       );
-
-      if (isCorrect) {
-        // Đúng: Thêm vào danh sách matched
-        this.matchedPairs.push({ leftId: this.selectedLeftId, rightId: this.selectedRightId });
-        this.selectedLeftId = null;
-        this.selectedRightId = null;
-      } else {
-        // Sai: Hiển thị lỗi rồi reset
-        this.errorPair = { leftId: this.selectedLeftId, rightId: this.selectedRightId };
-        
-        setTimeout(() => {
-          this.errorPair = null;
-          this.selectedLeftId = null;
-          this.selectedRightId = null;
-        }, 800);
-      }
+      // Thêm liên kết mới
+      this.userConnections.push({ leftId: this.selectedLeftId, rightId: this.selectedRightId });
+      
+      this.selectedLeftId = null;
+      this.selectedRightId = null;
+      
+      this.drawLines();
     }
   }
 
-  isMatchedLeft(id: string): boolean {
-    return this.matchedPairs.some(p => p.leftId === id);
+  drawLines() {
+    if (!this.columnsContainer) return;
+    const containerRect = this.columnsContainer.nativeElement.getBoundingClientRect();
+    
+    this.lines = this.userConnections.map(conn => {
+      const leftEl = document.getElementById(`item-${conn.leftId}`);
+      const rightEl = document.getElementById(`item-${conn.rightId}`);
+      
+      if (!leftEl || !rightEl) return null;
+
+      const lRect = leftEl.getBoundingClientRect();
+      const rRect = rightEl.getBoundingClientRect();
+
+      // Điểm bắt đầu (mép phải của item trái)
+      const startX = lRect.right - containerRect.left;
+      const startY = lRect.top + (lRect.height / 2) - containerRect.top;
+
+      // Điểm kết thúc (mép trái của item phải)
+      const endX = rRect.left - containerRect.left;
+      const endY = rRect.top + (rRect.height / 2) - containerRect.top;
+
+      // Tính đường cong bezier dạng ống nước
+      // Tăng khoảng cách control point tỷ lệ thuận với khoảng cách X để đường cong mượt hơn
+      const dx = Math.abs(endX - startX);
+      const cpOffset = Math.max(50, dx * 0.4); 
+      
+      const controlPointX1 = startX + cpOffset;
+      const controlPointX2 = endX - cpOffset;
+      
+      const path = `M ${startX} ${startY} C ${controlPointX1} ${startY}, ${controlPointX2} ${endY}, ${endX} ${endY}`;
+
+      let status: 'default' | 'correct' | 'incorrect' = 'default';
+      if (this.submitted) {
+        const isCorrect = this.data.pairs.some(p => p.leftId === conn.leftId && p.rightId === conn.rightId);
+        status = isCorrect ? 'correct' : 'incorrect';
+      }
+
+      return { startX, startY, endX, endY, path, status };
+    }).filter(l => l !== null) as LineData[];
+    
+    this.cdr.detectChanges();
   }
 
-  isMatchedRight(id: string): boolean {
-    return this.matchedPairs.some(p => p.rightId === id);
-  }
-
-  isErrorLeft(id: string): boolean {
-    return this.errorPair?.leftId === id;
-  }
-
-  isErrorRight(id: string): boolean {
-    return this.errorPair?.rightId === id;
+  checkAnswers() {
+    this.submitted = true;
+    
+    // Kiểm tra xem tất cả các cặp đã ghép có đúng không
+    let allCorrect = true;
+    if (this.userConnections.length === this.data.pairs.length) {
+      allCorrect = this.userConnections.every(conn => 
+        this.data.pairs.some(p => p.leftId === conn.leftId && p.rightId === conn.rightId)
+      );
+    } else {
+      allCorrect = false;
+    }
+    
+    this.isAllCorrect = allCorrect;
+    this.drawLines(); // Vẽ lại để cập nhật màu sắc
   }
 
   resetAll() {
-    this.matchedPairs = [];
+    this.submitted = false;
+    this.userConnections = [];
     this.selectedLeftId = null;
     this.selectedRightId = null;
-    this.errorPair = null;
+    this.isAllCorrect = false;
+    this.drawLines();
   }
 
-  get isCompleted(): boolean {
-    return this.matchedPairs.length === this.data.pairs.length;
+  isMatchedLeft(id: string): boolean {
+    return this.userConnections.some(p => p.leftId === id);
+  }
+
+  isMatchedRight(id: string): boolean {
+    return this.userConnections.some(p => p.rightId === id);
   }
 }

@@ -4,20 +4,15 @@
     <p class="description">Bấm một thẻ bên trái rồi bấm thẻ tương ứng bên phải (hoặc ngược lại) để nối.</p>
   </div>
 
-  <div class="completion-message" *ngIf="isCompleted">
-    🎉 Chúc mừng! Bạn đã nối đúng tất cả các câu.
-    <button class="btn-secondary" (click)="resetAll()">Làm lại</button>
-  </div>
+  <div class="matching-columns" #columnsContainer>
 
-  <div class="matching-columns" *ngIf="!isCompleted">
+
     <!-- Cột trái -->
     <div class="column left-col">
       <div class="col-title">CÂU HỎI / VẾ ĐẦU</div>
-      <div class="item-card" *ngFor="let item of data.leftItems; let i = index"
-           [class.selected]="selectedLeftId === item.id"
-           [class.matched]="isMatchedLeft(item.id)"
-           [class.error]="isErrorLeft(item.id)"
-           (click)="selectLeft(item)">
+      <div class="item-card" *ngFor="let item of data.leftItems; let i = index" [id]="'item-' + item.id"
+        [class.selected]="selectedLeftId === item.id" [class.matched]="isMatchedLeft(item.id)"
+        (click)="selectLeft(item)">
         <div class="number-badge">{{ i + 1 }}</div>
         <div class="item-content">
           <div class="hanzi">{{ item.content }}</div>
@@ -29,17 +24,49 @@
     <!-- Cột phải -->
     <div class="column right-col">
       <div class="col-title">CÂU TRẢ LỜI / VẾ SAU</div>
-      <div class="item-card" *ngFor="let item of data.rightItems; let i = index"
-           [class.selected]="selectedRightId === item.id"
-           [class.matched]="isMatchedRight(item.id)"
-           [class.error]="isErrorRight(item.id)"
-           (click)="selectRight(item)">
+      <div class="item-card" *ngFor="let item of data.rightItems; let i = index" [id]="'item-' + item.id"
+        [class.selected]="selectedRightId === item.id" [class.matched]="isMatchedRight(item.id)"
+        (click)="selectRight(item)">
         <div class="letter-badge">{{ ['a','b','c','d','e','f'][i] }}</div>
         <div class="item-content">
           <div class="hanzi">{{ item.content }}</div>
           <div class="pinyin" *ngIf="item.pinyin">{{ item.pinyin }}</div>
         </div>
       </div>
+    </div>
+
+    <!-- SVG Canvas for Lines -->
+    <svg class="lines-canvas">
+      <ng-container *ngFor="let line of lines">
+        <path [attr.d]="line.path" class="connection-line" [ngClass]="line.status" />
+        <circle [attr.cx]="line.startX" [attr.cy]="line.startY" r="6" class="connection-dot" [ngClass]="line.status" />
+        <circle [attr.cx]="line.endX" [attr.cy]="line.endY" r="6" class="connection-dot" [ngClass]="line.status" />
+      </ng-container>
+    </svg>
+
+  </div>
+
+  <!-- SVG Canvas for Lines -->
+  <svg class="lines-canvas">
+    <ng-container *ngFor="let line of lines">
+      <path [attr.d]="line.path" class="connection-line" [ngClass]="line.status" />
+      <circle [attr.cx]="line.startX" [attr.cy]="line.startY" r="6" class="connection-dot" [ngClass]="line.status" />
+      <circle [attr.cx]="line.endX" [attr.cy]="line.endY" r="6" class="connection-dot" [ngClass]="line.status" />
+    </ng-container>
+  </svg>
+
+  <!-- Kết quả và Hành động -->
+  <div class="bottom-section">
+    <div class="result-message" *ngIf="submitted">
+      <div class="feedback correct" *ngIf="isAllCorrect">🎉 Tuyệt vời! Bạn đã nối đúng tất cả.</div>
+      <div class="feedback incorrect" *ngIf="!isAllCorrect">❌ Chưa chính xác hoàn toàn. Hãy kiểm tra các đường chưa xanh
+        nhé!</div>
+    </div>
+
+    <div class="actions">
+      <button class="btn-primary" (click)="checkAnswers()" *ngIf="!submitted"
+        [disabled]="userConnections.length === 0">Kiểm tra</button>
+      <button class="btn-secondary" (click)="resetAll()" *ngIf="submitted">Làm lại</button>
     </div>
   </div>
 </div>

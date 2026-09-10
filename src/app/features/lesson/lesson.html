@@ -78,6 +78,12 @@
     @case ('4') {
     <app-grammar [data]="lessonData.grammar!"></app-grammar>
     }
+    @case ('5') {
+    <app-conversation [data]="lessonData.conversation!"></app-conversation>
+    }
+    @case ('6') {
+    <app-fill-blank [data]="lessonData.fillBlank!"></app-fill-blank>
+    }
     @default {
     <div class="active-module-placeholder">
       <h2>{{ modules[activeModuleId ? +activeModuleId - 1 : 0]?.title }} ({{ modules[activeModuleId ? +activeModuleId -

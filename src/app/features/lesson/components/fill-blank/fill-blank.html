@@ -1,0 +1,66 @@
+<div class="fill-blank-container">
+  <div class="header">
+    <div class="title-badge">🖍️ {{ data.title }}</div>
+    <p class="description">Điền từ/cụm từ thích hợp để hoàn thành câu.</p>
+  </div>
+
+  <div class="question-box" *ngFor="let q of data.questions; let i = index">
+    <div class="q-header">
+      <div class="number-badge">{{ i + 1 }}</div>
+    </div>
+
+    <div class="q-body">
+      <!-- Câu hỏi -->
+      <div class="sentence">
+        <span *ngFor="let part of q.parts">
+          <span *ngIf="part.type === 'text'">{{ part.content }}</span>
+          <span *ngIf="part.type === 'blank'" class="blank-slot"
+            [class.filled]="!!selectedChoices[q.id] || !!typedAnswers[q.id]"
+            [class.correct]="submitted[q.id] && isCorrect(q)" [class.incorrect]="submitted[q.id] && !isCorrect(q)">
+            <ng-container *ngIf="!selectedChoices[q.id]">
+              <input type="text" class="typing-input" [(ngModel)]="typedAnswers[q.id]" placeholder="Nhập từ..."
+                [disabled]="submitted[q.id]" />
+            </ng-container>
+            <ng-container *ngIf="selectedChoices[q.id]">
+              <div class="filled-content" (click)="clearSelection(q)"
+                [style.cursor]="!submitted[q.id] ? 'pointer' : 'default'">
+                <span class="pinyin">{{ getSelectedChoice(q)?.pinyin }}</span>
+                <span class="hanzi">{{ getSelectedChoice(q)?.text }}</span>
+              </div>
+            </ng-container>
+          </span>
+        </span>
+      </div>
+
+      <div class="hint" *ngIf="q.hint">{{ q.hint }}</div>
+
+      <!-- Lựa chọn -->
+      <div class="choices" *ngIf="!submitted[q.id]">
+        <button class="choice-btn" *ngFor="let choice of data.choices"
+          [class.selected]="selectedChoices[q.id] === choice.id" (click)="selectChoice(q, choice.id)">
+          <div class="pinyin">{{ choice.pinyin }}</div>
+          <div class="hanzi">{{ choice.text }}</div>
+        </button>
+      </div>
+
+      <!-- Kết quả -->
+      <div class="result-area" *ngIf="submitted[q.id]">
+        <div class="feedback correct" *ngIf="isCorrect(q)">🎉 Chính xác!</div>
+        <div class="feedback incorrect" *ngIf="!isCorrect(q)">❌ Chưa chính xác. Cố lên nhé!</div>
+
+        <div class="expected-answer">
+          <strong>Đáp án đúng:</strong>
+          <span class="pinyin">{{ getExpectedChoice(q)?.pinyin }}</span>
+          <span class="hanzi">{{ getExpectedChoice(q)?.text }}</span>
+        </div>
+      </div>
+
+      <!-- Hành động -->
+      <div class="actions">
+        <button class="btn-primary" (click)="checkAnswer(q)" *ngIf="!submitted[q.id]"
+          [disabled]="!selectedChoices[q.id] && !typedAnswers[q.id]">Kiểm tra</button>
+        <button class="btn-secondary" (click)="resetAnswer(q)" *ngIf="submitted[q.id]">Làm lại</button>
+      </div>
+    </div>
+  </div>
+</div>

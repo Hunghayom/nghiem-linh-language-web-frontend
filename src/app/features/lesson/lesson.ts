@@ -9,11 +9,13 @@ import { WarmUpComponent } from './components/warm-up/warm-up';
 import { VocabularyComponent } from './components/vocabulary/vocabulary';
 import { FlashcardsComponent } from './components/flashcards/flashcards';
 import { GrammarComponent } from './components/grammar/grammar';
+import { ConversationComponent } from './components/conversation/conversation';
+import { FillBlankComponent } from './components/fill-blank/fill-blank';
 
 @Component({
   selector: 'app-lesson',
   standalone: true,
-  imports: [CommonModule, WarmUpComponent, VocabularyComponent, FlashcardsComponent, GrammarComponent],
+  imports: [CommonModule, WarmUpComponent, VocabularyComponent, FlashcardsComponent, GrammarComponent, ConversationComponent, FillBlankComponent],
   styleUrl: './lesson.scss',
   templateUrl: './lesson.html',
 })

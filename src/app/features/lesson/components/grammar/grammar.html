@@ -47,8 +47,9 @@
         <div class="question-text">{{ rule.practice.questionText }}</div>
         
         <div class="drop-zone" [class.correct]="practiceSubmitted[rule.id] && isCorrect(rule)"
-             [class.incorrect]="practiceSubmitted[rule.id] && !isCorrect(rule)">
-          <div class="word-chip placed" 
+             [class.incorrect]="practiceSubmitted[rule.id] && !isCorrect(rule)"
+             cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="drop($event, rule)">
+          <div class="word-chip placed" cdkDrag
                *ngFor="let ansId of practiceAnswers[rule.id]"
                (click)="removeWord(rule, ansId)">
             {{ getWordText(rule, ansId) }}
@@ -60,6 +61,13 @@
                *ngFor="let word of getAvailableWords(rule)"
                (click)="selectWord(rule, word.id)">
             {{ word.text }}
+          </div>
+        </div>
+
+        <div class="result-message" *ngIf="practiceSubmitted[rule.id]">
+          <div class="praise" *ngIf="isCorrect(rule)">🎉 Tuyệt vời! Bạn đã trả lời chính xác.</div>
+          <div class="correct-answer">
+            <span class="label">Đáp án:</span> <span class="text">{{ getCorrectAnswersText(rule) }}</span>
           </div>
         </div>
 

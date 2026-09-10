@@ -1,11 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GrammarData, GrammarRule } from '../../models/lesson.data';
+import { DragDropModule, CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-grammar',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, DragDropModule],
   templateUrl: './grammar.html',
   styleUrls: ['./grammar.scss']
 })
@@ -58,6 +59,17 @@ export class GrammarComponent implements OnInit {
   resetAnswer(rule: GrammarRule) {
     this.practiceSubmitted[rule.id] = false;
     this.practiceAnswers[rule.id] = [];
+  }
+
+  drop(event: CdkDragDrop<string[]>, rule: GrammarRule) {
+    if (this.practiceSubmitted[rule.id]) return;
+    moveItemInArray(this.practiceAnswers[rule.id], event.previousIndex, event.currentIndex);
+  }
+
+  getCorrectAnswersText(rule: GrammarRule): string {
+    return rule.practice.correctOrderIds
+      .map(id => this.getWordText(rule, id))
+      .join(' ');
   }
 
   isCorrect(rule: GrammarRule): boolean {

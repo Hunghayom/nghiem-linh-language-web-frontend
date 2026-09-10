@@ -34,15 +34,6 @@
 
       <div class="hint" *ngIf="q.hint">{{ q.hint }}</div>
 
-      <!-- Lựa chọn -->
-      <div class="choices" *ngIf="!submitted[q.id]">
-        <button class="choice-btn" *ngFor="let choice of data.choices"
-          [class.selected]="selectedChoices[q.id] === choice.id" (click)="selectChoice(q, choice.id)">
-          <div class="pinyin">{{ choice.pinyin }}</div>
-          <div class="hanzi">{{ choice.text }}</div>
-        </button>
-      </div>
-
       <!-- Kết quả -->
       <div class="result-area" *ngIf="submitted[q.id]">
         <div class="feedback correct" *ngIf="isCorrect(q)">🎉 Chính xác!</div>
@@ -50,8 +41,9 @@
 
         <div class="expected-answer">
           <strong>Đáp án đúng:</strong>
-          <span class="pinyin">{{ getExpectedChoice(q)?.pinyin }}</span>
           <span class="hanzi">{{ getExpectedChoice(q)?.text }}</span>
+          <span class="pinyin">{{ getExpectedChoice(q)?.pinyin }}</span>
+
         </div>
       </div>
 

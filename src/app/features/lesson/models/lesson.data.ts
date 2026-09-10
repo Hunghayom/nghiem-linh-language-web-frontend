@@ -98,6 +98,42 @@ export interface FillBlankData {
   choices: FillBlankChoice[];
 }
 
+export interface ArrangingWord {
+  id: string;
+  text: string; // Hanzi
+  pinyin: string;
+}
+
+export interface ArrangingQuestion {
+  id: string;
+  meaning: string;
+  words: ArrangingWord[]; // available words
+  correctOrderIds: string[];
+}
+
+export interface ArrangingData {
+  title: string;
+  questions: ArrangingQuestion[];
+}
+
+export interface MatchingItem {
+  id: string;
+  content: string; // Hanzi / Pinyin combo
+  pinyin?: string;
+  hint?: string;
+}
+
+export interface MatchingPair {
+  leftId: string;
+  rightId: string;
+}
+
+export interface MatchingData {
+  title: string;
+  leftItems: MatchingItem[];
+  rightItems: MatchingItem[];
+  pairs: MatchingPair[];
+}
 export interface LessonData {
   lessonId: string;
   warmUp?: WarmUpData;
@@ -106,4 +142,6 @@ export interface LessonData {
   grammar?: GrammarData;
   conversation?: ConversationData;
   fillBlank?: FillBlankData;
+  arranging?: ArrangingData;
+  matching?: MatchingData;
 }

@@ -144,5 +144,46 @@ export const mockLessonData: LessonData = {
         hint: 'Gợi ý: 同学 / 老师 / 谢谢'
       }
     ]
+  },
+  arranging: {
+    title: 'Sắp xếp thành câu',
+    questions: [
+      {
+        id: 'aq1',
+        meaning: 'Chào các bạn!',
+        words: [
+          { id: 'w1', text: '你们', pinyin: 'nǐmen' },
+          { id: 'w2', text: '好', pinyin: 'hǎo' }
+        ],
+        correctOrderIds: ['w1', 'w2']
+      },
+      {
+        id: 'aq2',
+        meaning: 'Các bạn học, tạm biệt!',
+        words: [
+          { id: 'w3', text: '再见', pinyin: 'zàijiàn' },
+          { id: 'w4', text: '同学们', pinyin: 'tóngxuémen' }
+        ],
+        correctOrderIds: ['w4', 'w3']
+      }
+    ]
+  },
+  matching: {
+    title: 'Nối câu',
+    leftItems: [
+      { id: 'l1', content: 'AI小语，你好！', pinyin: 'AI Xiǎoyǔ, nǐ hǎo!' },
+      { id: 'l2', content: '大家好！', pinyin: 'Dàjiā hǎo!' },
+      { id: 'l3', content: '你们好！', pinyin: 'Nǐmen hǎo!' }
+    ],
+    rightItems: [
+      { id: 'r1', content: '你好，小语！', pinyin: 'Nǐ hǎo, Xiǎoyǔ!' },
+      { id: 'r2', content: '老师，再见！', pinyin: 'Lǎoshī, zàijiàn!' },
+      { id: 'r3', content: '老师，您好！', pinyin: 'Lǎoshī, nín hǎo!' }
+    ],
+    pairs: [
+      { leftId: 'l1', rightId: 'r1' },
+      { leftId: 'l2', rightId: 'r3' },
+      { leftId: 'l3', rightId: 'r2' }
+    ]
   }
 };

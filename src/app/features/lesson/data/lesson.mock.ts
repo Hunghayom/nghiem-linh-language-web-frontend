@@ -105,5 +105,44 @@ export const mockLessonData: LessonData = {
         }
       }
     ]
+  },
+  conversation: {
+    title: 'Hội thoại',
+    turns: [
+      { id: 't1', role: 'Vương Nhất Phi (cô Vương)', avatar: '王', hanzi: 'AI小语，你好！', pinyin: 'AI Xiǎoyǔ, nǐ hǎo!', meaning: 'Chào AI Tiểu Ngữ!' },
+      { id: 't2', role: 'AI Tiểu Ngữ', avatar: '语', hanzi: '王老师，你好！', pinyin: 'Wáng lǎoshī, nǐ hǎo!', meaning: 'Chào cô Vương!' }
+    ]
+  },
+  fillBlank: {
+    title: 'Điền vào chỗ trống',
+    choices: [
+      { id: 'c1', text: '你好', pinyin: 'nǐ hǎo' },
+      { id: 'c2', text: '不客气', pinyin: 'bú kèqi' },
+      { id: 'c3', text: '同学', pinyin: 'tóngxué' },
+      { id: 'c4', text: '明天', pinyin: 'míngtiān' }
+    ],
+    questions: [
+      {
+        id: 'q1',
+        speaker: '1',
+        parts: [{ type: 'text', content: 'A: ' }, { type: 'blank' }, { type: 'text', content: ' ! B: 你好！' }],
+        expectedChoiceId: 'c1',
+        hint: 'Gợi ý: 你好 / 谢谢 / 再见'
+      },
+      {
+        id: 'q2',
+        speaker: '2',
+        parts: [{ type: 'text', content: '谢谢你的帮助！ — A: ' }, { type: 'blank' }, { type: 'text', content: ' ，这是我应该做的。' }],
+        expectedChoiceId: 'c2',
+        hint: 'Gợi ý: 不客气 / 同学 / 再见'
+      },
+      {
+        id: 'q3',
+        speaker: '3',
+        parts: [{ type: 'blank' }, { type: 'text', content: ' 们，你们好！' }],
+        expectedChoiceId: 'c3',
+        hint: 'Gợi ý: 同学 / 老师 / 谢谢'
+      }
+    ]
   }
 };

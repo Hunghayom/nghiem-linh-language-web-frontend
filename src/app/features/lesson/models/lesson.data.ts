@@ -62,10 +62,48 @@ export interface GrammarData {
   rules: GrammarRule[];
 }
 
+export interface ConversationTurn {
+  id: string;
+  role: string;
+  avatar?: string;
+  hanzi: string;
+  pinyin: string;
+  meaning: string;
+  audioUrl?: string;
+}
+
+export interface ConversationData {
+  title: string;
+  turns: ConversationTurn[];
+}
+
+export interface FillBlankChoice {
+  id: string;
+  text: string;
+  pinyin: string;
+  meaning?: string;
+}
+
+export interface FillBlankQuestion {
+  id: string;
+  speaker?: string;
+  parts: { type: 'text' | 'blank', content?: string }[];
+  expectedChoiceId: string;
+  hint?: string;
+}
+
+export interface FillBlankData {
+  title: string;
+  questions: FillBlankQuestion[];
+  choices: FillBlankChoice[];
+}
+
 export interface LessonData {
   lessonId: string;
   warmUp?: WarmUpData;
   vocabulary?: VocabularyData;
   flashcards?: FlashcardData;
   grammar?: GrammarData;
+  conversation?: ConversationData;
+  fillBlank?: FillBlankData;
 }

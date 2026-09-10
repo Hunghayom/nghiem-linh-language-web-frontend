@@ -1,0 +1,38 @@
+<div class="conversation-container">
+  <div class="header">
+    <div class="title-badge">💬 {{ data.title }}</div>
+    <p class="description">Các tình huống hội thoại trong bài học.</p>
+  </div>
+
+  <div class="conversation-box">
+    <div class="turn" *ngFor="let turn of data.turns" [class.recording-active]="recordingTurnId === turn.id">
+      
+      <div class="turn-header">
+        <div class="avatar">{{ turn.avatar }}</div>
+        <div class="role-name">{{ turn.role }}</div>
+      </div>
+
+      <div class="turn-content">
+        <div class="text-content">
+          <div class="hanzi">{{ turn.hanzi }}</div>
+          <div class="pinyin">{{ turn.pinyin }}</div>
+          <div class="meaning">{{ turn.meaning }}</div>
+        </div>
+        
+        <div class="actions">
+          <button class="btn-audio" (click)="playAudio(turn)">🔊 Đọc mẫu</button>
+          
+          <div class="record-section">
+            <button class="btn-record" (click)="startRecording(turn)" [class.recording]="isRecording && recordingTurnId === turn.id">
+              🎤 {{ isRecording && recordingTurnId === turn.id ? 'Đang ghi âm...' : 'Ghi âm' }}
+            </button>
+            <div class="score" *ngIf="recordingScore && recordingTurnId === turn.id">
+              Điểm: <span class="score-value">{{ recordingScore }}</span>/100
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

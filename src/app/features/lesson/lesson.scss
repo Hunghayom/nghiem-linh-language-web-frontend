@@ -6,10 +6,10 @@
   background-color: #f8f9fa;
   min-height: 100vh;
 
-  /* Theme Variables Default (Green) */
-  --theme-color: #22c55e;
-  --theme-bg: #f0fdf4;
-  --theme-hover: #16a34a;
+  /* Theme Variables Default (HSK 1 - Teal) */
+  --theme-color: #0d9488;
+  --theme-bg: #f0fdfa;
+  --theme-hover: #0f766e;
 
   &.theme-pastel-blue {
     --theme-color: #3b82f6;
@@ -17,10 +17,10 @@
     --theme-hover: #2563eb;
   }
 
-  &.theme-pastel-orange {
-    --theme-color: #f97316;
-    --theme-bg: #fff7ed;
-    --theme-hover: #ea580c;
+  &.theme-pastel-indigo {
+    --theme-color: #6366f1;
+    --theme-bg: #eef2ff;
+    --theme-hover: #4f46e5;
   }
 }
 

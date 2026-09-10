@@ -20,14 +20,14 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
   courseId: string | null = '';
 
   hskLevels = [
-    { id: 'hsk1', name: 'HSK 1', theme: 'theme-pastel-green' },
+    { id: 'hsk1', name: 'HSK 1', theme: 'theme-pastel-teal' },
     { id: 'hsk2', name: 'HSK 2', theme: 'theme-pastel-blue' },
-    { id: 'hsk3', name: 'HSK 3', theme: 'theme-pastel-orange' }
+    { id: 'hsk3', name: 'HSK 3', theme: 'theme-pastel-indigo' }
   ];
 
   units: Unit[] = [];
   activeUnitId: number | null = null;
-  activeTheme = 'theme-pastel-green';
+  activeTheme = 'theme-pastel-teal';
 
   constructor(
     private route: ActivatedRoute,

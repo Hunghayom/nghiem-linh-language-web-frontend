@@ -9,22 +9,22 @@
   margin: 0 auto;
   padding: 40px 20px;
 
-  &.theme-pastel-green {
-    --theme-color: #71e299;
-    --theme-text: #0a4420;
-    --theme-stroke: #30b96e;
+  &.theme-pastel-teal {
+    --theme-color: #14b8a6;
+    --theme-text: #0f766e;
+    --theme-stroke: #0d9488;
   }
 
   &.theme-pastel-blue {
-    --theme-color: #78a6df;
-    --theme-text: #142b68;
-    --theme-stroke: #2f6eb7;
+    --theme-color: #3b82f6;
+    --theme-text: #1d4ed8;
+    --theme-stroke: #2563eb;
   }
 
-  &.theme-pastel-orange {
-    --theme-color: #ff9955;
-    --theme-text: #6d2306;
-    --theme-stroke: #e57745;
+  &.theme-pastel-indigo {
+    --theme-color: #6366f1;
+    --theme-text: #4338ca;
+    --theme-stroke: #4f46e5;
   }
 }
 

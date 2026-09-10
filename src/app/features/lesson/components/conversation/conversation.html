@@ -26,8 +26,15 @@
             <button class="btn-record" (click)="startRecording(turn)" [class.recording]="isRecording && recordingTurnId === turn.id">
               🎤 {{ isRecording && recordingTurnId === turn.id ? 'Đang ghi âm...' : 'Ghi âm' }}
             </button>
-            <div class="score" *ngIf="recordingScore && recordingTurnId === turn.id">
-              Điểm: <span class="score-value">{{ recordingScore }}</span>/100
+            <div class="score-feedback" *ngIf="recordingScore && recordingTurnId === turn.id">
+              <div class="score-box" [class.excellent]="recordingScore >= 90" [class.good]="recordingScore < 90">
+                <span class="score-label">Điểm:</span>
+                <span class="score-value">{{ recordingScore }}</span>
+                <span class="score-max">/100</span>
+              </div>
+              <div class="praise-message" *ngIf="recordingScore >= 90">🎉 Phát âm quá chuẩn, xuất sắc!</div>
+              <div class="praise-message good" *ngIf="recordingScore >= 50 && recordingScore < 90">💪 Tốt lắm! Luyện tập thêm chút nữa nhé.</div>
+              <div class="praise-message bad" *ngIf="recordingScore < 50">❌ Cố gắng lên, nghe lại và thử lại nhé!</div>
             </div>
           </div>
         </div>

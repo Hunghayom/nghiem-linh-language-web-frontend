@@ -31,7 +31,7 @@ export class Lesson implements OnInit, OnDestroy {
   popoverLeft: number = 0;
   popoverTop: number = 0;
 
-  themeClass: string = 'theme-pastel-green';
+  themeClass: string = 'theme-pastel-teal';
   hskLevelName: string = 'HSK 1';
   unitName: string = 'Bài 1';
   levelAndLessonName: string = 'HSK 1 - Bài 1';
@@ -73,9 +73,9 @@ export class Lesson implements OnInit, OnDestroy {
     this.route.queryParams.subscribe(params => {
       if (params['theme']) {
         this.themeClass = params['theme'];
-        if (this.themeClass.includes('green')) this.hskLevelName = 'HSK 1';
+        if (this.themeClass.includes('teal')) this.hskLevelName = 'HSK 1';
         else if (this.themeClass.includes('blue')) this.hskLevelName = 'HSK 2';
-        else if (this.themeClass.includes('orange')) this.hskLevelName = 'HSK 3';
+        else if (this.themeClass.includes('indigo')) this.hskLevelName = 'HSK 3';
       }
       this.updateLevelAndLessonName();
     });

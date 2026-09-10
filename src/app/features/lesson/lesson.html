@@ -84,6 +84,12 @@
     @case ('6') {
     <app-fill-blank [data]="lessonData.fillBlank!"></app-fill-blank>
     }
+    @case ('7') {
+    <app-arranging [data]="lessonData.arranging!"></app-arranging>
+    }
+    @case ('8') {
+    <app-matching [data]="lessonData.matching!"></app-matching>
+    }
     @default {
     <div class="active-module-placeholder">
       <h2>{{ modules[activeModuleId ? +activeModuleId - 1 : 0]?.title }} ({{ modules[activeModuleId ? +activeModuleId -

@@ -1,0 +1,55 @@
+<div class="arranging-container">
+  <div class="header">
+    <div class="title-badge">🧩 {{ data.title }}</div>
+    <p class="description">Bấm các từ theo đúng thứ tự. Kéo thả để sắp xếp lại, bấm để xóa.</p>
+  </div>
+
+  <div class="question-box" *ngFor="let q of data.questions; let i = index">
+    <div class="q-header">
+      <div class="number-badge">{{ i + 1 }}</div>
+    </div>
+
+    <div class="q-body">
+      <div class="meaning-text">Nghĩa: {{ q.meaning }}</div>
+
+      <!-- Khu vực xếp câu (Drop zone) -->
+      <div class="drop-zone" [class.correct]="practiceSubmitted[q.id] && isCorrect(q)"
+           [class.incorrect]="practiceSubmitted[q.id] && !isCorrect(q)"
+           cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="drop($event, q)">
+        
+        <div class="word-chip placed" cdkDrag
+             *ngFor="let ansId of practiceAnswers[q.id]"
+             (click)="removeWord(q, ansId)">
+          <div class="pinyin">{{ getWord(q, ansId)?.pinyin }}</div>
+          <div class="hanzi">{{ getWord(q, ansId)?.text }}</div>
+        </div>
+      </div>
+
+      <!-- Từ gợi ý (Source zone) -->
+      <div class="source-zone">
+        <div class="word-chip" 
+             *ngFor="let word of getAvailableWords(q)"
+             (click)="selectWord(q, word.id)">
+          <div class="pinyin">{{ word.pinyin }}</div>
+          <div class="hanzi">{{ word.text }}</div>
+        </div>
+      </div>
+
+      <!-- Kết quả -->
+      <div class="result-message" *ngIf="practiceSubmitted[q.id]">
+        <div class="praise" *ngIf="isCorrect(q)">🎉 Tuyệt vời! Bạn đã sắp xếp chính xác.</div>
+        <div class="praise incorrect" *ngIf="!isCorrect(q)">❌ Chưa chính xác. Cố lên nhé!</div>
+        <div class="correct-answer">
+          <span class="label">Đáp án đúng: </span> <span class="text">{{ getCorrectAnswersText(q) }}</span>
+        </div>
+      </div>
+
+      <!-- Hành động -->
+      <div class="actions">
+        <button class="btn-primary" (click)="checkAnswer(q)" *ngIf="!practiceSubmitted[q.id]" [disabled]="practiceAnswers[q.id].length === 0">Kiểm tra</button>
+        <button class="btn-secondary" (click)="resetAnswer(q)" *ngIf="practiceSubmitted[q.id]">Làm lại</button>
+        <button class="btn-audio-white" *ngIf="practiceSubmitted[q.id] && isCorrect(q)">🔊 Đọc mẫu</button>
+      </div>
+    </div>
+  </div>
+</div>

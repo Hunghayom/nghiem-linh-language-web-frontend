@@ -1,0 +1,162 @@
+.matching-container {
+  padding: 32px;
+  background-color: var(--theme-bg);
+  border-radius: 12px;
+  max-width: 900px;
+  margin: 0 auto;
+
+  .header {
+    margin-bottom: 24px;
+    
+    .title-badge {
+      display: inline-block;
+      padding: 6px 16px;
+      background-color: var(--theme-color);
+      color: white;
+      border-radius: 20px;
+      font-weight: bold;
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+    .description { 
+      color: #616161; 
+      font-size: 15px;
+    }
+  }
+
+  .completion-message {
+    padding: 24px;
+    background: #e8f5e9;
+    color: #4caf50;
+    font-weight: bold;
+    font-size: 18px;
+    border-radius: 12px;
+    border: 2px solid #4caf50;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .btn-secondary {
+      padding: 8px 24px;
+      background: white;
+      color: #4caf50;
+      border: 2px solid #4caf50;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.2s;
+
+      &:hover {
+        background: #4caf50;
+        color: white;
+      }
+    }
+  }
+
+  .matching-columns {
+    display: flex;
+    gap: 32px;
+
+    .column {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+
+      .col-title {
+        font-weight: bold;
+        color: #757575;
+        font-size: 14px;
+        margin-bottom: 8px;
+      }
+
+      .item-card {
+        background: white;
+        border: 2px solid #e0e0e0;
+        border-radius: 12px;
+        padding: 16px;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        cursor: pointer;
+        transition: all 0.2s;
+        min-height: 80px;
+
+        .number-badge, .letter-badge {
+          width: 32px;
+          height: 32px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-weight: bold;
+          font-size: 16px;
+          color: white;
+          flex-shrink: 0;
+        }
+
+        .number-badge { background: #ffb300; }
+        .letter-badge { background: #ffb300; } // Same color or different color? PDF uses same color for all bullets
+
+        .item-content {
+          .hanzi {
+            font-size: 18px;
+            font-weight: bold;
+            color: #212121;
+          }
+          .pinyin {
+            font-size: 13px;
+            color: #757575;
+            margin-top: 4px;
+          }
+        }
+
+        // States
+        &:hover:not(.matched) {
+          border-color: var(--theme-color);
+          background: var(--theme-bg);
+          transform: translateY(-2px);
+        }
+
+        &.selected {
+          border-color: var(--theme-color);
+          background: var(--theme-bg);
+          box-shadow: 0 0 0 2px var(--theme-color);
+          
+          .number-badge, .letter-badge {
+            background: var(--theme-color);
+          }
+        }
+
+        &.matched {
+          border-color: #4caf50;
+          background: #e8f5e9;
+          cursor: default;
+          opacity: 0.6; // Nối xong thì mờ đi 1 chút
+          
+          .number-badge, .letter-badge {
+            background: #4caf50;
+          }
+        }
+
+        &.error {
+          border-color: #f44336;
+          background: #ffebee;
+          animation: shake 0.4s;
+          
+          .number-badge, .letter-badge {
+            background: #f44336;
+          }
+        }
+      }
+    }
+  }
+}
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-5px); }
+  100% { transform: translateX(0); }
+}

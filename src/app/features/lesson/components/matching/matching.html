@@ -1,0 +1,45 @@
+<div class="matching-container">
+  <div class="header">
+    <div class="title-badge">🔗 {{ data.title }}</div>
+    <p class="description">Bấm một thẻ bên trái rồi bấm thẻ tương ứng bên phải (hoặc ngược lại) để nối.</p>
+  </div>
+
+  <div class="completion-message" *ngIf="isCompleted">
+    🎉 Chúc mừng! Bạn đã nối đúng tất cả các câu.
+    <button class="btn-secondary" (click)="resetAll()">Làm lại</button>
+  </div>
+
+  <div class="matching-columns" *ngIf="!isCompleted">
+    <!-- Cột trái -->
+    <div class="column left-col">
+      <div class="col-title">CÂU HỎI / VẾ ĐẦU</div>
+      <div class="item-card" *ngFor="let item of data.leftItems; let i = index"
+           [class.selected]="selectedLeftId === item.id"
+           [class.matched]="isMatchedLeft(item.id)"
+           [class.error]="isErrorLeft(item.id)"
+           (click)="selectLeft(item)">
+        <div class="number-badge">{{ i + 1 }}</div>
+        <div class="item-content">
+          <div class="hanzi">{{ item.content }}</div>
+          <div class="pinyin" *ngIf="item.pinyin">{{ item.pinyin }}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cột phải -->
+    <div class="column right-col">
+      <div class="col-title">CÂU TRẢ LỜI / VẾ SAU</div>
+      <div class="item-card" *ngFor="let item of data.rightItems; let i = index"
+           [class.selected]="selectedRightId === item.id"
+           [class.matched]="isMatchedRight(item.id)"
+           [class.error]="isErrorRight(item.id)"
+           (click)="selectRight(item)">
+        <div class="letter-badge">{{ ['a','b','c','d','e','f'][i] }}</div>
+        <div class="item-content">
+          <div class="hanzi">{{ item.content }}</div>
+          <div class="pinyin" *ngIf="item.pinyin">{{ item.pinyin }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -11,11 +11,13 @@ import { FlashcardsComponent } from './components/flashcards/flashcards';
 import { GrammarComponent } from './components/grammar/grammar';
 import { ConversationComponent } from './components/conversation/conversation';
 import { FillBlankComponent } from './components/fill-blank/fill-blank';
+import { ArrangingComponent } from './components/arranging/arranging';
+import { MatchingComponent } from './components/matching/matching';
 
 @Component({
   selector: 'app-lesson',
   standalone: true,
-  imports: [CommonModule, WarmUpComponent, VocabularyComponent, FlashcardsComponent, GrammarComponent, ConversationComponent, FillBlankComponent],
+  imports: [CommonModule, WarmUpComponent, VocabularyComponent, FlashcardsComponent, GrammarComponent, ConversationComponent, FillBlankComponent, ArrangingComponent, MatchingComponent],
   styleUrl: './lesson.scss',
   templateUrl: './lesson.html',
 })

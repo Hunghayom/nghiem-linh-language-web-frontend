@@ -14,12 +14,11 @@
 
       <!-- Khu vực xếp câu (Drop zone) -->
       <div class="drop-zone" [class.correct]="practiceSubmitted[q.id] && isCorrect(q)"
-           [class.incorrect]="practiceSubmitted[q.id] && !isCorrect(q)"
-           cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="drop($event, q)">
-        
-        <div class="word-chip placed" cdkDrag
-             *ngFor="let ansId of practiceAnswers[q.id]"
-             (click)="removeWord(q, ansId)">
+        [class.incorrect]="practiceSubmitted[q.id] && !isCorrect(q)" cdkDropList cdkDropListOrientation="horizontal"
+        (cdkDropListDropped)="drop($event, q)">
+
+        <div class="word-chip placed" cdkDrag *ngFor="let ansId of practiceAnswers[q.id]"
+          (click)="removeWord(q, ansId)">
           <div class="pinyin">{{ getWord(q, ansId)?.pinyin }}</div>
           <div class="hanzi">{{ getWord(q, ansId)?.text }}</div>
         </div>
@@ -27,9 +26,7 @@
 
       <!-- Từ gợi ý (Source zone) -->
       <div class="source-zone">
-        <div class="word-chip" 
-             *ngFor="let word of getAvailableWords(q)"
-             (click)="selectWord(q, word.id)">
+        <div class="word-chip" *ngFor="let word of getAvailableWords(q)" (click)="selectWord(q, word.id)">
           <div class="pinyin">{{ word.pinyin }}</div>
           <div class="hanzi">{{ word.text }}</div>
         </div>
@@ -46,7 +43,8 @@
 
       <!-- Hành động -->
       <div class="actions">
-        <button class="btn-primary" (click)="checkAnswer(q)" *ngIf="!practiceSubmitted[q.id]" [disabled]="practiceAnswers[q.id].length === 0">Kiểm tra</button>
+        <button class="btn-primary" (click)="checkAnswer(q)" *ngIf="!practiceSubmitted[q.id]"
+          [disabled]="practiceAnswers[q.id].length === 0">Kiểm tra</button>
         <button class="btn-secondary" (click)="resetAnswer(q)" *ngIf="practiceSubmitted[q.id]">Làm lại</button>
         <button class="btn-audio-white" *ngIf="practiceSubmitted[q.id] && isCorrect(q)">🔊 Đọc mẫu</button>
       </div>

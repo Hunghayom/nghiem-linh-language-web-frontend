@@ -1,5 +1,5 @@
 <div class="warm-up-container">
-  <div class="header" *ngIf="!isFinalTest">
+  <div class="header">
     <div class="title-row">
       <span class="icon">🎯</span>
       <span class="title-text">{{ data.title }}</span>
@@ -51,7 +51,7 @@
   </div>
 
   <div class="actions">
-    <button class="btn-primary" (click)="checkAnswers()" *ngIf="!isSubmitted">
+    <button class="btn-primary" (click)="checkAnswers()" *ngIf="!isSubmitted" [disabled]="!canSubmit">
       <span class="icon">✔️</span> Kiểm tra
     </button>
     <button class="btn-secondary" (click)="reset()" *ngIf="isSubmitted && !isFinalTest">
@@ -63,7 +63,7 @@
   </div>
 
   <!-- Feedback Area -->
-  <div class="feedback-area" *ngIf="isSubmitted && !isFinalTest">
+  <div class="feedback-area" *ngIf="isSubmitted">
     <div class="correct-answers-box">
       <h5>🔑 Đáp án đúng 正确答案:</h5>
       <div class="answers-pills">

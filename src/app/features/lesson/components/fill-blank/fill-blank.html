@@ -1,5 +1,5 @@
 <div class="fill-blank-container">
-  <div class="header" *ngIf="!isFinalTest">
+  <div class="header">
     <div class="title-badge">🖍️ {{ data.title }}</div>
     <p class="description">Điền từ/cụm từ thích hợp để hoàn thành câu.</p>
   </div>
@@ -35,7 +35,7 @@
       <div class="hint" *ngIf="q.hint">{{ q.hint }}</div>
 
       <!-- Từ gợi ý (Source zone) -->
-      <div class="source-zone" *ngIf="getAvailableChoices(q).length > 0">
+      <div class="source-zone" *ngIf="getAvailableChoices(q).length > 0 && !isFinalTest">
         <div class="word-chip" *ngFor="let choice of getAvailableChoices(q)" (click)="selectChoice(q, choice.id)">
           <div class="pinyin">{{ choice.pinyin }}</div>
           <div class="hanzi">{{ choice.text }}</div>
@@ -43,8 +43,8 @@
       </div>
       <!-- Kết quả -->
       <div class="result-area" *ngIf="submitted[q.id]">
-        <div class="feedback correct" *ngIf="isCorrect(q) && !isFinalTest">🎉 Chính xác!</div>
-        <div class="feedback incorrect" *ngIf="!isCorrect(q) && !isFinalTest">❌ Chưa chính xác. Cố lên nhé!</div>
+        <div class="feedback correct" *ngIf="isCorrect(q)">🎉 Chính xác!</div>
+        <div class="feedback incorrect" *ngIf="!isCorrect(q)">❌ Chưa chính xác. Cố lên nhé!</div>
 
         <div class="expected-answer" *ngIf="!isCorrect(q)">
           <strong>Đáp án đúng:</strong>

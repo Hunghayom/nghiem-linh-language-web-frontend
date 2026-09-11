@@ -1,5 +1,5 @@
 <div class="arranging-container">
-  <div class="header" *ngIf="!isFinalTest">
+  <div class="header">
     <div class="title-badge">🧩 {{ data.title }}</div>
     <p class="description">Bấm các từ theo đúng thứ tự. Kéo thả để sắp xếp lại, bấm để xóa.</p>
   </div>
@@ -34,8 +34,8 @@
 
       <!-- Kết quả -->
       <div class="result-message" *ngIf="practiceSubmitted[q.id]">
-        <div class="praise" *ngIf="isCorrect(q) && !isFinalTest">🎉 Tuyệt vời! Bạn đã sắp xếp chính xác.</div>
-        <div class="praise incorrect" *ngIf="!isCorrect(q) && !isFinalTest">❌ Chưa chính xác. Cố lên nhé!</div>
+        <div class="praise" *ngIf="isCorrect(q)">🎉 Tuyệt vời! Bạn đã sắp xếp chính xác.</div>
+        <div class="praise incorrect" *ngIf="!isCorrect(q)">❌ Chưa chính xác. Cố lên nhé!</div>
         <div class="correct-answer" *ngIf="!isCorrect(q)">
           <span class="label">Đáp án đúng: </span> <span class="text">{{ getCorrectAnswersText(q) }}</span>
         </div>
@@ -46,7 +46,7 @@
         <button class="btn-primary" (click)="checkAnswer(q)" *ngIf="!practiceSubmitted[q.id]"
           [disabled]="practiceAnswers[q.id].length === 0">Kiểm tra</button>
         <button class="btn-secondary" (click)="resetAnswer(q)" *ngIf="practiceSubmitted[q.id] && !isFinalTest">Làm lại</button>
-        <button class="btn-audio-white" *ngIf="practiceSubmitted[q.id] && isCorrect(q) && !isFinalTest">🔊 Đọc mẫu</button>
+        <button class="btn-audio-white" *ngIf="practiceSubmitted[q.id] && isCorrect(q)">🔊 Đọc mẫu</button>
       </div>
     </div>
   </div>

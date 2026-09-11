@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FinalTestData, FinalTestItem } from '../../models/lesson.data';
 import { QuizComponent } from '../quiz/quiz';
@@ -6,6 +6,8 @@ import { ArrangingComponent } from '../arranging/arranging';
 import { FillBlankComponent } from '../fill-blank/fill-blank';
 import { MatchingComponent } from '../matching/matching';
 import { WarmUpComponent } from '../warm-up/warm-up';
+
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-final-test',
@@ -22,6 +24,8 @@ import { WarmUpComponent } from '../warm-up/warm-up';
   styleUrl: './final-test.scss'
 })
 export class FinalTestComponent {
+  constructor(private cdr: ChangeDetectorRef, private router: Router) {}
+
   @Input() data?: FinalTestData;
   @Output() progressUpdated = new EventEmitter<number>();
 
@@ -73,6 +77,8 @@ export class FinalTestComponent {
     if (this.questionQueue.length > 0) {
       setTimeout(() => {
         this.showQuestion = true; // Hiện lại component mới (hoặc component cũ đã được reset)
+        this.cdr.detectChanges(); // Bắt buộc render lại
+        
         const container = document.querySelector('.final-test-container');
         if (container) {
           container.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -82,5 +88,13 @@ export class FinalTestComponent {
       this.testCompleted = true;
       this.progressUpdated.emit(100);
     }
+  }
+
+  resetTest() {
+    this.ngOnChanges();
+  }
+
+  finishTest() {
+    this.router.navigate(['/dashboard']);
   }
 }

@@ -12,7 +12,7 @@
     </div>
   </div>
 
-  <div class="test-content" *ngIf="!testCompleted && currentQuestion">
+  <div class="test-content" *ngIf="!testCompleted && currentQuestion && showQuestion">
     @switch (currentQuestion.type) {
     @case ('QUIZ') {
     <app-quiz [data]="currentQuestion.quizData!" (answerChecked)="onQuestionCompleted($event)"
@@ -52,6 +52,10 @@
         {{ score === data.questions.length ? 'Xuất sắc! Bạn đã nắm vững kiến thức.' : 'Cố gắng lên nhé! Hãy ôn tập lại
         các phần chưa vững.' }}
       </p>
+      <div class="actions">
+        <button class="btn-secondary" (click)="resetTest()">Làm lại</button>
+        <button class="btn-primary" (click)="finishTest()">Hoàn thành</button>
+      </div>
     </div>
   </div>
 </div>

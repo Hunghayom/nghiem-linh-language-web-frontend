@@ -61,6 +61,10 @@ export class QuizComponent implements OnInit {
     return this.displayQuestions.filter(q => this.isCorrect(q)).length;
   }
 
+  get canSubmit(): boolean {
+    return Object.keys(this.answers).length === this.displayQuestions.length;
+  }
+
   get isPerfect(): boolean {
     return this.getCorrectCount() === this.displayQuestions.length;
   }

@@ -103,6 +103,10 @@ export class WarmUpComponent implements OnInit {
     return this.answers[item.id]?.id === item.expectedVocabId;
   }
 
+  get canSubmit(): boolean {
+    return Object.values(this.answers).every(a => a !== null);
+  }
+
   getCorrectCount(): number {
     return this.displayItems.filter(item => this.isCorrect(item)).length;
   }

@@ -1,5 +1,5 @@
 <div class="quiz-container">
-  <div class="header" *ngIf="!isFinalTest">
+  <div class="header">
     <div class="title-row">
       <span class="icon">📝</span>
       <span class="title-text">{{ data.title }}</span>
@@ -41,7 +41,7 @@
   </div>
 
   <div class="actions">
-    <button class="btn-primary" (click)="checkAnswers()" *ngIf="!submitted">
+    <button class="btn-primary" (click)="checkAnswers()" *ngIf="!submitted" [disabled]="!canSubmit">
       <span class="icon">✔️</span> Kiểm tra
     </button>
     <button class="btn-secondary" (click)="reset()" *ngIf="submitted && !isFinalTest">
@@ -50,7 +50,7 @@
   </div>
 
   <!-- Feedback Area -->
-  <div class="feedback-area" *ngIf="submitted && !isFinalTest">
+  <div class="feedback-area" *ngIf="submitted">
     <div class="score-summary">
       <div class="score-box" [class.excellent]="isPerfect" [class.good]="!isPerfect">
         <span class="score-label">Đúng:</span>

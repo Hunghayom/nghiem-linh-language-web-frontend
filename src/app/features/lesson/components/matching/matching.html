@@ -1,5 +1,5 @@
 <div class="matching-container">
-  <div class="header" *ngIf="!isFinalTest">
+  <div class="header">
     <div class="title-badge">🔗 {{ data.title }}</div>
     <p class="description">Bấm một thẻ bên trái rồi bấm thẻ tương ứng bên phải (hoặc ngược lại) để nối.</p>
   </div>
@@ -46,18 +46,11 @@
 
   </div>
 
-  <!-- SVG Canvas for Lines -->
-  <svg class="lines-canvas">
-    <ng-container *ngFor="let line of lines">
-      <path [attr.d]="line.path" class="connection-line" [ngClass]="line.status" />
-      <circle [attr.cx]="line.startX" [attr.cy]="line.startY" r="6" class="connection-dot" [ngClass]="line.status" />
-      <circle [attr.cx]="line.endX" [attr.cy]="line.endY" r="6" class="connection-dot" [ngClass]="line.status" />
-    </ng-container>
-  </svg>
+
 
   <!-- Kết quả và Hành động -->
   <div class="bottom-section">
-    <div class="result-message" *ngIf="submitted && !isFinalTest">
+    <div class="result-message" *ngIf="submitted">
       <div class="feedback correct" *ngIf="isAllCorrect">🎉 Tuyệt vời! Bạn đã nối đúng tất cả.</div>
       <div class="feedback incorrect" *ngIf="!isAllCorrect">❌ Chưa chính xác hoàn toàn. Hãy kiểm tra các đường chưa xanh
         nhé!</div>

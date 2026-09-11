@@ -167,6 +167,37 @@ export interface SpeakingData {
   tasks: SpeakingTask[];
 }
 
+export interface FunFactItem {
+  id: string;
+  title: string;
+  content: string;
+  imageUrl?: string;
+}
+
+export interface FunFactsData {
+  title: string;
+  description?: string;
+  facts: FunFactItem[];
+}
+
+export type FinalTestQuestionType = 'QUIZ' | 'ARRANGING' | 'FILL_BLANK' | 'MATCHING' | 'WARM_UP';
+
+export interface FinalTestItem {
+  id: string;
+  type: FinalTestQuestionType;
+  quizData?: QuizData;
+  arrangingData?: ArrangingData;
+  fillBlankData?: FillBlankData;
+  matchingData?: MatchingData;
+  warmUpData?: WarmUpData;
+}
+
+export interface FinalTestData {
+  title: string;
+  description?: string;
+  questions: FinalTestItem[];
+}
+
 export interface LessonData {
   lessonId: string;
   warmUp?: WarmUpData;
@@ -179,4 +210,6 @@ export interface LessonData {
   matching?: MatchingData;
   quiz?: QuizData;
   speaking?: SpeakingData;
+  funFacts?: FunFactsData;
+  finalTest?: FinalTestData;
 }

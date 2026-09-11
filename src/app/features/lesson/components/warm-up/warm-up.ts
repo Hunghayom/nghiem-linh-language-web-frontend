@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { WarmUpData, VocabItem, WarmUpItem } from '../../models/lesson.data';
 
@@ -11,6 +11,7 @@ import { WarmUpData, VocabItem, WarmUpItem } from '../../models/lesson.data';
 })
 export class WarmUpComponent implements OnInit {
   @Input() data!: WarmUpData;
+  @Output() answerChecked = new EventEmitter<boolean>();
   
   displayItems: WarmUpItem[] = [];
   displayChoices: VocabItem[] = [];
@@ -83,6 +84,7 @@ export class WarmUpComponent implements OnInit {
 
   checkAnswers() {
     this.isSubmitted = true;
+    this.answerChecked.emit(this.isPerfect);
   }
 
   reset() {

@@ -1,0 +1,50 @@
+<div class="final-test-container" *ngIf="data">
+  <div class="test-header">
+    <h2>{{ data.title }}</h2>
+    <p class="description" *ngIf="data.description">{{ data.description }}</p>
+
+    <div class="test-progress">
+      <div class="progress-text">Câu {{ currentQuestionIndex + 1 }} / {{ data.questions.length }}</div>
+      <div class="progress-bar">
+        <div class="progress-fill" [style.width.%]="(currentQuestionIndex / data.questions.length) * 100"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="test-content" *ngIf="!testCompleted && currentQuestion">
+    @switch (currentQuestion.type) {
+    @case ('QUIZ') {
+    <app-quiz [data]="currentQuestion.quizData!" (answerChecked)="onQuestionCompleted($event)"></app-quiz>
+    }
+    @case ('ARRANGING') {
+    <app-arranging [data]="currentQuestion.arrangingData!"
+      (answerChecked)="onQuestionCompleted($event)"></app-arranging>
+    }
+    @case ('FILL_BLANK') {
+    <app-fill-blank [data]="currentQuestion.fillBlankData!"
+      (answerChecked)="onQuestionCompleted($event)"></app-fill-blank>
+    }
+    @case ('MATCHING') {
+    <app-matching [data]="currentQuestion.matchingData!" (answerChecked)="onQuestionCompleted($event)"></app-matching>
+    }
+    @case ('WARM_UP') {
+    <app-warm-up [data]="currentQuestion.warmUpData!" (answerChecked)="onQuestionCompleted($event)"></app-warm-up>
+    }
+    }
+  </div>
+
+  <div class="test-result" *ngIf="testCompleted">
+    <div class="result-card">
+      <h3>Hoàn thành bài kiểm tra!</h3>
+      <div class="score">
+        <span class="score-number">{{ score }}</span>
+        <span class="score-total">/ {{ data.questions.length }}</span>
+      </div>
+      <p class="score-message">
+        {{ score === data.questions.length ? 'Xuất sắc! Bạn đã nắm vững kiến thức.' : 'Cố gắng lên nhé! Hãy ôn tập lại
+        các phần chưa vững.' }}
+      </p>
+      <button class="btn-retry" (click)="resetTest()">Làm lại</button>
+    </div>
+  </div>
+</div>

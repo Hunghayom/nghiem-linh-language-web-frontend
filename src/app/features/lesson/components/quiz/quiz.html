@@ -9,7 +9,7 @@
 
   <!-- Tracker bar (sticky) -->
   <div class="tracker-bar">
-    <div class="tracker-item" *ngFor="let q of data.questions; let i = index" [ngClass]="getTrackerClass(q)"
+    <div class="tracker-item" *ngFor="let q of displayQuestions; let i = index" [ngClass]="getTrackerClass(q)"
       (click)="scrollToQuestion(i)">
       {{ i + 1 }}
     </div>
@@ -17,13 +17,13 @@
 
   <!-- Questions List -->
   <div class="questions-list">
-    <div class="question-card" *ngFor="let q of data.questions; let i = index" [id]="'question-' + i">
+    <div class="question-card" *ngFor="let q of displayQuestions; let i = index" [id]="'question-' + i">
       <div class="q-header">
         <span class="q-number">Câu {{ i + 1 }}</span>
         <span class="q-text">{{ q.questionText }}</span>
       </div>
 
-      <div class="options-grid">
+      <div class="options-grid" [ngClass]="'grid-' + q.options.length">
         <div class="option-item" *ngFor="let opt of q.options; let optIdx = index"
           [class.selected]="answers[q.id] === opt.id" [class.correct]="submitted && opt.id === q.correctOptionId"
           [class.incorrect]="submitted && answers[q.id] === opt.id && answers[q.id] !== q.correctOptionId"
@@ -54,7 +54,7 @@
     <div class="score-summary">
       <div class="score-box" [class.excellent]="isPerfect" [class.good]="!isPerfect">
         <span class="score-label">Đúng:</span>
-        <span class="score-value">{{ getCorrectCount() }}/{{ data.questions.length }}</span>
+        <span class="score-value">{{ getCorrectCount() }}/{{ displayQuestions.length }}</span>
       </div>
       <div class="feedback-message">
         <span class="icon" *ngIf="isPerfect">🎉</span>

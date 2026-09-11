@@ -10,7 +10,7 @@
     <!-- Cột trái -->
     <div class="column left-col">
       <div class="col-title">CÂU HỎI / VẾ ĐẦU</div>
-      <div class="item-card" *ngFor="let item of data.leftItems; let i = index" [id]="'item-' + item.id"
+      <div class="item-card" *ngFor="let item of displayLeftItems; let i = index" [id]="'item-' + item.id"
         [class.selected]="selectedLeftId === item.id" [class.matched]="isMatchedLeft(item.id)"
         (click)="selectLeft(item)">
         <div class="number-badge">{{ i + 1 }}</div>
@@ -24,7 +24,7 @@
     <!-- Cột phải -->
     <div class="column right-col">
       <div class="col-title">CÂU TRẢ LỜI / VẾ SAU</div>
-      <div class="item-card" *ngFor="let item of data.rightItems; let i = index" [id]="'item-' + item.id"
+      <div class="item-card" *ngFor="let item of displayRightItems; let i = index" [id]="'item-' + item.id"
         [class.selected]="selectedRightId === item.id" [class.matched]="isMatchedRight(item.id)"
         (click)="selectRight(item)">
         <div class="letter-badge">{{ ['a','b','c','d','e','f'][i] }}</div>

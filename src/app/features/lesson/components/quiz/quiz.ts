@@ -1,6 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { QuizData, QuizQuestion } from '../../models/lesson.data';
+import { shuffleArray } from '../../../../shared/utils/array.utils';
 
 @Component({
   selector: 'app-quiz',
@@ -9,11 +10,26 @@ import { QuizData, QuizQuestion } from '../../models/lesson.data';
   templateUrl: './quiz.html',
   styleUrls: ['./quiz.scss']
 })
-export class QuizComponent {
+export class QuizComponent implements OnInit {
   @Input() data!: QuizData;
+  @Output() answerChecked = new EventEmitter<boolean>();
+  displayQuestions: QuizQuestion[] = [];
 
   answers: { [key: string]: string } = {};
   submitted: boolean = false;
+
+  ngOnInit() {
+    this.setupQuiz();
+  }
+
+  setupQuiz() {
+    this.submitted = false;
+    this.answers = {};
+    this.displayQuestions = shuffleArray(this.data.questions).map(q => ({
+      ...q,
+      options: shuffleArray(q.options)
+    }));
+  }
 
   selectOption(questionId: string, optionId: string) {
     if (this.submitted) return;
@@ -26,11 +42,11 @@ export class QuizComponent {
 
   checkAnswers() {
     this.submitted = true;
+    this.answerChecked.emit(this.isPerfect);
   }
 
   reset() {
-    this.submitted = false;
-    this.answers = {};
+    this.setupQuiz();
   }
 
   scrollToQuestion(index: number) {
@@ -41,11 +57,11 @@ export class QuizComponent {
   }
 
   getCorrectCount(): number {
-    return this.data.questions.filter(q => this.isCorrect(q)).length;
+    return this.displayQuestions.filter(q => this.isCorrect(q)).length;
   }
 
   get isPerfect(): boolean {
-    return this.getCorrectCount() === this.data.questions.length;
+    return this.getCorrectCount() === this.displayQuestions.length;
   }
 
   getTrackerClass(q: QuizQuestion): string {

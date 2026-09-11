@@ -96,6 +96,12 @@
     @case ('10') {
     <app-speaking *ngIf="lessonData.speaking" [data]="lessonData.speaking!"></app-speaking>
     }
+    @case ('11') {
+    <app-fun-facts *ngIf="lessonData.funFacts" [data]="lessonData.funFacts!"></app-fun-facts>
+    }
+    @case ('12') {
+    <app-final-test *ngIf="lessonData.finalTest" [data]="lessonData.finalTest!" (progressUpdated)="onProgressUpdated('12', $event)"></app-final-test>
+    }
     @default {
     <div class="active-module-placeholder">
       <h2>{{ modules[activeModuleId ? +activeModuleId - 1 : 0]?.title }} ({{ modules[activeModuleId ? +activeModuleId -

@@ -1,7 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
 import { ArrangingData, ArrangingQuestion, ArrangingWord } from '../../models/lesson.data';
+import { shuffleArray } from '../../../../shared/utils/array.utils';
 
 @Component({
   selector: 'app-arranging',
@@ -12,14 +13,26 @@ import { ArrangingData, ArrangingQuestion, ArrangingWord } from '../../models/le
 })
 export class ArrangingComponent implements OnInit {
   @Input() data!: ArrangingData;
+  @Output() answerChecked = new EventEmitter<boolean>();
+  displayQuestions: ArrangingQuestion[] = [];
   
   practiceAnswers: { [questionId: string]: string[] } = {};
   practiceSubmitted: { [questionId: string]: boolean } = {};
 
   ngOnInit() {
-    this.data.questions.forEach(q => {
+    this.setupArranging();
+  }
+
+  setupArranging() {
+    this.practiceAnswers = {};
+    this.practiceSubmitted = {};
+    this.displayQuestions = shuffleArray(this.data.questions).map(q => {
       this.practiceAnswers[q.id] = [];
       this.practiceSubmitted[q.id] = false;
+      return {
+        ...q,
+        words: shuffleArray(q.words)
+      };
     });
   }
 
@@ -53,11 +66,18 @@ export class ArrangingComponent implements OnInit {
 
   checkAnswer(question: ArrangingQuestion) {
     this.practiceSubmitted[question.id] = true;
+    this.answerChecked.emit(this.isCorrect(question));
   }
 
   resetAnswer(question: ArrangingQuestion) {
     this.practiceSubmitted[question.id] = false;
     this.practiceAnswers[question.id] = [];
+    
+    // Tráo lại từ khi làm lại
+    const targetQ = this.displayQuestions.find(q => q.id === question.id);
+    if (targetQ) {
+      targetQ.words = shuffleArray(targetQ.words);
+    }
   }
 
   drop(event: CdkDragDrop<string[]>, question: ArrangingQuestion) {

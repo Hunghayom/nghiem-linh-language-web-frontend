@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GrammarData, GrammarRule } from '../../models/lesson.data';
 import { DragDropModule, CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { shuffleArray } from '../../../../shared/utils/array.utils';
 
 @Component({
   selector: 'app-grammar',
@@ -12,15 +13,31 @@ import { DragDropModule, CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-
 })
 export class GrammarComponent implements OnInit {
   @Input() data!: GrammarData;
+  displayRules: GrammarRule[] = [];
   
   // Track answers for each rule's practice
   practiceAnswers: { [ruleId: string]: string[] } = {};
   practiceSubmitted: { [ruleId: string]: boolean } = {};
 
   ngOnInit() {
-    this.data.rules.forEach(rule => {
+    this.setupGrammar();
+  }
+
+  setupGrammar() {
+    this.displayRules = this.data.rules.map(rule => {
       this.practiceAnswers[rule.id] = [];
       this.practiceSubmitted[rule.id] = false;
+      
+      if (rule.practice) {
+        return {
+          ...rule,
+          practice: {
+            ...rule.practice,
+            wordsToOrder: shuffleArray(rule.practice.wordsToOrder)
+          }
+        };
+      }
+      return rule;
     });
   }
 
@@ -59,6 +76,11 @@ export class GrammarComponent implements OnInit {
   resetAnswer(rule: GrammarRule) {
     this.practiceSubmitted[rule.id] = false;
     this.practiceAnswers[rule.id] = [];
+    
+    const targetRule = this.displayRules.find(r => r.id === rule.id);
+    if (targetRule && targetRule.practice) {
+      targetRule.practice.wordsToOrder = shuffleArray(targetRule.practice.wordsToOrder);
+    }
   }
 
   drop(event: CdkDragDrop<string[]>, rule: GrammarRule) {

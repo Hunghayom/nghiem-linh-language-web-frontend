@@ -241,5 +241,119 @@ export const mockLessonData: LessonData = {
         meaning: 'Các bạn học, tạm biệt!'
       }
     ]
+  },
+  funFacts: {
+    title: 'Có thể bạn chưa biết',
+    description: 'Một số thông tin thú vị về văn hóa và ngôn ngữ Trung Quốc.',
+    facts: [
+      {
+        id: 'ff1',
+        title: 'Chữ Hán và Bính âm',
+        content: 'Chữ Hán không biểu thị cách đọc trực tiếp như chữ Quốc ngữ. Bính âm (Pinyin) là hệ thống phiên âm bằng chữ cái Latinh giúp người học dễ dàng đọc và phát âm tiếng Trung.'
+      },
+      {
+        id: 'ff2',
+        title: 'Chào hỏi cơ bản',
+        content: 'Người Trung Quốc thường chào nhau bằng câu "你好" (Xin chào). Trong các tình huống trang trọng hoặc với người lớn tuổi, họ dùng "您好" để thể hiện sự tôn trọng.'
+      }
+    ]
+  },
+  finalTest: {
+    title: 'Kiểm tra tổng hợp',
+    description: 'Làm đúng toàn bộ các câu hỏi để hoàn thành bài học.',
+    questions: [
+      {
+        id: 'ft1',
+        type: 'QUIZ',
+        quizData: {
+          title: 'Trắc nghiệm',
+          questions: [
+            {
+              id: 'q1',
+              questionText: 'Trong tiếng Trung, "Xin chào" nói như thế nào?',
+              options: [
+                { id: 'o1', text: '你好 (Nǐ hǎo)' },
+                { id: 'o2', text: '再见 (Zàijiàn)' },
+                { id: 'o3', text: '谢谢 (Xièxie)' },
+                { id: 'o4', text: '老师 (Lǎoshī)' }
+              ],
+              correctOptionId: 'o1'
+            }
+          ]
+        }
+      },
+      {
+        id: 'ft2',
+        type: 'ARRANGING',
+        arrangingData: {
+          title: 'Sắp xếp thành câu',
+          questions: [
+            {
+              id: 'aq1',
+              meaning: 'Chào các bạn!',
+              words: [
+                { id: 'w1', text: '你们', pinyin: 'nǐmen' },
+                { id: 'w2', text: '好', pinyin: 'hǎo' }
+              ],
+              correctOrderIds: ['w1', 'w2']
+            }
+          ]
+        }
+      },
+      {
+        id: 'ft3',
+        type: 'FILL_BLANK',
+        fillBlankData: {
+          title: 'Điền vào chỗ trống',
+          choices: [
+            { id: 'c3', text: '同学', pinyin: 'tóngxué' },
+          ],
+          questions: [
+            {
+              id: 'q3',
+              speaker: '3',
+              parts: [{ type: 'blank' }, { type: 'text', content: ' 们，你们好！' }],
+              expectedChoiceId: 'c3',
+              hint: 'Gợi ý: 同学 / 老师 / 谢谢'
+            }
+          ]
+        }
+      },
+      {
+        id: 'ft4',
+        type: 'MATCHING',
+        matchingData: {
+          title: 'Nối câu',
+          leftItems: [
+            { id: 'l1', content: 'AI小语，你好！', pinyin: 'AI Xiǎoyǔ, nǐ hǎo!' },
+            { id: 'l2', content: '大家好！', pinyin: 'Dàjiā hǎo!' },
+          ],
+          rightItems: [
+            { id: 'r1', content: '你好，小语！', pinyin: 'Nǐ hǎo, Xiǎoyǔ!' },
+            { id: 'r2', content: '老师，再见！', pinyin: 'Lǎoshī, zàijiàn!' },
+          ],
+          pairs: [
+            { leftId: 'l1', rightId: 'r1' },
+            { leftId: 'l2', rightId: 'r2' }
+          ]
+        }
+      },
+      {
+        id: 'ft5',
+        type: 'WARM_UP',
+        warmUpData: {
+          title: 'Khởi động',
+          description: 'Nối nghĩa tiếng Việt với từ tiếng Trung',
+          items: [
+            { id: 'wu1', meaning: 'xin chào', expectedVocabId: 'v1' },
+            { id: 'wu2', meaning: 'tạm biệt', expectedVocabId: 'v2' },
+          ],
+          choices: [
+            { id: 'v1', hanzi: '你好', pinyin: 'nǐ hǎo', meaning: 'xin chào', examples: [] },
+            { id: 'v2', hanzi: '再见', pinyin: 'zàijiàn', meaning: 'tạm biệt', examples: [] },
+          ]
+        }
+      }
+    ]
   }
 };

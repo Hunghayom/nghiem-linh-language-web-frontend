@@ -1,6 +1,7 @@
-import { Component, Input, OnInit, AfterViewInit, HostListener, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
+import { Component, Input, OnInit, AfterViewInit, HostListener, ViewChild, ElementRef, ChangeDetectorRef, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatchingData, MatchingItem, MatchingPair } from '../../models/lesson.data';
+import { shuffleArray } from '../../../../shared/utils/array.utils';
 
 interface LineData {
   startX: number;
@@ -20,7 +21,12 @@ interface LineData {
 })
 export class MatchingComponent implements OnInit, AfterViewInit {
   @Input() data!: MatchingData;
+  @Output() answerChecked = new EventEmitter<boolean>();
+  
   @ViewChild('columnsContainer') columnsContainer!: ElementRef;
+  
+  displayLeftItems: MatchingItem[] = [];
+  displayRightItems: MatchingItem[] = [];
   
   userConnections: { leftId: string, rightId: string }[] = [];
   selectedLeftId: string | null = null;
@@ -34,6 +40,17 @@ export class MatchingComponent implements OnInit, AfterViewInit {
   constructor(private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
+    this.setupMatching();
+  }
+
+  setupMatching() {
+    this.displayLeftItems = shuffleArray(this.data.leftItems);
+    this.displayRightItems = shuffleArray(this.data.rightItems);
+    this.userConnections = [];
+    this.selectedLeftId = null;
+    this.selectedRightId = null;
+    this.submitted = false;
+    this.isAllCorrect = false;
   }
 
   ngAfterViewInit() {
@@ -141,15 +158,12 @@ export class MatchingComponent implements OnInit, AfterViewInit {
     
     this.isAllCorrect = allCorrect;
     this.drawLines(); // Vẽ lại để cập nhật màu sắc
+    this.answerChecked.emit(this.isAllCorrect);
   }
 
   resetAll() {
-    this.submitted = false;
-    this.userConnections = [];
-    this.selectedLeftId = null;
-    this.selectedRightId = null;
-    this.isAllCorrect = false;
-    this.drawLines();
+    this.setupMatching();
+    setTimeout(() => this.drawLines(), 50);
   }
 
   isMatchedLeft(id: string): boolean {

@@ -4,7 +4,7 @@
     <p class="description">Bấm các từ theo đúng thứ tự. Kéo thả để sắp xếp lại, bấm để xóa.</p>
   </div>
 
-  <div class="question-box" *ngFor="let q of data.questions; let i = index">
+  <div class="question-box" *ngFor="let q of displayQuestions; let i = index">
     <div class="q-header">
       <div class="number-badge">{{ i + 1 }}</div>
     </div>

@@ -15,6 +15,8 @@ import { ArrangingComponent } from './components/arranging/arranging';
 import { MatchingComponent } from './components/matching/matching';
 import { QuizComponent } from './components/quiz/quiz';
 import { SpeakingComponent } from './components/speaking/speaking';
+import { FunFactsComponent } from './components/fun-facts/fun-facts';
+import { FinalTestComponent } from './components/final-test/final-test';
 
 @Component({
   selector: 'app-lesson',
@@ -31,6 +33,8 @@ import { SpeakingComponent } from './components/speaking/speaking';
     MatchingComponent,
     QuizComponent,
     SpeakingComponent,
+    FunFactsComponent,
+    FinalTestComponent,
   ],
   styleUrl: './lesson.scss',
   templateUrl: './lesson.html',
@@ -106,7 +110,7 @@ export class Lesson implements OnInit, OnDestroy {
       { id: '9', type: LessonType.QUIZ, title: 'Trắc nghiệm', shortName: 'Trắc nghiệm', cnName: '测验', isActive: false, progress: 0, isLocked: false },
       { id: '10', type: LessonType.SPEAKING, title: 'Luyện nói', shortName: 'Luyện nói', cnName: '口语', isActive: false, progress: 0, isLocked: false },
       { id: '11', type: LessonType.FUN_FACTS, title: 'Có thể bạn chưa biết', shortName: 'Có thể bạn chưa biết', cnName: '文化', isActive: false, progress: 0, isLocked: false },
-      { id: '12', type: LessonType.FINAL_TEST, title: 'Kiểm tra', shortName: 'Kiểm tra', cnName: '考试', isActive: false, progress: 0, isLocked: true },
+      { id: '12', type: LessonType.FINAL_TEST, title: 'Kiểm tra', shortName: 'Kiểm tra', cnName: '考试', isActive: false, progress: 0, isLocked: false },
     ];
     this.activeModuleId = this.modules[0].id;
   }

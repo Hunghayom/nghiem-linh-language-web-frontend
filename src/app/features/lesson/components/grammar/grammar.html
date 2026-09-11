@@ -4,7 +4,7 @@
     <p class="description">Những điểm ngữ pháp trọng tâm của bài.</p>
   </div>
 
-  <div class="grammar-rule" *ngFor="let rule of data.rules; let i = index">
+  <div class="grammar-rule" *ngFor="let rule of displayRules; let i = index">
     <div class="rule-header">
       <div class="number-badge">{{ i + 1 }}</div>
       <h3 class="rule-title">{{ rule.title }}</h3>

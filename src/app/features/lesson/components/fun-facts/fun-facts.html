@@ -1,0 +1,16 @@
+<div class="fun-facts-container">
+  <div class="header">
+    <div class="title-badge">💡 {{ data.title }}</div>
+    <p class="description" *ngIf="data.description">{{ data.description }}</p>
+  </div>
+
+  <div class="facts-list">
+    <div class="fact-card" *ngFor="let fact of data.facts">
+      <div class="fact-icon">✨</div>
+      <div class="fact-content">
+        <h3 class="fact-title">{{ fact.title }}</h3>
+        <p class="fact-text">{{ fact.content }}</p>
+      </div>
+    </div>
+  </div>
+</div>

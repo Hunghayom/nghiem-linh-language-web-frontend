@@ -1,7 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { FillBlankData, FillBlankQuestion, FillBlankChoice } from '../../models/lesson.data';
+import { shuffleArray } from '../../../../shared/utils/array.utils';
 
 @Component({
   selector: 'app-fill-blank',
@@ -12,6 +13,9 @@ import { FillBlankData, FillBlankQuestion, FillBlankChoice } from '../../models/
 })
 export class FillBlankComponent implements OnInit {
   @Input() data!: FillBlankData;
+  @Output() answerChecked = new EventEmitter<boolean>();
+  
+  displayQuestions: FillBlankQuestion[] = [];
   
   // Track selected choice for each question
   selectedChoices: { [questionId: string]: string | null } = {};
@@ -19,7 +23,17 @@ export class FillBlankComponent implements OnInit {
   submitted: { [questionId: string]: boolean } = {};
 
   ngOnInit() {
-    this.data.questions.forEach(q => {
+    this.setupFillBlank();
+  }
+
+  setupFillBlank() {
+    this.selectedChoices = {};
+    this.typedAnswers = {};
+    this.submitted = {};
+    
+    this.displayQuestions = shuffleArray(this.data.questions);
+    
+    this.displayQuestions.forEach(q => {
       this.selectedChoices[q.id] = null;
       this.typedAnswers[q.id] = '';
       this.submitted[q.id] = false;
@@ -50,6 +64,7 @@ export class FillBlankComponent implements OnInit {
   checkAnswer(question: FillBlankQuestion) {
     if (this.selectedChoices[question.id] || this.typedAnswers[question.id]?.trim()) {
       this.submitted[question.id] = true;
+      this.answerChecked.emit(this.isCorrect(question));
     }
   }
 

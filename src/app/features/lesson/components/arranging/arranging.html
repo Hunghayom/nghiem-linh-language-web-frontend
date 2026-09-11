@@ -33,11 +33,18 @@
       </div>
 
       <!-- Kết quả -->
-      <div class="result-message" *ngIf="practiceSubmitted[q.id]">
-        <div class="praise" *ngIf="isCorrect(q)">🎉 Tuyệt vời! Bạn đã sắp xếp chính xác.</div>
-        <div class="praise incorrect" *ngIf="!isCorrect(q)">❌ Chưa chính xác. Cố lên nhé!</div>
-        <div class="correct-answer" *ngIf="!isCorrect(q)">
-          <span class="label">Đáp án đúng: </span> <span class="text">{{ getCorrectAnswersText(q) }}</span>
+      <div class="feedback-area" *ngIf="practiceSubmitted[q.id]">
+        <div class="correct-answers-box" *ngIf="!isCorrect(q)">
+          <h5>🔑 Đáp án đúng 正确答案:</h5>
+          <div class="answers-pills">
+            <span class="answer-pill">{{ getCorrectAnswersText(q) }}</span>
+          </div>
+        </div>
+
+        <div class="feedback-message" [class.success]="isCorrect(q)" [class.warning]="!isCorrect(q)">
+          <span class="icon" *ngIf="isCorrect(q)">🎉</span>
+          <span class="icon" *ngIf="!isCorrect(q)">💪</span>
+          {{ isCorrect(q) ? 'Tuyệt vời! Bạn đã sắp xếp chính xác.' : 'Chưa chính xác. Cố lên nhé!' }}
         </div>
       </div>
 

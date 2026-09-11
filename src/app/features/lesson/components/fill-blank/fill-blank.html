@@ -42,15 +42,20 @@
         </div>
       </div>
       <!-- Kết quả -->
-      <div class="result-area" *ngIf="submitted[q.id]">
-        <div class="feedback correct" *ngIf="isCorrect(q)">🎉 Chính xác!</div>
-        <div class="feedback incorrect" *ngIf="!isCorrect(q)">❌ Chưa chính xác. Cố lên nhé!</div>
+      <div class="feedback-area" *ngIf="submitted[q.id]">
+        <div class="correct-answers-box" *ngIf="!isCorrect(q)">
+          <h5>🔑 Đáp án đúng 正确答案:</h5>
+          <div class="answers-pills">
+            <span class="answer-pill">
+              {{ getExpectedChoice(q)?.text }} <small *ngIf="getExpectedChoice(q)?.pinyin">({{ getExpectedChoice(q)?.pinyin }})</small>
+            </span>
+          </div>
+        </div>
 
-        <div class="expected-answer" *ngIf="!isCorrect(q)">
-          <strong>Đáp án đúng:</strong>
-          <span class="hanzi">{{ getExpectedChoice(q)?.text }}</span>
-          <span class="pinyin">{{ getExpectedChoice(q)?.pinyin }}</span>
-
+        <div class="feedback-message" [class.success]="isCorrect(q)" [class.warning]="!isCorrect(q)">
+          <span class="icon" *ngIf="isCorrect(q)">🎉</span>
+          <span class="icon" *ngIf="!isCorrect(q)">💪</span>
+          {{ isCorrect(q) ? 'Tuyệt vời! Bạn đã điền chính xác.' : 'Chưa chính xác. Cố lên nhé!' }}
         </div>
       </div>
 

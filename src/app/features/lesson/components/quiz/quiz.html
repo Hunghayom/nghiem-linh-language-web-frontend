@@ -40,6 +40,16 @@
     </div>
   </div>
 
+
+
+  <!-- Feedback Area -->
+  <div class="feedback-area" *ngIf="submitted">
+    <div class="feedback-message" [class.success]="isPerfect" [class.warning]="!isPerfect">
+      <span class="icon" *ngIf="isPerfect">🎉</span>
+      <span class="icon" *ngIf="!isPerfect">💪</span>
+      {{ isPerfect ? 'Tuyệt vời! Bạn đã trả lời chính xác.' : 'Chưa chính xác hoàn toàn. Cố lên nhé!' }}
+    </div>
+  </div>
   <div class="actions">
     <button class="btn-primary" (click)="checkAnswers()" *ngIf="!submitted" [disabled]="!canSubmit">
       <span class="icon">✔️</span> Kiểm tra
@@ -47,21 +57,5 @@
     <button class="btn-secondary" (click)="reset()" *ngIf="submitted && !isFinalTest">
       <span class="icon">🔄</span> Làm lại
     </button>
-  </div>
-
-  <!-- Feedback Area -->
-  <div class="feedback-area" *ngIf="submitted">
-    <div class="score-summary">
-      <div class="score-box" [class.excellent]="isPerfect" [class.good]="!isPerfect">
-        <span class="score-label">Đúng:</span>
-        <span class="score-value">{{ getCorrectCount() }}/{{ displayQuestions.length }}</span>
-      </div>
-      <div class="feedback-message">
-        <span class="icon" *ngIf="isPerfect">🎉</span>
-        <span class="icon" *ngIf="!isPerfect">💪</span>
-        {{ isPerfect ? 'Hoàn hảo! Bạn đã làm đúng tất cả.' : 'Tuyệt vời! Cố gắng luyện tập thêm để đạt điểm tuyệt đối
-        nhé!' }}
-      </div>
-    </div>
   </div>
 </div>

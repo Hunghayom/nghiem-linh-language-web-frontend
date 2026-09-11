@@ -245,8 +245,9 @@
   .actions {
     display: flex;
     justify-content: center;
-    gap: 16px;
-    margin-bottom: 24px;
+    gap: 12px;
+
+    margin-top: 24px;
 
     button {
       display: flex;
@@ -283,63 +284,62 @@
 
   .feedback-area {
     margin-top: 24px;
-    padding: 24px;
-    background: #ffffff;
-    border: 2px solid var(--theme-color);
-    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    animation: fadeIn 0.3s ease-in-out;
 
-    .score-summary {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 16px;
+    .correct-answers-box {
+      background: var(--theme-bg);
+      border: 2px solid var(--theme-color);
+      padding: 16px;
+      border-radius: 8px;
 
-      .score-box {
-        display: flex;
-        align-items: baseline;
-        gap: 8px;
-        padding: 16px 32px;
-        background: #f5f5f5;
-        border-radius: 12px;
-        border: 2px solid #e0e0e0;
-
-        .score-label {
-          font-size: 16px;
-          color: #616161;
-          font-weight: bold;
-        }
-
-        .score-value {
-          font-size: 32px;
-          font-weight: bold;
-        }
-
-        &.excellent {
-          border-color: #16a34a;
-          background: #dcfce7;
-
-          .score-value {
-            color: #16a34a;
-          }
-        }
-
-        &.good {
-          border-color: #ff9800;
-          background: #fff3e0;
-
-          .score-value {
-            color: #ff9800;
-          }
-        }
+      h5 {
+        margin: 0 0 12px 0;
+        color: var(--theme-hover);
+        font-size: 14px;
       }
 
-      .feedback-message {
-        font-size: 18px;
-        font-weight: bold;
-        color: var(--theme-color);
+      .answers-pills {
         display: flex;
-        align-items: center;
-        gap: 8px;
+        flex-wrap: wrap;
+        gap: 10px;
+
+        .answer-pill {
+          background: #ffffff;
+          border: 2px solid var(--theme-color);
+          padding: 6px 16px;
+          border-radius: 20px;
+          font-weight: bold;
+          font-size: 14px;
+        }
+      }
+    }
+
+    .feedback-message {
+      padding: 16px;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      .icon {
+        font-size: 20px;
+      }
+
+      &.success {
+        background-color: #f1f8e9;
+        color: #2e7d32;
+        border: 1px solid #c5e1a5;
+      }
+
+      &.warning {
+        background-color: #fff3cd;
+        color: #856404;
+        border: 1px solid #ffeeba;
       }
     }
   }

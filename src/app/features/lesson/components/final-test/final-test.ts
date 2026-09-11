@@ -95,6 +95,6 @@ export class FinalTestComponent {
   }
 
   finishTest() {
-    this.router.navigate(['/dashboard']);
+    this.router.navigate(['/course', 'tieng-trung']);
   }
 }

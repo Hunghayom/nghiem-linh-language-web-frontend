@@ -189,42 +189,64 @@
         }
       }
 
-      .result-area {
-        margin-bottom: 20px;
-        padding: 16px;
-        border-radius: 8px;
-        background: #f5f5f5;
+      .feedback-area {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        margin-bottom: 24px;
+        animation: fadeIn 0.3s ease-in-out;
 
-        .feedback {
-          font-weight: bold;
-          font-size: 16px;
-          margin-bottom: 8px;
+        .correct-answers-box {
+          background: var(--theme-bg);
+          border: 2px solid var(--theme-color);
+          padding: 16px;
+          border-radius: 8px;
 
-          &.correct {
-            color: #16a34a;
+          h5 {
+            margin: 0 0 12px 0;
+            color: var(--theme-hover);
+            font-size: 14px;
           }
 
-          &.incorrect {
-            color: #f44336;
+          .answers-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+
+            .answer-pill {
+              background: #ffffff;
+              border: 2px solid var(--theme-color);
+              padding: 6px 16px;
+              border-radius: 20px;
+              font-weight: bold;
+              font-size: 14px;
+            }
           }
         }
 
-        .expected-answer {
-          font-size: 15px;
-          color: #424242;
+        .feedback-message {
+          padding: 16px;
+          border-radius: 8px;
+          font-weight: bold;
+          font-size: 16px;
           display: flex;
           align-items: center;
-          gap: 8px;
+          gap: 12px;
 
-          .pinyin {
-            color: #757575;
-            font-size: 13px;
+          .icon {
+            font-size: 20px;
           }
 
-          .hanzi {
-            color: var(--theme-color);
-            font-weight: bold;
-            font-size: 18px;
+          &.success {
+            background-color: #f1f8e9;
+            color: #2e7d32;
+            border: 1px solid #c5e1a5;
+          }
+
+          &.warning {
+            background-color: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeeba;
           }
         }
       }

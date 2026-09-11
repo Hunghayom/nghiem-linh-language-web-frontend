@@ -50,10 +50,12 @@
 
   <!-- Kết quả và Hành động -->
   <div class="bottom-section">
-    <div class="result-message" *ngIf="submitted">
-      <div class="feedback correct" *ngIf="isAllCorrect">🎉 Tuyệt vời! Bạn đã nối đúng tất cả.</div>
-      <div class="feedback incorrect" *ngIf="!isAllCorrect">❌ Chưa chính xác hoàn toàn. Hãy kiểm tra các đường chưa xanh
-        nhé!</div>
+    <div class="feedback-area" *ngIf="submitted">
+      <div class="feedback-message" [class.success]="isAllCorrect" [class.warning]="!isAllCorrect">
+        <span class="icon" *ngIf="isAllCorrect">🎉</span>
+        <span class="icon" *ngIf="!isAllCorrect">💪</span>
+        {{ isAllCorrect ? 'Tuyệt vời! Bạn đã nối đúng tất cả.' : 'Chưa chính xác hoàn toàn. Hãy kiểm tra các đường chưa xanh nhé!' }}
+      </div>
     </div>
 
     <div class="actions">

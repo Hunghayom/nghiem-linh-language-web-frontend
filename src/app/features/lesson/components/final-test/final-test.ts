@@ -34,30 +34,23 @@ export class FinalTestComponent {
     return this.data.questions[this.currentQuestionIndex];
   }
 
-  // Cần bắt sự kiện hoàn thành của từng dạng bài để chuyển sang câu tiếp theo
+  isCurrentQuestionChecked: boolean = false;
+
+  // Cần bắt sự kiện hoàn thành của từng dạng bài để hiện nút Tiếp tục
   onQuestionCompleted(isCorrect: boolean) {
+    this.isCurrentQuestionChecked = true;
     if (isCorrect) {
       this.score++;
     }
-
-    if (this.data && this.currentQuestionIndex < this.data.questions.length - 1) {
-      // Chuyển sang câu tiếp theo
-      setTimeout(() => {
-        this.currentQuestionIndex++;
-      }, 1500); // Đợi 1.5s để người dùng thấy kết quả trước khi sang câu mới
-    } else {
-      // Hoàn thành bài test
-      setTimeout(() => {
-        this.testCompleted = true;
-        this.progressUpdated.emit(100);
-      }, 1500);
-    }
   }
 
-  resetTest() {
-    this.currentQuestionIndex = 0;
-    this.testCompleted = false;
-    this.score = 0;
-    this.progressUpdated.emit(0);
+  nextQuestion() {
+    this.isCurrentQuestionChecked = false;
+    if (this.data && this.currentQuestionIndex < this.data.questions.length - 1) {
+      this.currentQuestionIndex++;
+    } else {
+      this.testCompleted = true;
+      this.progressUpdated.emit(100);
+    }
   }
 }

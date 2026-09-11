@@ -65,51 +65,53 @@
 
   <!-- Khung nội dung chính -->
   <main class="lesson-content-area" (click)="onDocumentClick()">
-    @switch (activeModuleId) {
-    @case ('1') {
-    <app-warm-up [data]="lessonData.warmUp!"></app-warm-up>
-    }
-    @case ('2') {
-    <app-vocabulary [data]="lessonData.vocabulary!"></app-vocabulary>
-    }
-    @case ('3') {
-    <app-flashcards [data]="lessonData.flashcards!" (progressUpdated)="onProgressUpdated('3', $event)"></app-flashcards>
-    }
-    @case ('4') {
-    <app-grammar [data]="lessonData.grammar!"></app-grammar>
-    }
-    @case ('5') {
-    <app-conversation [data]="lessonData.conversation!"></app-conversation>
-    }
-    @case ('6') {
-    <app-fill-blank [data]="lessonData.fillBlank!"></app-fill-blank>
-    }
-    @case ('7') {
-    <app-arranging [data]="lessonData.arranging!"></app-arranging>
-    }
-    @case ('8') {
-    <app-matching [data]="lessonData.matching!"></app-matching>
-    }
-    @case ('9') {
-    <app-quiz *ngIf="lessonData.quiz" [data]="lessonData.quiz!"></app-quiz>
-    }
-    @case ('10') {
-    <app-speaking *ngIf="lessonData.speaking" [data]="lessonData.speaking!"></app-speaking>
-    }
-    @case ('11') {
-    <app-fun-facts *ngIf="lessonData.funFacts" [data]="lessonData.funFacts!"></app-fun-facts>
-    }
-    @case ('12') {
-    <app-final-test *ngIf="lessonData.finalTest" [data]="lessonData.finalTest!" (progressUpdated)="onProgressUpdated('12', $event)"></app-final-test>
-    }
-    @default {
-    <div class="active-module-placeholder">
-      <h2>{{ modules[activeModuleId ? +activeModuleId - 1 : 0]?.title }} ({{ modules[activeModuleId ? +activeModuleId -
-        1 : 0]?.cnName }})</h2>
-      <p>Nội dung của phần {{ modules[activeModuleId ? +activeModuleId - 1 : 0]?.shortName }} đang được xây dựng...</p>
+    <div class="lesson-module-card">
+      @switch (activeModuleId) {
+      @case ('1') {
+      <app-warm-up [data]="lessonData.warmUp!"></app-warm-up>
+      }
+      @case ('2') {
+      <app-vocabulary [data]="lessonData.vocabulary!"></app-vocabulary>
+      }
+      @case ('3') {
+      <app-flashcards [data]="lessonData.flashcards!" (progressUpdated)="onProgressUpdated('3', $event)"></app-flashcards>
+      }
+      @case ('4') {
+      <app-grammar [data]="lessonData.grammar!"></app-grammar>
+      }
+      @case ('5') {
+      <app-conversation [data]="lessonData.conversation!"></app-conversation>
+      }
+      @case ('6') {
+      <app-fill-blank [data]="lessonData.fillBlank!"></app-fill-blank>
+      }
+      @case ('7') {
+      <app-arranging [data]="lessonData.arranging!"></app-arranging>
+      }
+      @case ('8') {
+      <app-matching [data]="lessonData.matching!"></app-matching>
+      }
+      @case ('9') {
+      <app-quiz *ngIf="lessonData.quiz" [data]="lessonData.quiz!"></app-quiz>
+      }
+      @case ('10') {
+      <app-speaking *ngIf="lessonData.speaking" [data]="lessonData.speaking!"></app-speaking>
+      }
+      @case ('11') {
+      <app-fun-facts *ngIf="lessonData.funFacts" [data]="lessonData.funFacts!"></app-fun-facts>
+      }
+      @case ('12') {
+      <app-final-test *ngIf="lessonData.finalTest" [data]="lessonData.finalTest!" (progressUpdated)="onProgressUpdated('12', $event)"></app-final-test>
+      }
+      @default {
+      <div class="active-module-placeholder">
+        <h2>{{ modules[activeModuleId ? +activeModuleId - 1 : 0]?.title }} ({{ modules[activeModuleId ? +activeModuleId -
+          1 : 0]?.cnName }})</h2>
+        <p>Nội dung của phần {{ modules[activeModuleId ? +activeModuleId - 1 : 0]?.shortName }} đang được xây dựng...</p>
+      </div>
+      }
+      }
     </div>
-    }
-    }
   </main>
   <!-- Dropdown Chọn Bài Học -->
   <div class="lesson-dropdown-menu" *ngIf="isLessonSelectorOpen" [style.left.px]="dropdownLeft"

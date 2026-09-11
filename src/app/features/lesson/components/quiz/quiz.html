@@ -1,5 +1,5 @@
 <div class="quiz-container">
-  <div class="header">
+  <div class="header" *ngIf="!isFinalTest">
     <div class="title-row">
       <span class="icon">📝</span>
       <span class="title-text">{{ data.title }}</span>
@@ -8,7 +8,7 @@
   </div>
 
   <!-- Tracker bar (sticky) -->
-  <div class="tracker-bar">
+  <div class="tracker-bar" *ngIf="!isFinalTest">
     <div class="tracker-item" *ngFor="let q of displayQuestions; let i = index" [ngClass]="getTrackerClass(q)"
       (click)="scrollToQuestion(i)">
       {{ i + 1 }}
@@ -19,7 +19,7 @@
   <div class="questions-list">
     <div class="question-card" *ngFor="let q of displayQuestions; let i = index" [id]="'question-' + i">
       <div class="q-header">
-        <span class="q-number">Câu {{ i + 1 }}</span>
+        <span class="q-number" *ngIf="!isFinalTest">Câu {{ i + 1 }}</span>
         <span class="q-text">{{ q.questionText }}</span>
       </div>
 
@@ -44,13 +44,13 @@
     <button class="btn-primary" (click)="checkAnswers()" *ngIf="!submitted">
       <span class="icon">✔️</span> Kiểm tra
     </button>
-    <button class="btn-secondary" (click)="reset()" *ngIf="submitted">
+    <button class="btn-secondary" (click)="reset()" *ngIf="submitted && !isFinalTest">
       <span class="icon">🔄</span> Làm lại
     </button>
   </div>
 
   <!-- Feedback Area -->
-  <div class="feedback-area" *ngIf="submitted">
+  <div class="feedback-area" *ngIf="submitted && !isFinalTest">
     <div class="score-summary">
       <div class="score-box" [class.excellent]="isPerfect" [class.good]="!isPerfect">
         <span class="score-label">Đúng:</span>

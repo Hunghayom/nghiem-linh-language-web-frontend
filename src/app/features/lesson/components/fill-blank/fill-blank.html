@@ -1,11 +1,11 @@
 <div class="fill-blank-container">
-  <div class="header">
+  <div class="header" *ngIf="!isFinalTest">
     <div class="title-badge">🖍️ {{ data.title }}</div>
     <p class="description">Điền từ/cụm từ thích hợp để hoàn thành câu.</p>
   </div>
 
   <div class="question-box" *ngFor="let q of displayQuestions; let i = index">
-    <div class="q-header">
+    <div class="q-header" *ngIf="!isFinalTest">
       <div class="number-badge">{{ i + 1 }}</div>
     </div>
 
@@ -34,12 +34,19 @@
 
       <div class="hint" *ngIf="q.hint">{{ q.hint }}</div>
 
+      <!-- Từ gợi ý (Source zone) -->
+      <div class="source-zone" *ngIf="getAvailableChoices(q).length > 0">
+        <div class="word-chip" *ngFor="let choice of getAvailableChoices(q)" (click)="selectChoice(q, choice.id)">
+          <div class="pinyin">{{ choice.pinyin }}</div>
+          <div class="hanzi">{{ choice.text }}</div>
+        </div>
+      </div>
       <!-- Kết quả -->
       <div class="result-area" *ngIf="submitted[q.id]">
-        <div class="feedback correct" *ngIf="isCorrect(q)">🎉 Chính xác!</div>
-        <div class="feedback incorrect" *ngIf="!isCorrect(q)">❌ Chưa chính xác. Cố lên nhé!</div>
+        <div class="feedback correct" *ngIf="isCorrect(q) && !isFinalTest">🎉 Chính xác!</div>
+        <div class="feedback incorrect" *ngIf="!isCorrect(q) && !isFinalTest">❌ Chưa chính xác. Cố lên nhé!</div>
 
-        <div class="expected-answer">
+        <div class="expected-answer" *ngIf="!isCorrect(q)">
           <strong>Đáp án đúng:</strong>
           <span class="hanzi">{{ getExpectedChoice(q)?.text }}</span>
           <span class="pinyin">{{ getExpectedChoice(q)?.pinyin }}</span>
@@ -51,7 +58,7 @@
       <div class="actions">
         <button class="btn-primary" (click)="checkAnswer(q)" *ngIf="!submitted[q.id]"
           [disabled]="!selectedChoices[q.id] && !typedAnswers[q.id]">Kiểm tra</button>
-        <button class="btn-secondary" (click)="resetAnswer(q)" *ngIf="submitted[q.id]">Làm lại</button>
+        <button class="btn-secondary" (click)="resetAnswer(q)" *ngIf="submitted[q.id] && !isFinalTest">Làm lại</button>
       </div>
     </div>
   </div>

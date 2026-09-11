@@ -12,6 +12,7 @@ import { shuffleArray } from '../../../../shared/utils/array.utils';
 })
 export class QuizComponent implements OnInit {
   @Input() data!: QuizData;
+  @Input() isFinalTest: boolean = false;
   @Output() answerChecked = new EventEmitter<boolean>();
   displayQuestions: QuizQuestion[] = [];
 

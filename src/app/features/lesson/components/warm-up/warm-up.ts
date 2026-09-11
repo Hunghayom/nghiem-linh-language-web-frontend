@@ -11,6 +11,7 @@ import { WarmUpData, VocabItem, WarmUpItem } from '../../models/lesson.data';
 })
 export class WarmUpComponent implements OnInit {
   @Input() data!: WarmUpData;
+  @Input() isFinalTest: boolean = false;
   @Output() answerChecked = new EventEmitter<boolean>();
   
   displayItems: WarmUpItem[] = [];
@@ -116,5 +117,12 @@ export class WarmUpComponent implements OnInit {
       const letter = String.fromCharCode(65 + choiceIndex);
       return `${index + 1}-${letter}`;
     });
+  }
+
+  hasAvailableChoices(): boolean {
+    const usedChoiceIds = Object.values(this.answers)
+      .filter(a => a != null)
+      .map(a => a!.id);
+    return this.displayChoices.some(c => !usedChoiceIds.includes(c.id));
   }
 }

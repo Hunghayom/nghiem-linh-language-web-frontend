@@ -13,6 +13,7 @@ import { shuffleArray } from '../../../../shared/utils/array.utils';
 })
 export class ArrangingComponent implements OnInit {
   @Input() data!: ArrangingData;
+  @Input() isFinalTest: boolean = false;
   @Output() answerChecked = new EventEmitter<boolean>();
   displayQuestions: ArrangingQuestion[] = [];
   

@@ -1,11 +1,11 @@
 <div class="arranging-container">
-  <div class="header">
+  <div class="header" *ngIf="!isFinalTest">
     <div class="title-badge">🧩 {{ data.title }}</div>
     <p class="description">Bấm các từ theo đúng thứ tự. Kéo thả để sắp xếp lại, bấm để xóa.</p>
   </div>
 
   <div class="question-box" *ngFor="let q of displayQuestions; let i = index">
-    <div class="q-header">
+    <div class="q-header" *ngIf="!isFinalTest">
       <div class="number-badge">{{ i + 1 }}</div>
     </div>
 
@@ -25,7 +25,7 @@
       </div>
 
       <!-- Từ gợi ý (Source zone) -->
-      <div class="source-zone">
+      <div class="source-zone" *ngIf="getAvailableWords(q).length > 0">
         <div class="word-chip" *ngFor="let word of getAvailableWords(q)" (click)="selectWord(q, word.id)">
           <div class="pinyin">{{ word.pinyin }}</div>
           <div class="hanzi">{{ word.text }}</div>
@@ -34,9 +34,9 @@
 
       <!-- Kết quả -->
       <div class="result-message" *ngIf="practiceSubmitted[q.id]">
-        <div class="praise" *ngIf="isCorrect(q)">🎉 Tuyệt vời! Bạn đã sắp xếp chính xác.</div>
-        <div class="praise incorrect" *ngIf="!isCorrect(q)">❌ Chưa chính xác. Cố lên nhé!</div>
-        <div class="correct-answer">
+        <div class="praise" *ngIf="isCorrect(q) && !isFinalTest">🎉 Tuyệt vời! Bạn đã sắp xếp chính xác.</div>
+        <div class="praise incorrect" *ngIf="!isCorrect(q) && !isFinalTest">❌ Chưa chính xác. Cố lên nhé!</div>
+        <div class="correct-answer" *ngIf="!isCorrect(q)">
           <span class="label">Đáp án đúng: </span> <span class="text">{{ getCorrectAnswersText(q) }}</span>
         </div>
       </div>
@@ -45,8 +45,8 @@
       <div class="actions">
         <button class="btn-primary" (click)="checkAnswer(q)" *ngIf="!practiceSubmitted[q.id]"
           [disabled]="practiceAnswers[q.id].length === 0">Kiểm tra</button>
-        <button class="btn-secondary" (click)="resetAnswer(q)" *ngIf="practiceSubmitted[q.id]">Làm lại</button>
-        <button class="btn-audio-white" *ngIf="practiceSubmitted[q.id] && isCorrect(q)">🔊 Đọc mẫu</button>
+        <button class="btn-secondary" (click)="resetAnswer(q)" *ngIf="practiceSubmitted[q.id] && !isFinalTest">Làm lại</button>
+        <button class="btn-audio-white" *ngIf="practiceSubmitted[q.id] && isCorrect(q) && !isFinalTest">🔊 Đọc mẫu</button>
       </div>
     </div>
   </div>

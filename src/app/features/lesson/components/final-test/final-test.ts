@@ -25,30 +25,61 @@ export class FinalTestComponent {
   @Input() data?: FinalTestData;
   @Output() progressUpdated = new EventEmitter<number>();
 
-  currentQuestionIndex: number = 0;
+  questionQueue: FinalTestItem[] = [];
+  originalTotalQuestions: number = 0;
   testCompleted: boolean = false;
   score: number = 0;
+  isCurrentQuestionChecked: boolean = false;
+  wasCurrentQuestionCorrect: boolean = false;
 
-  get currentQuestion(): FinalTestItem | undefined {
-    if (!this.data || !this.data.questions) return undefined;
-    return this.data.questions[this.currentQuestionIndex];
+  ngOnChanges() {
+    if (this.data && this.data.questions) {
+      this.questionQueue = [...this.data.questions];
+      this.originalTotalQuestions = this.data.questions.length;
+      this.testCompleted = false;
+      this.score = 0;
+      this.isCurrentQuestionChecked = false;
+    }
   }
 
-  isCurrentQuestionChecked: boolean = false;
+  get currentQuestion(): FinalTestItem | undefined {
+    if (this.questionQueue.length === 0) return undefined;
+    return this.questionQueue[0];
+  }
 
   // Cần bắt sự kiện hoàn thành của từng dạng bài để hiện nút Tiếp tục
   onQuestionCompleted(isCorrect: boolean) {
     this.isCurrentQuestionChecked = true;
-    if (isCorrect) {
-      this.score++;
-    }
+    this.wasCurrentQuestionCorrect = isCorrect;
   }
 
   nextQuestion() {
     this.isCurrentQuestionChecked = false;
-    if (this.data && this.currentQuestionIndex < this.data.questions.length - 1) {
-      this.currentQuestionIndex++;
+
+    // Lấy câu hỏi hiện tại ra khỏi đầu hàng chờ
+    const currentQ = this.questionQueue.shift();
+
+    if (currentQ) {
+      if (this.wasCurrentQuestionCorrect) {
+        // Trả lời đúng, ghi nhận (chỉ cần tính tiến độ, score ở bài Final Test có thể tuỳ chọn)
+        this.score++;
+      } else {
+        // Trả lời sai, đẩy câu này xuống cuối hàng chờ
+        this.questionQueue.push(currentQ);
+      }
+    }
+
+    if (this.questionQueue.length > 0) {
+      // Tiếp tục làm câu tiếp theo
+      // Tự động cuộn màn hình để canh giữa nội dung kiểm tra
+      setTimeout(() => {
+        const container = document.querySelector('.final-test-container');
+        if (container) {
+          container.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 50);
     } else {
+      // Đã hết câu hỏi trong hàng chờ
       this.testCompleted = true;
       this.progressUpdated.emit(100);
     }

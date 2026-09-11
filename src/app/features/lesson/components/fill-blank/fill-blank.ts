@@ -13,6 +13,7 @@ import { shuffleArray } from '../../../../shared/utils/array.utils';
 })
 export class FillBlankComponent implements OnInit {
   @Input() data!: FillBlankData;
+  @Input() isFinalTest: boolean = false;
   @Output() answerChecked = new EventEmitter<boolean>();
   
   displayQuestions: FillBlankQuestion[] = [];
@@ -59,6 +60,11 @@ export class FillBlankComponent implements OnInit {
 
   getExpectedChoice(question: FillBlankQuestion): FillBlankChoice | undefined {
     return this.data.choices.find(c => c.id === question.expectedChoiceId);
+  }
+
+  getAvailableChoices(question: FillBlankQuestion): FillBlankChoice[] {
+    const usedChoiceIds = Object.values(this.selectedChoices);
+    return this.data.choices.filter(c => !usedChoiceIds.includes(c.id));
   }
 
   checkAnswer(question: FillBlankQuestion) {

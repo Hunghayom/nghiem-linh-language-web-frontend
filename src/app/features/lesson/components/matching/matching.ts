@@ -19,8 +19,9 @@ interface LineData {
   templateUrl: './matching.html',
   styleUrls: ['./matching.scss']
 })
-export class MatchingComponent implements OnInit, AfterViewInit {
+export class MatchingComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() data!: MatchingData;
+  @Input() isFinalTest: boolean = false;
   @Output() answerChecked = new EventEmitter<boolean>();
   
   @ViewChild('columnsContainer') columnsContainer!: ElementRef;

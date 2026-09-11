@@ -1,5 +1,5 @@
 <div class="matching-container">
-  <div class="header">
+  <div class="header" *ngIf="!isFinalTest">
     <div class="title-badge">🔗 {{ data.title }}</div>
     <p class="description">Bấm một thẻ bên trái rồi bấm thẻ tương ứng bên phải (hoặc ngược lại) để nối.</p>
   </div>
@@ -57,7 +57,7 @@
 
   <!-- Kết quả và Hành động -->
   <div class="bottom-section">
-    <div class="result-message" *ngIf="submitted">
+    <div class="result-message" *ngIf="submitted && !isFinalTest">
       <div class="feedback correct" *ngIf="isAllCorrect">🎉 Tuyệt vời! Bạn đã nối đúng tất cả.</div>
       <div class="feedback incorrect" *ngIf="!isAllCorrect">❌ Chưa chính xác hoàn toàn. Hãy kiểm tra các đường chưa xanh
         nhé!</div>
@@ -66,7 +66,7 @@
     <div class="actions">
       <button class="btn-primary" (click)="checkAnswers()" *ngIf="!submitted"
         [disabled]="userConnections.length === 0">Kiểm tra</button>
-      <button class="btn-secondary" (click)="resetAll()" *ngIf="submitted">Làm lại</button>
+      <button class="btn-secondary" (click)="resetAll()" *ngIf="submitted && !isFinalTest">Làm lại</button>
     </div>
   </div>
 </div>

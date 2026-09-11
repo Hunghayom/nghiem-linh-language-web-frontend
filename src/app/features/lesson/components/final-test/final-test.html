@@ -5,7 +5,7 @@
     
     <div class="test-progress">
       <div class="progress-bar">
-        <div class="progress-fill" [style.width.%]="(currentQuestionIndex / data.questions.length) * 100"></div>
+        <div class="progress-fill" [style.width.%]="originalTotalQuestions > 0 ? ((originalTotalQuestions - questionQueue.length) / originalTotalQuestions) * 100 : 0"></div>
       </div>
     </div>
   </div>
@@ -13,19 +13,19 @@
   <div class="test-content" *ngIf="!testCompleted && currentQuestion">
     @switch (currentQuestion.type) {
       @case ('QUIZ') {
-        <app-quiz [data]="currentQuestion.quizData!" (answerChecked)="onQuestionCompleted($event)"></app-quiz>
+        <app-quiz [data]="currentQuestion.quizData!" (answerChecked)="onQuestionCompleted($event)" [isFinalTest]="true"></app-quiz>
       }
       @case ('ARRANGING') {
-        <app-arranging [data]="currentQuestion.arrangingData!" (answerChecked)="onQuestionCompleted($event)"></app-arranging>
+        <app-arranging [data]="currentQuestion.arrangingData!" (answerChecked)="onQuestionCompleted($event)" [isFinalTest]="true"></app-arranging>
       }
       @case ('FILL_BLANK') {
-        <app-fill-blank [data]="currentQuestion.fillBlankData!" (answerChecked)="onQuestionCompleted($event)"></app-fill-blank>
+        <app-fill-blank [data]="currentQuestion.fillBlankData!" (answerChecked)="onQuestionCompleted($event)" [isFinalTest]="true"></app-fill-blank>
       }
       @case ('MATCHING') {
-        <app-matching [data]="currentQuestion.matchingData!" (answerChecked)="onQuestionCompleted($event)"></app-matching>
+        <app-matching [data]="currentQuestion.matchingData!" (answerChecked)="onQuestionCompleted($event)" [isFinalTest]="true"></app-matching>
       }
       @case ('WARM_UP') {
-        <app-warm-up [data]="currentQuestion.warmUpData!" (answerChecked)="onQuestionCompleted($event)"></app-warm-up>
+        <app-warm-up [data]="currentQuestion.warmUpData!" (answerChecked)="onQuestionCompleted($event)" [isFinalTest]="true"></app-warm-up>
       }
     }
     

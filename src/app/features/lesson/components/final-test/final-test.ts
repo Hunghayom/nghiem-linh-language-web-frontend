@@ -11,11 +11,11 @@ import { WarmUpComponent } from '../warm-up/warm-up';
   selector: 'app-final-test',
   standalone: true,
   imports: [
-    CommonModule, 
-    QuizComponent, 
-    ArrangingComponent, 
-    FillBlankComponent, 
-    MatchingComponent, 
+    CommonModule,
+    QuizComponent,
+    ArrangingComponent,
+    FillBlankComponent,
+    MatchingComponent,
     WarmUpComponent
   ],
   templateUrl: './final-test.html',
@@ -31,6 +31,7 @@ export class FinalTestComponent {
   score: number = 0;
   isCurrentQuestionChecked: boolean = false;
   wasCurrentQuestionCorrect: boolean = false;
+  showQuestion: boolean = true;
 
   ngOnChanges() {
     if (this.data && this.data.questions) {
@@ -39,6 +40,7 @@ export class FinalTestComponent {
       this.testCompleted = false;
       this.score = 0;
       this.isCurrentQuestionChecked = false;
+      this.showQuestion = true;
     }
   }
 
@@ -55,31 +57,28 @@ export class FinalTestComponent {
 
   nextQuestion() {
     this.isCurrentQuestionChecked = false;
+    this.showQuestion = false; // Ẩn component hiện tại để force re-render
 
     // Lấy câu hỏi hiện tại ra khỏi đầu hàng chờ
     const currentQ = this.questionQueue.shift();
 
     if (currentQ) {
       if (this.wasCurrentQuestionCorrect) {
-        // Trả lời đúng, ghi nhận (chỉ cần tính tiến độ, score ở bài Final Test có thể tuỳ chọn)
         this.score++;
       } else {
-        // Trả lời sai, đẩy câu này xuống cuối hàng chờ
         this.questionQueue.push(currentQ);
       }
     }
 
     if (this.questionQueue.length > 0) {
-      // Tiếp tục làm câu tiếp theo
-      // Tự động cuộn màn hình để canh giữa nội dung kiểm tra
       setTimeout(() => {
+        this.showQuestion = true; // Hiện lại component mới (hoặc component cũ đã được reset)
         const container = document.querySelector('.final-test-container');
         if (container) {
           container.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
       }, 50);
     } else {
-      // Đã hết câu hỏi trong hàng chờ
       this.testCompleted = true;
       this.progressUpdated.emit(100);
     }

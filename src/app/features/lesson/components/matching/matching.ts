@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, AfterViewInit, HostListener, ViewChild, ElementRef, ChangeDetectorRef, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, AfterViewInit, HostListener, ViewChild, ElementRef, ChangeDetectorRef, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatchingData, MatchingItem, MatchingPair } from '../../models/lesson.data';
 import { shuffleArray } from '../../../../shared/utils/array.utils';
@@ -173,5 +173,9 @@ export class MatchingComponent implements OnInit, AfterViewInit, OnDestroy {
 
   isMatchedRight(id: string): boolean {
     return this.userConnections.some(p => p.rightId === id);
+  }
+
+  ngOnDestroy() {
+    // cleanup
   }
 }
